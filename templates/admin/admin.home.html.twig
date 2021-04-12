@@ -4,6 +4,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>ID User</th>
                         <th>Mail</th>
                         <th>Password</th>
                         <th>Nom</th>
@@ -16,6 +17,7 @@
                 {% for blabla in test %}
                     <tr>
                         <td>{{ blabla.id }}</td>
+                        <td>{{ blabla.idUser.id }}</td>
                         <td>{{ blabla.idUser.mail }}</td>
                         <td>{{ blabla.idUser.password }}</td>
                         <td>{{ blabla.idUser.name }}</td>
