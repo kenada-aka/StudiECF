@@ -12,7 +12,7 @@
                 <tbody>
                 {% for blabla in test %}
                     <tr>
-                        <td>{{ blabla.id }} - {{ blabla.lastName }} - {{ blabla.firstName }}</td>
+                        <td>{{ blabla.id }} - {{ blabla.name }} - {{ blabla.lastName }} - {{ blabla.mail }} - {{ blabla.password }}</td>
                         <td>
                             <a href="{{ path('admin.property.edit', {id: blabla.id}) }}">Editer</a>
                             <form method="POST" action="{{ path('admin.property.delete', {id: blabla.id}) }}">

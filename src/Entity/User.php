@@ -38,6 +38,13 @@ class User
      */
     private $lastname;
 
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+
+
     public function getMail(): ?string
     {
         return $this->mail;

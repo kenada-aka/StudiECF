@@ -73,6 +73,64 @@ class DefaultController extends AbstractController
 
     }
 
+    /**
+     * @Route("/posts/{id}", name="admin.property.edit", methods="GET|POST")
+     * @param User $user
+     */
+
+    public function post(User $user, int $id, Request $request)
+
+    {
+        //dump($user);
+        //dump($id);
+        $form = $this->createForm(UserType::class,  $user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+           
+           // $this->em->persist($user);
+            $this->em->flush();
+            
+        }
+
+       
+
+        return $this->render('test.edit.html.twig', [
+
+            'title' => 'TEST CRUD (edit)',
+            'form' => $form->createView()
+
+        ]);
+
+    }
+
+    /**
+     * @Route("/posts/{id}", name="admin.property.delete", methods="DELETE")
+     * @param User $user
+     */
+
+    public function delete(User $user, Request $request)
+
+    {
+        //dump($request);
+        if($this->isCsrfTokenValid('delete'. $user->getId(), $request->get('_token')))
+        {
+            //$this->em = $this->getDoctrine()->getManager();
+            $this->em->remove($user);
+            $this->em->flush();
+
+
+            
+        }
+        
+        return $this->redirectToRoute('admin.property.home');
+        
+        
+
+    }
+
     
 
 }
