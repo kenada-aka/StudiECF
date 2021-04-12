@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;                         // Perme
 use App\Repository\UserRepository;
 
 use App\Entity\User;
-//use App\Form\UserType;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 
 
@@ -26,22 +26,50 @@ class DefaultController extends AbstractController
     }
 
     /**
-
-     * @Route("/", name="home")
-
+     * @Route("/", name="admin.property.home")
      */
-    public function home(UserRepository $userRepository)
 
+    public function home(UserRepository $userRepository)
     {
 
     
         
 
         return $this->render('index.html.twig', [
-                        'title' => 'Ma page de contact ',
+                        'title' => 'CRUD TEST',
                         'test' => $userRepository->findAll()
                         
                     ]);
+
+    }
+
+     /**
+     * @Route("/addUser", name="admin.property.new")
+     */
+
+    public function addUser(Request $request)
+
+    {
+        $user = new User();
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $this->em = $this->getDoctrine()->getManager();
+
+            $this->em->persist($user);
+            $this->em->flush();
+            return $this->redirectToRoute('admin.property.home');
+        }
+
+        return $this->render('test.new.html.twig', [
+
+            'title' => 'TEST CRUD (new)',
+            'form' => $form->createView()
+
+        ]);
 
     }
 
