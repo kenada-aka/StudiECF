@@ -8,9 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;                         // Permet d'utiliser les routes sans "config/routes.yaml"
 
 use App\Repository\UserRepository;
-
 use App\Entity\User;
 use App\Form\UserType;
+
+use App\Repository\AdminRepository;
+use App\Entity\Admin;
+use App\Form\AdminType;
+
 use Doctrine\ORM\EntityManagerInterface;
 
 
@@ -18,10 +22,12 @@ class DefaultController extends AbstractController
 {
 
     private $repository; 
+    private $repoTest;
     private $em;
 
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $em) {
+    public function __construct(UserRepository $userRepository, AdminRepository $adminRepository, EntityManagerInterface $em) {
         $this->repository = $userRepository;
+        $this->repoTest = $adminRepository;
         $this->em = $em;
     }
 
@@ -33,11 +39,11 @@ class DefaultController extends AbstractController
     {
 
     
-        
+        //dump($this->repoTest->findAll());
 
         return $this->render('index.html.twig', [
                         'title' => 'CRUD TEST',
-                        'test' => $userRepository->findAll()
+                        'test' => $this->repoTest->findAll()
                         
                     ]);
 
@@ -50,9 +56,15 @@ class DefaultController extends AbstractController
     public function addUser(Request $request)
 
     {
+    /*
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
+
+*/
+        $user = new Admin();
+
+        $form = $this->createForm(AdminType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {

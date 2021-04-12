@@ -38,6 +38,11 @@ class User
      */
     private $lastname;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $actor;
+
     public function getId(): ?string
     {
         return $this->id;
@@ -89,6 +94,18 @@ class User
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getActor(): ?string
+    {
+        return $this->actor;
+    }
+
+    public function setActor(string $actor): self
+    {
+        $this->actor = $actor;
 
         return $this;
     }
