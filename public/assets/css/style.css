@@ -119,6 +119,7 @@ body {
   # Top Bar
   --------------------------------------------------------------*/
   #topbar {
+    background: rgba(0, 0, 0, 0.1);
     height: 60px;
     padding: 0;
     font-size: 14px;
@@ -126,6 +127,7 @@ body {
     overflow: hidden;
     color: rgba(255, 255, 255, 0.8);
     z-index: 996;
+    backdrop-filter: blur(6px);
   }
   
   #topbar.topbar-scrolled {
@@ -145,19 +147,19 @@ body {
   #topbar .contact-info i {
     color: #f6b024;
     line-height: 0;
-    margin-right: 5px;
-  }
-  
-  #topbar .contact-info .phone-icon {
+    margin-right: 10px;
     margin-left: 15px;
   }
+  
+ 
   
   #topbar .cta {
     background: transparent;
   }
   
-  #topbar .cta a {
+  #topbar .cta input.submit {
     color: #fff;
+    border:0;
     background: #f6b024;
     padding: 6px 24px 8px 24px;
     display: inline-block;
@@ -165,7 +167,7 @@ body {
     border-radius: 50px;
   }
   
-  #topbar .cta a:hover {
+  #topbar .cta input.submit:hover {
     background: #f1a40a;
   }
   
@@ -178,6 +180,8 @@ body {
     z-index: 997;
     height: 70px;
     top: 60px;
+    border-bottom:rgb(71, 71, 71) 2px solid;
+    backdrop-filter: blur(2px);
   }
   
   #header.header-scrolled {
