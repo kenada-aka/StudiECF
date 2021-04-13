@@ -1,0 +1,92 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">Register</h2>
+            <p class="animate__animated animate__fadeInUp">...</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section id="contact" class="contact">
+        <div class="container aos-init" data-aos="fade-up">
+      
+            <div class="section-title">
+                <h2>Contact Us</h2><!-- todo -->
+            </div>
+        
+            <div class="row mt-1 d-flex justify-content-end aos-init" data-aos="fade-right" data-aos-delay="100">
+
+          <div class="col-lg-5">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>A108 Adam Street, New York, NY 535022</p>
+                <p>TODO XHR HERE</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>info@example.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p>+1 5589 55488 55s</p>
+              </div>
+
+            </div>
+
+            </div>
+        
+            <div class="col-lg-6 mt-5 mt-lg-0 aos-init" data-aos="fade-left" data-aos-delay="100">
+            
+                <form action="forms/contact.php" method="post" class="php-email-form">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control" name="email" id="email" placeholder="Nom" required="">
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Prénom" required="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Mail" required="">
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                            <input type="password" name="name" class="form-control" id="name" placeholder="Password" required="">
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <select class="form-select" aria-label="Default select example">
+  <option selected>Open this select menu</option>
+  <option value="1">Locataire</option>
+  <option value="2">Propriétaire</option>
+  <option value="3">Bailleur Tiers</option>
+  <option value="3">Agence</option>
+</select>
+                    </div>
+                    <div class="my-3">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Your message has been sent. Thank you!</div>
+                    </div>
+                    <div class="text-center"><button type="submit">Inscription</button></div>
+                </form>
+        
+            </div>
+    
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

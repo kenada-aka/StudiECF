@@ -1,5 +1,18 @@
-<div class="container mt-4">
-            <h1>{{ title }}</h1>
+{% extends "index.html.twig" %}
+
+{% block body %}
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">...</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section>
+    <div class="container mt-4">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -38,3 +51,6 @@
             
         </div>
         <a href="{{ path('admin.property.new') }}">Ajouter un nouveau utilisateur</a>
+        </section>
+</main>
+{% endblock %}

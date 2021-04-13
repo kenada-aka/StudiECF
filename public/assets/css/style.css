@@ -564,6 +564,18 @@ body {
       font-size: 28px;
     }
   }
+
+/*--------------------------------------------------------------
+  # Hero2 Section
+  --------------------------------------------------------------*/
+
+#hero.register {
+  height: 30vh;
+  background: url("../img/panorama.jpg") top center;
+  background-size: cover;
+  padding:0;
+}
+
   
   /*--------------------------------------------------------------
   # Sections General
