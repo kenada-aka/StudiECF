@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -36,6 +37,7 @@ class MessageController extends AbstractController
 
     /**
      * @Route("/message/", name="message.home")
+     * @IsGranted("ROLE_ADMIN")
      */
 
     public function home(): Response
