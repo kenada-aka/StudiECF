@@ -3,9 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Realty;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class RealtyType extends AbstractType
 {
@@ -16,6 +20,8 @@ class RealtyType extends AbstractType
             ->add('description')
             ->add('rent')
             ->add('to_rent')
+            //->add('id_owner', EntityType::class, ['class' => User::class,'choice_label' => 'id'])
+            
         ;
     }
 

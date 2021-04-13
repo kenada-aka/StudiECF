@@ -49,6 +49,17 @@ class Realty
      */
     private $images;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="realtyOwner", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $id_owner;
+
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="realtyTenant", cascade={"persist", "remove"})
+     */
+    private $id_tenant;
+
     public function __construct()
     {
         $this->documents = new ArrayCollection();
@@ -165,6 +176,30 @@ class Realty
                 $image->setIdRealty(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdOwner(): ?User
+    {
+        return $this->id_owner;
+    }
+
+    public function setIdOwner(User $id_owner): self
+    {
+        $this->id_owner = $id_owner;
+
+        return $this;
+    }
+
+    public function getIdTenant(): ?User
+    {
+        return $this->id_tenant;
+    }
+
+    public function setIdTenant(?User $id_tenant): self
+    {
+        $this->id_tenant = $id_tenant;
 
         return $this;
     }

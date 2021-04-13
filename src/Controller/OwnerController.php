@@ -18,14 +18,18 @@ use App\Repository\RealtyRepository;
 use App\Entity\Realty;
 use App\Form\RealtyType;
 
+use App\Repository\UserRepository;
+use App\Entity\User;
+
 class OwnerController extends AbstractController
 {
     private $realtyRepo;
     private $messageRepo; 
     private $em;
 
-    public function __construct(EntityManagerInterface $em, RealtyRepository $realtyRepository, MessageRepository $messageRepository)
+    public function __construct(EntityManagerInterface $em, RealtyRepository $realtyRepository, MessageRepository $messageRepository, userRepository $userRepository)
     {
+        $this->userRepo = $userRepository;
         $this->realtyRepo = $realtyRepository;
         $this->messageRepo = $messageRepository;
         $this->em = $em;
@@ -50,6 +54,12 @@ class OwnerController extends AbstractController
     public function add(Request $request): Response
     {
         $realty = new Realty();
+
+        $user = $this->userRepo->find(1);
+        //$user = new User();
+        //$this->em->persist($user);
+
+        $realty->setIdTenant($user);
 
         $form = $this->createForm(RealtyType::class, $realty);
         $form->handleRequest($request);

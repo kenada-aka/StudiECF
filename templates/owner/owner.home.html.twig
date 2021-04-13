@@ -22,8 +22,8 @@
                         <th>description</th>
                         <th>rent</th>
                         <th>to_rent</th>
-                        <th>?</th>
-                        <th>?</th>
+                        <th>id_owner</th>
+                        <th>id_tenant</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -35,8 +35,16 @@
                         <td>{{ realty.description }}</td>
                         <td>{{ realty.rent }}</td>
                         <td>{{ realty.toRent }}</td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                        {% if realty.idOwner %}
+                        {{ realty.idOwner.mail }}
+                        {% endif %}
+                        </td>
+                        <td>
+                        {% if realty.idTenant %}
+                        {{ realty.idTenant.mail }}
+                        {% endif %}
+                        </td>
                         <td>
                             <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Editer</a>
                             <form method="POST" action="{{ path('admin.property.delete', {id: realty.id}) }}">

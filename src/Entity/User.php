@@ -55,6 +55,16 @@ class User
      */
     private $messagesReceive;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Realty::class, mappedBy="id_owner", cascade={"persist", "remove"})
+     */
+    private $realtyOwner;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Realty::class, mappedBy="id_tenant", cascade={"persist", "remove"})
+     */
+    private $realtyTenant;
+
     public function __construct()
     {
         $this->messagesSend = new ArrayCollection();
@@ -184,6 +194,45 @@ class User
                 $messagesReceive->setIdReceiver(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRealtyOwner(): ?Realty
+    {
+        return $this->realtyOwner;
+    }
+
+    public function setRealtyOwner(Realty $realtyOwner): self
+    {
+        // set the owning side of the relation if necessary
+        if ($realtyOwner->getIdOwner() !== $this) {
+            $realtyOwner->setIdOwner($this);
+        }
+
+        $this->realtyOwner = $realtyOwner;
+
+        return $this;
+    }
+
+    public function getRealtyTenant(): ?Realty
+    {
+        return $this->realtyTenant;
+    }
+
+    public function setRealtyTenant(?Realty $realtyTenant): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($realtyTenant === null && $this->realtyTenant !== null) {
+            $this->realtyTenant->setIdTenant(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($realtyTenant !== null && $realtyTenant->getIdTenant() !== $this) {
+            $realtyTenant->setIdTenant($this);
+        }
+
+        $this->realtyTenant = $realtyTenant;
 
         return $this;
     }
