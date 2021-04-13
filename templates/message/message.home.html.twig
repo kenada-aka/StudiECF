@@ -18,46 +18,32 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>title</th>
-                        <th>description</th>
-                        <th>rent</th>
-                        <th>to_rent</th>
-                        <th>id_owner</th>
-                        <th>id_tenant</th>
-                        <th>documents</th>
-                        <th>images</th>
+                        <th>Date</th>
+                        <th>suject</th>
+                        <th>message</th>
+                        <th>id sender</th>
+                        <th>id receiver</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for realty in realties %}
+                {% for message in messages %}
                     <tr>
-                        <td>{{ realty.id }}</td>
-                        <td>{{ realty.title }}</td>
-                        <td>{{ realty.description }}</td>
-                        <td>{{ realty.rent }}</td>
-                        <td>{{ realty.toRent }}</td>
+                        <td>{{ message.id }}</td>
+                        <td>{{ message.date|date("d/m/Y") }}</td>
+                        <td>{{ message.subject }}</td>
+                        <td>{{ message.message }}</td>
+                        <td>{{ message.idSender.id }}</td>
+                        <td>{{ message.idReceiver.id }}</td>
                         <td>
-                        {% if realty.idOwner %}
-                        {{ realty.idOwner.mail }}
-                        {% endif %}
-                        </td>
-                        <td>
-                        {% if realty.idTenant %}
-                        {{ realty.idTenant.mail }}
-                        {% endif %}
-                        </td>
-                        <td>{{ realty.documents|length }}</td>
-                        <td>{{ realty.images|length }}</td>
-                        <td>
-                            <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Editer</a>
-                            <form method="POST" action="{{ path('admin.property.delete', {id: realty.id}) }}">
+                            <a href="{{ path('admin.property.edit', {id: message.id}) }}">Editer</a>
+                            <form method="POST" action="{{ path('admin.property.delete', {id: message.id}) }}">
                                 <input type="hidden" name="_method" value="DELETE"/>
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ realty.id)}}"/>
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id)}}"/>
                                 <button>Supprimer</button>
                             </form>
-                            <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au locataire</a>
-                            <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au propriétaire</a>
+                            <a href="{{ path('admin.property.edit', {id: message.id}) }}">Envoyer message au locataire</a>
+                            <a href="{{ path('admin.property.edit', {id: message.id}) }}">Envoyer message au propriétaire</a>
                         </td>
                     </tr>
                  {% endfor %}

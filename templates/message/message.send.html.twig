@@ -1,0 +1,25 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">...</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section>
+        <div class="container mt-4">
+            {{ form_start(form) }}
+                {{ form_rest(form) }}
+                <button>Envoyer</button>
+            {{ form_end(form) }}
+        </div>
+    </section>
+</main>
+
+{% endblock %}
