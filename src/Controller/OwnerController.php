@@ -21,6 +21,11 @@ use App\Form\RealtyType;
 use App\Repository\UserRepository;
 use App\Entity\User;
 
+use App\Entity\Image;
+use App\Form\ImageType;
+
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 class OwnerController extends AbstractController
 {
     private $realtyRepo;
@@ -74,6 +79,52 @@ class OwnerController extends AbstractController
         return $this->render('owner/owner.add.html.twig', [
             'title' => 'Owner / Add',
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/owner/uploadImage", name="owner.upload.image")
+     */
+
+    public function uploadImage(Request $request, SluggerInterface $slugger): Response
+    {
+        $image = new Image();
+
+        $form = $this->createForm(ImageType::class, $image);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            
+            $pngFile = $form->get('png')->getData();
+
+            if($pngFile) 
+            {
+                $originalFilename = pathinfo($pngFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$pngFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pngFile->move(
+                        $this->getParameter('png_directory'), // config/services.yaml
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                $image->setUrl($newFilename);
+            }
+
+            return $this->redirectToRoute('owner.home');
+       
+        }
+
+        return $this->render('owner/owner.upload.image.html.twig', [
+            'title' => 'Owner / Upload Image',
+            'form' => $form->createView(),
         ]);
     }
 }

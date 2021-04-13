@@ -24,6 +24,8 @@
                         <th>to_rent</th>
                         <th>id_owner</th>
                         <th>id_tenant</th>
+                        <th>documents</th>
+                        <th>images</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -45,6 +47,8 @@
                         {{ realty.idTenant.mail }}
                         {% endif %}
                         </td>
+                        <td>{{ realty.documents|length }}</td>
+                        <td>{{ realty.images|length }}</td>
                         <td>
                             <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Editer</a>
                             <form method="POST" action="{{ path('admin.property.delete', {id: realty.id}) }}">
