@@ -1,0 +1,58 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">...</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section>
+        <div class="container mt-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>title</th>
+                        <th>description</th>
+                        <th>rent</th>
+                        <th>to_rent</th>
+                        <th>?</th>
+                        <th>?</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for realty in realties %}
+                    <tr>
+                        <td>{{ realty.id }}</td>
+                        <td>{{ realty.title }}</td>
+                        <td>{{ realty.description }}</td>
+                        <td>{{ realty.rent }}</td>
+                        <td>{{ realty.toRent }}</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Editer</a>
+                            <form method="POST" action="{{ path('admin.property.delete', {id: realty.id}) }}">
+                                <input type="hidden" name="_method" value="DELETE"/>
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ realty.id)}}"/>
+                                <button>Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                 {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ path('owner.add') }}">Ajouter un nouveau bien immobilier (TODO MENU)</a>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
+
