@@ -19,6 +19,8 @@ use App\Repository\AdminRepository;
 use App\Entity\Admin;
 use App\Form\AdminType;
 
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 class DefaultController extends AbstractController
 {
 
@@ -38,6 +40,10 @@ class DefaultController extends AbstractController
 
     public function home()
     {
+
+        //$user = new User();
+        
+
 
         //dump($this->repoTest->findAll());
 
@@ -59,4 +65,5 @@ class DefaultController extends AbstractController
 
     }
 
+    
 }
