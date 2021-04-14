@@ -1,0 +1,43 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">...</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <p>TODO Filtres + le owner ne doit pas être déjà loué</p>
+    <p>TODO carousel (images) + responsive image</p>
+    <section>
+        <div class="container mt-4">
+            <table class="table table-striped">
+                <tbody>
+                {% for realty in realties %}
+                    <tr>
+                        <td>
+                            {% for image in realty.images %}
+                                <img src="{{ asset('uploads/png/' ~ image.url) }}" /></td>
+                            {% endfor %}
+                        <td>
+                            <p>{{ realty.title }}</p>
+                            <p>{{ realty.description }}</p>
+                        </td>
+                        <td>
+                            <p>{{ realty.rent }}</p>
+                        </td>
+                    </tr>
+                 {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
+

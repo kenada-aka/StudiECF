@@ -44,6 +44,17 @@ class OwnerController extends AbstractController
     }
 
     /**
+     * @Route("/owners", name="show.owners")
+     */
+    public function owners()
+    {
+        return $this->render('owner/owner.public.html.twig', [
+            'title' => 'Owner / Home',
+            'realties' => $this->realtyRepo->findAll()
+        ]);
+    }
+
+    /**
      * @Route("/owner/", name="owner.home")
      */
 
@@ -54,6 +65,8 @@ class OwnerController extends AbstractController
             'realties' => $this->realtyRepo->findAll()
         ]);
     }
+
+    
 
     /**
      * @Route("/owner/add", name="owner.add")

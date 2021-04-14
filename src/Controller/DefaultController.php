@@ -13,7 +13,6 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-
     public function home()
     {
 

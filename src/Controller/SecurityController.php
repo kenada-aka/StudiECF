@@ -77,9 +77,7 @@ class SecurityController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid())
         {
-            // Tant qu'on est pas authentifié, tout les formulaires passe par LoginForm
-            // anonymous: true
-            
+
             // Encode the password
 
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
@@ -113,7 +111,7 @@ class SecurityController extends AbstractController
         if($this->isGranted('ROLE_BAILLEUR_TIERS') && !$this->isGranted('ROLE_AGENCE') )
         {
             // Vérifier si l'abonnement est valide
-            dump($user);
+            //dump($user);
         }
         return $this->render('home/home.html.twig', [
             'title' => 'CRUD TEST'
