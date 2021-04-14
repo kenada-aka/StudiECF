@@ -19,7 +19,6 @@ use App\Repository\AdminRepository;
 use App\Entity\Admin;
 use App\Form\AdminType;
 
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class DefaultController extends AbstractController
 {
@@ -53,17 +52,6 @@ class DefaultController extends AbstractController
 
     }
 
-    /**
-     * @Route("/register", name="register")
-     */
-
-    public function register()
-    {
-        return $this->render('home/register.html.twig', [
-            'title' => 'CRUD TEST'
-        ]);
-
-    }
 
     
 }

@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -38,6 +39,12 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
@@ -47,6 +54,13 @@ class User implements UserInterface, \Serializable
     public function getUsername()
     {
         return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     public function getSalt()
@@ -59,7 +73,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -70,16 +84,6 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="json")
      */
     private $roles = [];
-
-    /**
-     * @ORM\Column(type="string", unique=true, nullable=true)
-     */
-    private $apiToken;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $actor;
 
     /**
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="id_sender")
@@ -117,14 +121,14 @@ class User implements UserInterface, \Serializable
 
 
 
-    public function getMail(): ?string
+    public function getEmail(): ?string
     {
-        return $this->mail;
+        return $this->email;
     }
 
-    public function setMail(string $mail): self
+    public function setEmail(string $email): self
     {
-        $this->mail = $mail;
+        $this->email = $email;
 
         return $this;
     }
@@ -133,7 +137,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->password;
     }
-
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -141,14 +144,24 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getName(): ?string
+    public function getPlainPassword()
     {
-        return $this->name;
+        return $this->plainPassword;
     }
 
-    public function setName(string $name): self
+    public function setPlainPassword($password)
     {
-        $this->name = $name;
+        $this->plainPassword = $password;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
 
         return $this;
     }

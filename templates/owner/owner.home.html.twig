@@ -39,12 +39,12 @@
                         <td>{{ realty.toRent }}</td>
                         <td>
                         {% if realty.idOwner %}
-                        {{ realty.idOwner.mail }}
+                        {{ realty.idOwner.email }}
                         {% endif %}
                         </td>
                         <td>
                         {% if realty.idTenant %}
-                        {{ realty.idTenant.mail }}
+                        {{ realty.idTenant.email }}
                         {% endif %}
                         </td>
                         <td>{{ realty.documents|length }}</td>
