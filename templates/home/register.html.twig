@@ -48,47 +48,22 @@
         
             <div class="col-lg-6 mt-5 mt-lg-0 aos-init" data-aos="fade-left" data-aos-delay="100">
                 {{ form_start(form, {'action': path('register'), 'method': 'POST'}) }}
+                    {{ form_row(form.lastname) }}
+                    {{ form_row(form.firstname) }}
                     {{ form_row(form.username) }}
                     {{ form_row(form.email) }}
                     {{ form_row(form.plainPassword.first) }}
                     {{ form_row(form.plainPassword.second) }}
-                    <button type="submit">Register!</button>
+                    {{ form_row(form.roles) }}
+                    <div class="text-center php-email-form"><button type="submit">Inscription</button></div>
                 {{ form_end(form) }}
             
-                <form action="{{ path('register') }}" method="post" class="php-email-form">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <input type="text" class="form-control" name="email" id="email" placeholder="Nom" required="">
-                        </div>
-                        <div class="col-md-6 form-group mt-3 mt-md-0">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Prénom" required="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Mail" required="">
-                        </div>
-                        <div class="col-md-6 form-group mt-3 mt-md-0">
-                            <input type="password" name="name" class="form-control" id="name" placeholder="Password" required="">
-                        </div>
-                    </div>
-                    <div class="form-group mt-3">
-                        <select class="form-select" aria-label="Default select example">
-  <option selected>Open this select menu</option>
-  <option value="1">Locataire</option>
-  <option value="2">Propriétaire</option>
-  <option value="3">Bailleur Tiers</option>
-  <option value="3">Agence</option>
-</select>
-                    </div>
-                    <div class="my-3">
+               
+         <div class="my-3">
                         <div class="loading">Loading</div>
                         <div class="error-message"></div>
                         <div class="sent-message">Your message has been sent. Thank you!</div>
                     </div>
-                    <div class="text-center"><button type="submit">Inscription</button></div>
-                </form>
-        
             </div>
     
             </div>

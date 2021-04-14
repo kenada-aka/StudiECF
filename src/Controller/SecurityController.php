@@ -6,7 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -61,7 +64,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/register", name="register", methods="GET|POST")
-
      */
 
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
@@ -83,18 +85,12 @@ class SecurityController extends AbstractController
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
 
             $user->setPassword($password);
-            
-            $user->setName("Name");
-            $user->setLastname("Lastname");
-            $user->setActor("Admin");
-            //$user->setApitoken("Admin");
 
-            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            
-            return $this->redirectToRoute('register');
+
+            return $this->redirectToRoute('home');
             
         }
 
@@ -103,6 +99,24 @@ class SecurityController extends AbstractController
         return $this->render('home/register.html.twig', [
             'title' => 'CRUD TEST',
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/member", name="member")
+     * @IsGranted("ROLE_LOCATAIRE")
+     */
+    public function member()
+    {
+        $user = $this->getUser();
+
+        if($this->isGranted('ROLE_BAILLEUR_TIERS') && !$this->isGranted('ROLE_AGENCE') )
+        {
+            // Vérifier si l'abonnement est valide
+            dump($user);
+        }
+        return $this->render('home/home.html.twig', [
+            'title' => 'CRUD TEST'
         ]);
     }
 }

@@ -298,6 +298,26 @@ class User implements UserInterface, \Serializable
         return array_unique($roles);
     }
 
+    public function setRoles(array $roles) 
+    {
+        switch($roles[0])
+        {
+            case "1": // Locataire
+                $this->roles = ["ROLE_LOCATAIRE"];
+                break;
+            case "2": // Propriétaire
+                $this->roles = ["ROLE_LOCATAIRE","ROLE_PROPRIETAIRE"];
+                break;
+            case "3": // Bailleur Tiers
+                $this->roles = ["ROLE_LOCATAIRE","ROLE_PROPRIETAIRE","ROLE_BAILLEUR_TIERS"];
+                break;
+            case "4": // Agence
+                $this->roles = ["ROLE_LOCATAIRE","ROLE_PROPRIETAIRE","ROLE_BAILLEUR_TIERS","ROLE_AGENCE"];
+                break;
+        }
+        return $this;
+    }
+
     public function eraseCredentials()
     {
     }
