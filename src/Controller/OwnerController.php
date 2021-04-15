@@ -102,7 +102,8 @@ class OwnerController extends AbstractController
     {
         $user = $this->getUser();
         return $this->render('owner/owner.home.html.twig', [
-            'title' => 'Owner / Home',
+            'title' => 'Visualiser vos annonces de location',
+            'subtitle' => 'A partir de cette page vous allez pouvoir visualiser les annonces de vos locations.',
             'realties' => $this->realtyRepo->findAllWhereOwnerId($user->getId())
         ]);
     }
@@ -132,7 +133,8 @@ class OwnerController extends AbstractController
         }
 
         return $this->render('owner/owner.add.html.twig', [
-            'title' => 'Owner / Add',
+            'title' => 'Ajouter une nouvelle location',
+            'subtitle' => 'Pour ajouter une nouvelle location il suffit de compléter le formulaire ci-dessous.',
             'form' => $form->createView()
         ]);
     }
@@ -155,10 +157,12 @@ class OwnerController extends AbstractController
         {
             $this->em->persist($realty);
             $this->em->flush();
+            return $this->redirectToRoute('owner.home');
         }
 
         return $this->render('owner/owner.edit.html.twig', [
-            'title' => 'Owner / Update',
+            'title' => 'Modifier votre annonce',
+            'subtitle' => 'A partir de cette page, vous pouvez modifier les informations de votre annonce.',
             'form' => $form->createView()
         ]);
     }
@@ -182,11 +186,11 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * @Route("/owner/uploadImage", name="owner.upload.image")
+     * @Route("/owner/uploadImage/{idRent}", name="owner.upload.image")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */
 
-    public function uploadImage(Request $request, SluggerInterface $slugger): Response
+    public function uploadImage(int $idRent, Request $request, SluggerInterface $slugger): Response
     {
         $image = new Image();
 
@@ -218,7 +222,7 @@ class OwnerController extends AbstractController
                 $image->setUrl($newFilename);
 
 
-                $reality = $this->realtyRepo->find(1);
+                $reality = $this->realtyRepo->find($idRent);
                 $image->setIdRealty($reality);
 
 
@@ -231,17 +235,18 @@ class OwnerController extends AbstractController
         }
 
         return $this->render('owner/owner.upload.image.html.twig', [
-            'title' => 'Owner / Upload Image',
+            'title' => 'Ajouter une photo',
+            'subtitle' => 'A partir de cette page, vous pouvez ajouter une photo pour votre annonce, les formats acceptés sont JPG et PNG.',
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/owner/uploadDocument", name="owner.upload.document")
+     * @Route("/owner/uploadDocument/{idRent}", name="owner.upload.document")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */
 
-    public function uploadDocument(Request $request, SluggerInterface $slugger): Response
+    public function uploadDocument(int $idRent, Request $request, SluggerInterface $slugger): Response
     {
         $document = new Document();
 
@@ -273,7 +278,7 @@ class OwnerController extends AbstractController
                 $document->setUrl($newFilename);
 
 
-                $reality = $this->realtyRepo->find(1);
+                $reality = $this->realtyRepo->find($idRent);
                 $document->setIdRealty($reality);
 
 
@@ -286,7 +291,8 @@ class OwnerController extends AbstractController
         }
 
         return $this->render('owner/owner.upload.document.html.twig', [
-            'title' => 'Owner / Upload Document',
+            'title' => 'Ajouter un document',
+            'subtitle' => 'A partir de cette page, vous pouvez ajouter un document pour votre annonce (exemple : bail, quittances, assurance, ...), le format accepté est PDF.',
             'form' => $form->createView(),
         ]);
     }

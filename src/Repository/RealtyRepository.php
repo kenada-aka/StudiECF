@@ -22,6 +22,7 @@ class RealtyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Realty::class);
     }
+
     /**
      * Récupère la liste des biens qui ne sont pas louer
      **/
@@ -30,6 +31,18 @@ class RealtyRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.statut = :val')
             ->setParameter('val', 2)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Récupère la location par le locataire
+     **/
+    public function findByTenant(int $tenantId)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.id_tenant = :val')
+            ->setParameter('val', $tenantId)
             ->getQuery()
             ->getResult();
     }

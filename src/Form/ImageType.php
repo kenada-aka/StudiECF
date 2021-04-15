@@ -31,9 +31,10 @@ class ImageType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'image/png'
+                            'image/png',
+                            'image/jpeg'
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid PNG document',
+                        'mimeTypesMessage' => 'Please upload a valid PNG or JPG document',
                     ])
                 ],
             ]);

@@ -15,9 +15,8 @@
     <section class="main">
         <div class="container mt-4">
             {% if realties|length == 0 %}
-                <div class="alert alert-warning" role="alert">Il n'y a pas d'annonce</div>
+                <div class="alert alert-warning" role="alert">Vous n'avez pas de location en cours !</div>
             {% else %}
-                {% include "home/filters.html.twig" %}
                 <table class="table table-striped">
                     <tbody>
                     {% for realty in realties %}
@@ -40,11 +39,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                {% include "home/pagination.html.twig" %}
             {% endif %}
         </div>
     </section>
 </main>
 
 {% endblock %}
-

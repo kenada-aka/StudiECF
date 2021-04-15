@@ -6,60 +6,78 @@
     <div class="carousel-item active">
         <div class="carousel-container">
             <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
-            <p class="animate__animated animate__fadeInUp">...</p>
+            <p class="animate__animated animate__fadeInUp">{{ subtitle }}</p>
         </div>
     </div>
 </section>
 
 <main id="main">
-    <section>
+    <section class="section">
         <div class="container mt-4">
             {% if realties|length == 0 %}
-                <p>Vous n'avez pas de propriétaié</p>
+                <div class="alert alert-warning text-center" role="alert">Vous n'avez pas encore ajouté d'annonce</div>
             {% else %}
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th>Statut</th>
                             <th>Photos</th>
                             <th>Titre</th>
                             <th>Description</th>
                             <th>Loyer</th>
                             <th>documents</th>
+                            <th>Propriétaire</th>
                             <th>Locataire</th>
-                            
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for realty in realties %}
                         <tr>
-                            <td>{{ realty.images|length }}</td>
+                            <td>{{ ["","En attente de validation par l'agence"][realty.statut] }}</td>
+                            <td>
+                                {% if realty.images|length != 0 %}
+                                    {% for image in realty.images %}
+                                        <img src="{{ asset('uploads/png/' ~ image.url) }}"/>
+                                    {% endfor %}
+                                {% endif %}
+                                <a href="{{ path('owner.upload.image', {idRent: realty.id}) }}" class="btn btn-primary">Ajouter une photo</a>
+                            </td>
                             <td>{{ realty.title }}</td>
                             <td>{{ realty.description }}</td>
                             <td>{{ realty.rent }}€</td>
-                            <td>{{ realty.documents|length }}</td>
                             <td>
-                            {% if realty.idTenant %}
-                            {{ realty.idTenant.email }}
-                            <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au locataire</a>
-                            {% endif %}
-                            </td>
-                            
-                            
-                            <td>
-                                <a href="{{ path('owner.update', {idOwner: realty.id}) }}">Modifier l'annonce</a>
-                                <a href="{{ path('owner.upload.image', {id: realty.id}) }}">Ajouter une photo</a>
-                                <a href="{{ path('owner.upload.document', {id: realty.id}) }}">Ajouter un document</a>
-                                {% if realty.statut == 1 %}
-                                    <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Publier l'annonce</a>
+                                {% if realty.documents|length != 0 %}
+                                    <ul>
+                                    {% for document in realty.documents %}
+                                        <li><a href="{{ asset('uploads/pdf/' ~ document.url) }}">{{ document.url }}</a></li>
+                                    {% endfor %}
+                                    </ul>
                                 {% endif %}
+                                <a href="{{ path('owner.upload.document', {idRent: realty.id}) }}" class="btn btn-primary">Ajouter un document</a>
+                            </td>
+                            <td>{{ realty.idOwner.lastname }} {{ realty.idOwner.firstname }}</td>
+                            <td>
+                                {% if realty.idTenant %}
+                                    {{ realty.idTenant.lastname }} {{ realty.idTenant.firstname }}
+                                    <a href="{{ path('admin.property.edit', {id: realty.id}) }}" class="btn btn-primary">Envoyer message au locataire</a>
+                                {% else %}
+                                    <p>Il n'y a pas de locataire</p>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ path('owner.update', {idOwner: realty.id}) }}" class="btn btn-primary">Modifier l'annonce</a>
                                 <form method="POST" action="{{ path('owner.delete', {idOwner: realty.id}) }}">
                                     <input type="hidden" name="_method" value="DELETE"/>
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ realty.id)}}"/>
-                                    <button>Supprimer l'annonce</button>
+                                    <button class="btn btn-primary">Supprimer l'annonce</button>
                                 </form>
-                                
-                                <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au propriétaire</a>
+                                {% if is_granted('ROLE_BAILLEUR_TIERS') %}
+                                    {% if realty.statut == 1 %}
+                                        <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Publier l'annonce</a>
+                                    {% endif %}
+                                    <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au propriétaire</a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

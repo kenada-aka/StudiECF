@@ -29,8 +29,10 @@
                         <li><i class="bx bx-chevron-right"></i> <a href="/#services">Services</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="/#pricing">Prix</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="/#contact">Contact</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="{{ path('show.owners') }}">Annonces</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="{{ path('register') }}">Inscription</a></li>
+                        {% if not app.user %}
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('show.owners') }}">Annonces</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('register') }}">Inscription</a></li>
+                        {% endif %}
                     </ul>
                 </div>
                 

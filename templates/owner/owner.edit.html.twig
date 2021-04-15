@@ -6,18 +6,53 @@
     <div class="carousel-item active">
         <div class="carousel-container">
             <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
-            <p class="animate__animated animate__fadeInUp">...</p>
+            <p class="animate__animated animate__fadeInUp">{{ subtitle }}</p>
         </div>
     </div>
 </section>
 
 <main id="main">
-    <section>
-        <div class="container mt-4">
-            {{ form_start(form) }}
-                {{ form_rest(form) }}
-                <button>Mettre à jour</button>
-            {{ form_end(form) }}
+    <section id="contact" class="contact">
+        <div class="container aos-init" data-aos="fade-up">
+      
+            <div class="section-title">
+                <h2>Contact Us</h2><!-- todo -->
+            </div>
+        
+            <div class="row mt-1 d-flex justify-content-end aos-init" data-aos="fade-right" data-aos-delay="100">
+
+          <div class="col-lg-5">
+           <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Adresse :</h4>
+                <p>113 rue des locations immobilières, 75 001, Paris</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email :</h4>
+                <p>contact@daz-immobilier.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Téléphone :</h4>
+                <p>+33 6 89 13 23 33</p>
+              </div>
+
+            </div>
+
+            </div>
+        
+            <div class="col-lg-6 mt-5 mt-lg-0 aos-init" data-aos="fade-left" data-aos-delay="100">
+                {{ form_start(form) }}
+                    {{ form_rest(form) }}
+                    <div class="text-center php-email-form"><button type="submit">Mettre à jour</button></div>
+                {{ form_end(form) }}
+            </div>
+    
+            </div>
         </div>
     </section>
 </main>
