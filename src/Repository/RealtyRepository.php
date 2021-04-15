@@ -34,7 +34,7 @@ class RealtyRepository extends ServiceEntityRepository
      *
      * @return Paginator
      */
-    public function findAllWithPagination($page, $nbMaxParPage)
+    public function findAllWithPagination($page, $nbMaxParPage, $order)
     {
         if(!is_numeric($page))
         {
@@ -53,7 +53,7 @@ class RealtyRepository extends ServiceEntityRepository
     
         $qb = $this->createQueryBuilder('a')
             //->where('CURRENT_DATE() >= a.datePublication')
-            ->orderBy('a.id', 'DESC');
+            ->orderBy('a.rent', $order);
         
         $query = $qb->getQuery();
 

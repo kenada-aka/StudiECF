@@ -63,11 +63,18 @@ class OwnerController extends AbstractController
      *
      * @return array
      */
-    public function indexAction(int $page)
+    public function pagination(int $page, Request $request)
     {
         $nbArticlesParPage = 1;
 
-        $articles = $this->realtyRepo->findAllWithPagination($page, $nbArticlesParPage);
+        $order = "ASC";
+
+        if($request->isMethod('post'))
+        {
+            $order = $request->get('order'); // TODO : Filtrer les posibilités
+        }
+
+        $articles = $this->realtyRepo->findAllWithPagination($page, $nbArticlesParPage, $order);
 
         $pagination = array(
             'page' => $page,
