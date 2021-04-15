@@ -1,0 +1,29 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">...</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section>
+        <div class="container mt-4">
+            <form method="post" action="{{ path('member.subscribe') }}">
+                <select name="mode">
+                    <option value="CB">CB</option>
+                    <option value="Virement">Virement</option>
+                    <option value="Chèque">Chèque</option>
+                </select>
+                <input type="submit" value="Valider"/>
+            </form>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
