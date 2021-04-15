@@ -22,6 +22,17 @@ class RealtyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Realty::class);
     }
+    /**
+     * Récupère la liste des biens qui ne sont pas louer
+     **/
+    public function findAllFreeRent()
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.statut = :val')
+            ->setParameter('val', 2)
+            ->getQuery()
+            ->getResult();
+    }
 
     /**
      * Récupère la liste des biens par rapport au propriétaire

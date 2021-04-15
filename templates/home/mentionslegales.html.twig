@@ -1,0 +1,44 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">{{ subtitle }}</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section class="section">
+        <div class="container mt-4">
+            <h3>Ce site est la propriété de la société DAZ Immobilier :</h3>
+            <ul>
+                <li>Société par Actions Simplifiée au capital de 100 000 €</li>
+                <li>Siège social : 113 rue des agences immobilières, 75 001, Paris</li>
+                <li>RCS Paris XXX XXX XXX</li>
+                <li>N° TVA intracommunautaire : FR XXX XXX XXX XX</li>
+                <li>Téléphone : +33 6 89 13 23 33 (Appel non surtaxé)</li>
+                <li>Contact : <a href="mailto:contact@daz-immobilier.com">contact@daz-immobilier.com</a></li>
+                <li>Directeur de la publication : David Dadouda, Directeur Général de DAZ Immobilier</li>
+            </ul>
+            <h3>Hébergement</h3>
+            <ul>
+                <li>OVH - SAS au capital de 10 059 500 €</li>
+                <li>RCS Lille Métropole 424 761 419 00045</li>
+                <li>Code APE 6202A</li>
+                <li>N° TVA : FR 22 424 761 419</li>
+                <li>Siège social : 2 rue Kellermann - 59100 Roubaix - France.</li>
+                <li>Téléphone : 08 203 203 63</li>
+            </ul>
+            <h3>Développement :</h3>
+            <ul>
+                <li>DAZ WebAgency: <a href="http://www.daz-web-agency.com" target="_blank">www.daz-web-agency.com</a></li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

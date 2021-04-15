@@ -1,0 +1,37 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">{{ subtitle }}</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section class="section">
+        <div class="container mt-4">   
+            <h2>Mon compte</h2>
+            <ul>
+                <li><a href="#pourquoi-creer-un-compte">Pourquoi créer un compte ?</a></li>
+                <li><a href="#comment-recuperer-mon-mot-de-passe">Comment récupérer mon mot de passe ?</a></li>
+                <li><a href="#comment-changer-de-mot-de-passe">Comment changer de mot de passe ?</a></li>
+                <li><a href="#comment-changer-l-adresse-e-mail-liee-a-mon-compte">Comment changer l’adresse e-mail liée à mon compte ?</a></li>
+            </ul>
+            <h2>Mon compte</h2>
+            <h3 id="pourquoi-creer-un-compte">Pourquoi créer un compte ?</h3>
+            <p>En créant votre compte sur DAZ Immobilier, vous bénéficiez de plus de services qui faciliteront vos recherches. L’inscription est simple et rapide et vous permet de mémoriser vos recherches, de créer et de gérer vos alertes, de conserver vos favoris ou de partager des annonces. Et bien sûr, vous pourrez retrouver toutes ces informations et services en mobilité simplement en vous connectant à votre compte..</p>
+            <h3 id="comment-recuperer-mon-mot-de-passe">Comment récupérer mon mot de passe ?</h3>
+            <p>Pour le moment cette fonctionnalité n'est pas encore possible, mais nous travaillons dessus !</p>
+            <h3 id="comment-changer-de-mot-de-passe">Comment changer de mot de passe ?</h3>
+            <p>Pour le moment cette fonctionnalité n'est pas encore possible, mais nous travaillons dessus !</p>
+            <h3 id="comment-changer-l-adresse-e-mail-liee-a-mon-compte">Comment changer l’adresse e-mail liée à mon compte ?</h3>
+            <p>Pour le moment cette fonctionnalité n'est pas encore possible, mais nous travaillons dessus !</p>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

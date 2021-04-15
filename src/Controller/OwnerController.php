@@ -51,8 +51,9 @@ class OwnerController extends AbstractController
     public function owners()
     {
         return $this->render('owner/owner.public.html.twig', [
-            'title' => 'Owner / Home',
-            'realties' => $this->realtyRepo->findAll()
+            'title' => 'Offres de location',
+            'subtitle' => 'Sur cette page vous pouvez voir toutes les offres de location libre de nos biens, ainsi que les biens des propriétaires et des bailleurs tiers.',
+            'realties' => $this->realtyRepo->findAllFreeRent()
         ]);
     }
 

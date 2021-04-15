@@ -584,6 +584,14 @@ body {
     padding: 60px 0;
     overflow: hidden;
   }
+
+  section.main {
+    margin:30px;
+    text-align:center;
+  }
+  section.section {
+    margin:30px;
+  }
   
   .section-bg {
     background-color: #f1f8ff;

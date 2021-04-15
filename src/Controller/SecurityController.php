@@ -97,7 +97,8 @@ class SecurityController extends AbstractController
 
 
         return $this->render('home/register.html.twig', [
-            'title' => 'CRUD TEST',
+            'title' => 'Inscription',
+            'subtitle' => 'Merci pour votre confiance, vous pouvez profiter de nos servies en vous inscrivant via le formulaire d\'inscription',
             'form' => $form->createView()
         ]);
     }
