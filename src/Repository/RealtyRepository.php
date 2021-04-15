@@ -6,6 +6,10 @@ use App\Entity\Realty;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use InvalidArgumentException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 /**
  * @method Realty|null find($id, $lockMode = null, $lockVersion = null)
  * @method Realty|null findOneBy(array $criteria, array $orderBy = null)
@@ -17,6 +21,52 @@ class RealtyRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Realty::class);
+    }
+
+    /**
+     * Récupère une liste d'articles triés et paginés.
+     *
+     * @param int $page Le numéro de la page
+     * @param int $nbMaxParPage Nombre maximum d'article par page     
+     *
+     * @throws InvalidArgumentException
+     * @throws NotFoundHttpException
+     *
+     * @return Paginator
+     */
+    public function findAllWithPagination($page, $nbMaxParPage)
+    {
+        if(!is_numeric($page))
+        {
+            throw new InvalidArgumentException("La valeur de l'argument $page est incorrecte (valeur : " . $page . ").");
+        }
+
+        if($page < 1)
+        {
+            throw new NotFoundHttpException("La page demandée n'existe pas");
+        }
+
+        if(!is_numeric($nbMaxParPage))
+        {
+            throw new InvalidArgumentException("La valeur de l'argument $nbMaxParPage est incorrecte (valeur : " . $nbMaxParPage . ").");
+        }
+    
+        $qb = $this->createQueryBuilder('a')
+            //->where('CURRENT_DATE() >= a.datePublication')
+            ->orderBy('a.id', 'DESC');
+        
+        $query = $qb->getQuery();
+
+        $premierResultat = ($page - 1) * $nbMaxParPage;
+        $query->setFirstResult($premierResultat)->setMaxResults($nbMaxParPage);
+        $paginator = new Paginator($query);
+
+        if(($paginator->count() <= $premierResultat) && $page != 1)
+        {
+            throw new NotFoundHttpException("La page demandée n'existe pas.");
+        }
+
+        return $paginator;
     }
 
     // /**

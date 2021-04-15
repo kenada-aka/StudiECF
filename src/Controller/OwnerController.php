@@ -55,6 +55,35 @@ class OwnerController extends AbstractController
     }
 
     /**
+     * Liste l'ensemble des articles triés par date de publication pour une page donnée.
+     *
+     * @Route("/owners/public/{page}", requirements={"page" = "\d+"}, name="front_articles_index")
+     *
+     * @param int $page Le numéro de la page
+     *
+     * @return array
+     */
+    public function indexAction(int $page)
+    {
+        $nbArticlesParPage = 1;
+
+        $articles = $this->realtyRepo->findAllWithPagination($page, $nbArticlesParPage);
+
+        $pagination = array(
+            'page' => $page,
+            'nbPages' => ceil(count($articles) / $nbArticlesParPage),
+            'nomRoute' => 'front_articles_index',
+            'paramsRoute' => array()
+        );
+
+        return $this->render('owner/owner.public.html.twig', [
+            'title' => 'Owner / Home',
+            'realties' => $articles,
+            'pagination' => $pagination
+        ]);
+    }
+
+    /**
      * @Route("/owner/", name="owner.home")
      */
 

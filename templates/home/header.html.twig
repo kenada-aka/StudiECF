@@ -10,12 +10,11 @@
         </div>
         <div class="contact-info d-flex align-items-center">
             <!-- Formulaire de choix de la langue -->
-            <a href="/" class="d-flex align-items-center me-2 text-decoration-none">
-                <img src="/assets/img/france.png" width="32"/>
-            </a>
-            <a href="/" class="d-flex align-items-center ms-2 text-decoration-none">
-                <img src="/assets/img/uk.png" width="32"/>
-            </a>
+            {% for locale in locales %}
+                <a href="{{ path('change_locale', {'locale': locale}) }}" class="d-flex align-items-center me-2 text-decoration-none">
+                    <img src="/assets/img/{{ locale }}.png" width="32"/>
+                </a>
+            {% endfor %}
         </div>
         <div class="cta d-none d-md-block">
             <!-- Formulaire de connexion -->

@@ -6,6 +6,7 @@
 parameters:
     png_directory: '%kernel.project_dir%/public/uploads/png'
     pdf_directory: '%kernel.project_dir%/public/uploads/pdf'
+    app.locales: [en, fr]
 
 services:
     # default configuration for services in *this* file
