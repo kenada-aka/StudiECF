@@ -30,6 +30,12 @@ class Message
     private $id_receiver;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Realty::class, inversedBy="messagesRealty")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $id_owner;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $subject;
@@ -47,7 +53,7 @@ class Message
     /**
      * @ORM\Column(type="integer")
      */
-    private $type;
+    private $type; // 1 = problème, 2 = simple message, 3 = travaux, 4 = échelonner le loyer
 
     public function getId(): ?int
     {
@@ -70,10 +76,23 @@ class Message
     {
         return $this->id_receiver;
     }
+    
 
     public function setIdReceiver(?User $id_receiver): self
     {
         $this->id_receiver = $id_receiver;
+
+        return $this;
+    }
+
+    public function getIdOwner(): ?Realty
+    {
+        return $this->id_owner;
+    }
+
+    public function setIdOwner(?Realty $id_owner): self
+    {
+        $this->id_owner = $id_owner;
 
         return $this;
     }

@@ -44,18 +44,23 @@
                     <li><a class="nav-link scrollto" href="{{ path('register') }}">Inscription</a></li>
                 {% endif %}
                 {% if app.user %}
-                    
-                    {% if is_granted('ROLE_PROPRIETAIRE') %}
+                    {% if is_granted('ROLE_AGENCE') %}
+                        <li><a class="nav-link scrollto active" href="{{ path('member.home') }}">Accueil</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('owner.home') }}">Gestion des biens</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('register') }}">Gestion des messages</a></li>
+                    {% elseif is_granted('ROLE_BAILLEUR_TIERS') %}
+                        <li><a class="nav-link scrollto active" href="{{ path('member.home') }}">Accueil</a></li>
+                        {% if disablemenu is not defined %}
+                            <li><a class="nav-link scrollto" href="{{ path('owner.add') }}">Ajouter une location</a></li>
+                            <li><a class="nav-link scrollto" href="{{ path('owner.home') }}">Visualiser mes locations</a></li>
+                        {% endif %}
+                    {% elseif is_granted('ROLE_PROPRIETAIRE') %}
                         <li><a class="nav-link scrollto active" href="{{ path('member.home') }}">Accueil</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('owner.add') }}">Ajouter une location</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('owner.home') }}">Visualiser mes locations</a></li>
                     {% elseif is_granted('ROLE_LOCATAIRE') %}
                         <li><a class="nav-link scrollto active" href="{{ path('member.home') }}">Accueil</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('member.rent') }}">Ma location</a></li>
-                    {% endif %}
-                    {% if is_granted('ROLE_BAILLEUR_TIERS') %}
-                        <li><a class="nav-link scrollto" href="{{ path('owner.home') }}">Gestion des biens</a></li>
-                        <li><a class="nav-link scrollto" href="{{ path('register') }}">Gestion des messages</a></li>
                     {% endif %}
                 {% endif %}
             </ul>

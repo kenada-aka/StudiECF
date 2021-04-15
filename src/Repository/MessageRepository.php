@@ -19,6 +19,19 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
+    /**
+     * Récupère les messages entre le locataire et le propriétaire (par rapport à un bien)
+     **/
+    public function findAllByOwner(int $idOwner)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.id_owner = :val')
+            ->setParameter('val', $idOwner)
+            ->orderBy('a.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */

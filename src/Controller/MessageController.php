@@ -18,20 +18,21 @@ use App\Repository\MessageRepository;
 use App\Entity\Message;
 use App\Form\MessageType;
 
-use App\Repository\UserRepository;
-use App\Entity\User;
+use App\Repository\RealtyRepository;
+use App\Entity\Realty;
+
 
 class MessageController extends AbstractController
 {
 
     private $messageRepo;
-    private $userRepo;
+    private $realtyRepo;
     private $em;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, UserRepository $userRepository)
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, RealtyRepository $realtyRepository)
     {
         $this->messageRepo = $messageRepository;
-        $this->userRepo = $userRepository;
+        $this->realtyRepo = $realtyRepository;
         $this->em = $em;
     }
 
@@ -46,6 +47,110 @@ class MessageController extends AbstractController
             'title' => 'Message / Home',
             'messages' => $this->messageRepo->findAll()
         ]);
+    }
+
+    /**
+     * @Route("/message/tenant/{idOwner}", name="tenant.contact")
+     * @IsGranted("ROLE_LOCATAIRE")
+     */
+    public function tenantContact(int $idOwner, Request $request)
+    {
+        // Tenant 
+        $user = $this->getUser();
+        // Message
+
+        $message = new Message();
+
+        // Sender
+
+        $message->setIdSender($user);
+
+        // Receiver
+
+        $realty = $this->realtyRepo->findByTenant($user->getId());
+
+        $receiver = $realty[0]->getIdOwner();
+        $message->setIdReceiver($receiver);
+
+        $message->setType(2); // 2 = message entre propriétaire et locataire
+        $message->setDate(new \DateTime());
+
+        $form = $this->createForm(MessageType::class,  $message);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+
+            $this->em->persist($message);
+            $this->em->flush();
+
+            
+        }
+
+        // Historique des messages
+
+
+
+        return $this->render('message/message.home.html.twig', [
+            'title' => 'Message',
+            'subtitle' => 'A partir de cette page, vous allez pouvoir échanger entre locataire et propriétaire.',
+            'form' => $form->createView(),
+            'messages' => $this->messageRepo->findAllByOwner($idOwner)
+        ]);
+
+    }
+
+    /**
+     * @Route("/message/owner/{idOwner}", name="owner.contact")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+    public function ownerContact(int $idOwner, Request $request)
+    {
+        // Tenant 
+        $user = $this->getUser();
+        // Message
+
+        $message = new Message();
+
+        // Sender
+
+        $message->setIdSender($user);
+
+        // Receiver
+
+        $realty = $this->realtyRepo->find($idOwner);
+
+        $receiver = $realty->getIdTenant();
+        $message->setIdReceiver($receiver);
+
+        $message->setType(2); // 2 = message entre propriétaire et locataire
+        $message->setDate(new \DateTime());
+
+        $form = $this->createForm(MessageType::class,  $message);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+
+            $this->em->persist($message);
+            $this->em->flush();
+
+            
+        }
+
+        // Historique des messages
+
+
+
+        return $this->render('message/message.home.html.twig', [
+            'title' => 'Message',
+            'subtitle' => 'A partir de cette page, vous allez pouvoir échanger entre locataire et propriétaire.',
+            'form' => $form->createView(),
+            'messages' => $this->messageRepo->findAllByOwner($idOwner)
+        ]);
+
     }
 
     /**

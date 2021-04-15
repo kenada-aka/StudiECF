@@ -120,7 +120,10 @@ class OwnerController extends AbstractController
         $realty = new Realty();
 
         $realty->setIdOwner($user); // propriétaire
-        $realty->setStatut(1); // private
+        if($this->isGranted('ROLE_BAILLEUR_TIERS')) $statut = 2;
+        else  $statut = 1;
+
+        $realty->setStatut($statut); // private
 
         $form = $this->createForm(RealtyType::class, $realty);
         $form->handleRequest($request);
@@ -130,6 +133,7 @@ class OwnerController extends AbstractController
             $this->em->persist($realty);
             $this->em->flush();
             return $this->redirectToRoute('owner.home');
+            
         }
 
         return $this->render('owner/owner.add.html.twig', [
@@ -181,6 +185,78 @@ class OwnerController extends AbstractController
             $this->em->remove($realty);
             $this->em->flush();
         }
+        
+        return $this->redirectToRoute('owner.home');
+    }
+
+    /**
+     * @Route("/owner/post/{idOwner}", name="owner.post")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+
+    public function post(int $idOwner)
+    {
+        $realty = $this->realtyRepo->find($idOwner);
+
+        $realty->setStatut(3); // publier
+
+        $this->em->persist($realty);
+        $this->em->flush();
+        
+        return $this->redirectToRoute('owner.home');
+    }
+
+    /**
+     * @Route("/owner/reserved/{idOwner}", name="owner.reserved")
+     * @IsGranted("ROLE_LOCATAIRE")
+     */
+
+    public function reserved(int $idOwner)
+    {
+        $user = $this->getUser();
+
+        $realty = $this->realtyRepo->find($idOwner);
+
+        $realty->setStatut(4); // reserver
+        $realty->setIdTenant($user);
+
+        $this->em->persist($realty);
+        $this->em->flush();
+        
+        return $this->redirectToRoute('member.home');
+    }
+
+    /**
+     * @Route("/owner/canceled/{idRent}", name="owner.canceled")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+
+    public function canceled(int $idRent)
+    {
+        $realty = $this->realtyRepo->find($idRent);
+
+        $realty->setStatut(3); // reserver
+        $realty->setIdTenant(null);
+
+        $this->em->persist($realty);
+        $this->em->flush();
+        
+        return $this->redirectToRoute('owner.home');
+    }
+
+    /**
+     * @Route("/owner/accepted/{idRent}", name="owner.accepted")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+
+    public function accepted(int $idRent)
+    {
+        $realty = $this->realtyRepo->find($idRent);
+
+        $realty->setStatut(5); // louer
+
+        $this->em->persist($realty);
+        $this->em->flush();
         
         return $this->redirectToRoute('owner.home');
     }

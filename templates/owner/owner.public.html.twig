@@ -33,7 +33,7 @@
                             <td>
                                 <p>{{ realty.rent }}</p>
                                 {% if is_granted('ROLE_LOCATAIRE') %}
-                                    <p>contact</p>
+                                    <a href="{{ path('owner.reserved', {idOwner: realty.id}) }}" class="btn btn-primary">Demander location</a>
                                 {% endif %}
                             </td>
                         </tr>

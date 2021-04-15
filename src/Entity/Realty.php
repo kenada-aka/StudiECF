@@ -37,7 +37,7 @@ class Realty
     /**
      * @ORM\Column(type="integer")
      */
-    private $statut; // 1 = private, 2 = public, 3 = to rent
+    private $statut; // 1 = private propriétaire, 2 = private bailleur tiers ou agence, 3 = publique libre de location, 4 = réserver par locataire, 5 = louer
 
     /**
      * @ORM\OneToMany(targetEntity=Document::class, mappedBy="id_realty")
@@ -61,6 +61,11 @@ class Realty
      * @ORM\joinColumn(onDelete="SET NULL")
      */
     private $id_tenant;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="id_receiver", cascade={"persist", "remove"})
+     */
+    private $messagesRealty;
 
     public function __construct()
     {
@@ -110,14 +115,44 @@ class Realty
         return $this;
     }
 
-    public function getStatut(): ?bool
+    public function getStatut(): ?int
     {
         return $this->statut;
     }
 
-    public function setStatut(bool $statut): self
+    public function setStatut(int $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessagesRealty(): Collection
+    {
+        return $this->messagesRealty;
+    }
+
+    public function addMessagesRealty(Message $messagesRealty): self
+    {
+        if (!$this->messagesRealty->contains($messagesRealty)) {
+            $this->messagesRealty[] = $messagesRealty;
+            $messagesRealty->setIdRealty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagesRealty(Message $messagesRealty): self
+    {
+        if ($this->messagesRealty->removeElement($messagesRealty)) {
+            // set the owning side to null (unless already changed)
+            if ($messagesRealty->getIdRealty() === $this) {
+                $messagesRealty->setIdRealty(null);
+            }
+        }
 
         return $this;
     }

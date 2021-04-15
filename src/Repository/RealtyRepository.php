@@ -30,7 +30,7 @@ class RealtyRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.statut = :val')
-            ->setParameter('val', 2)
+            ->setParameter('val', 3)
             ->getQuery()
             ->getResult();
     }
@@ -88,7 +88,6 @@ class RealtyRepository extends ServiceEntityRepository
         }
     
         $qb = $this->createQueryBuilder('a')
-            //->where('CURRENT_DATE() >= a.datePublication')
             ->orderBy('a.rent', $order);
         
         $query = $qb->getQuery();

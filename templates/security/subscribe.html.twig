@@ -6,22 +6,26 @@
     <div class="carousel-item active">
         <div class="carousel-container">
             <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
-            <p class="animate__animated animate__fadeInUp">...</p>
+            <p class="animate__animated animate__fadeInUp">{{ subtitle }}</p>
         </div>
     </div>
 </section>
 
 <main id="main">
-    <section>
-        <div class="container mt-4">
-            <form method="post" action="{{ path('member.subscribe') }}">
-                <select name="mode">
-                    <option value="CB">CB</option>
-                    <option value="Virement">Virement</option>
-                    <option value="Chèque">Chèque</option>
-                </select>
-                <input type="submit" value="Valider"/>
-            </form>
+    <section class="section contact">
+        <div class="container aos-init" data-aos="fade-up">
+            <div class="row mt-1 d-flex justify-content-end aos-init" data-aos="fade-right" data-aos-delay="100">
+                <div class="col-lg-6 mt-5 mt-lg-0 aos-init" data-aos="fade-left" data-aos-delay="100">
+                    <form method="post" action="{{ path('member.subscribe') }}">
+                        <select name="mode">
+                            <option value="CB">CB</option>
+                            <option value="Virement">Virement</option>
+                            <option value="Chèque">Chèque</option>
+                        </select>
+                        <div class="text-center php-email-form"><button type="submit">Envoyer</button></div>
+                   </form>
+                </div>
+            </div>
         </div>
     </section>
 </main>

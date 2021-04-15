@@ -34,9 +34,19 @@ class TenantController extends AbstractController
         // A près authentification tous les utilisateurs arrivent ici !
         $user = $this->getUser();
 
-        if($user)
+        if($this->isGranted('ROLE_BAILLEUR_TIERS') && !$this->isGranted('ROLE_AGENCE') )
         {
-            //dump($user);
+            // Vérifier si l'abonnement est valide (1mois)
+            $diff = date_diff(new \DateTime(), $user->getSubscribe());
+            
+            if($diff->m < 1)
+            {
+                return $this->render('security/subscribe.html.twig', [
+                    'title' => 'Bonjour',
+                    'subtitle' => 'Pour pouvoir utiliser nos services, veuillez régler votre abonnement, merci.',
+                    'disablemenu' => 1
+                ]);
+            }
         }
 
         return $this->render('owner/owner.public.html.twig', [

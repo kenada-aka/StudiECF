@@ -104,31 +104,6 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/member", name="member")
-     * @IsGranted("ROLE_LOCATAIRE")
-     */
-    public function member()
-    {
-        $user = $this->getUser();
-
-        if($this->isGranted('ROLE_BAILLEUR_TIERS') && !$this->isGranted('ROLE_AGENCE') )
-        {
-            // Vérifier si l'abonnement est valide (1mois)
-            $diff = date_diff(new \DateTime(), $user->getSubscribe());
-            
-            if($diff->m < 1)
-            {
-                return $this->render('security/subscribe.html.twig', [
-                    'title' => 'Subscribe'
-                ]);
-            }
-        }
-        return $this->render('home/home.html.twig', [
-            'title' => 'CRUD TEST'
-        ]);
-    }
-
-    /**
      * @Route("/subscribe", name="member.subscribe")
      * @IsGranted("ROLE_LOCATAIRE")
      */
@@ -142,8 +117,9 @@ class SecurityController extends AbstractController
             if($request->isMethod('post'))
             {
                 $mode = $request->get('mode');
-                if($mode = "CB")
+                if($mode == "CB")
                 {
+                    
                     $datetime = new \DateTime();
                     $datetime->add(new \DateInterval('P31D')); // + 31 Days : http://en.wikipedia.org/wiki/Iso8601#Durations
                     
@@ -152,10 +128,11 @@ class SecurityController extends AbstractController
                     $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($user);
                     $entityManager->flush();
+                    
                 }
             }
         }
 
-        return $this->redirectToRoute('member');
+        return $this->redirectToRoute('member.home');
     }
 }

@@ -34,7 +34,13 @@
                     <tbody>
                     {% for realty in realties %}
                         <tr>
-                            <td>{{ ["","En attente de validation par l'agence"][realty.statut] }}</td>
+                            <td>
+                                <p>{{ ["","En attente de validation par l'agence", "En attente de publication", "En attente de locataire", "Confirmer la location", "LOUER"][realty.statut] }}</p>
+                                {% if realty.statut == 4 %}
+                                    <a href="{{ path('owner.canceled', {idRent: realty.id}) }}" class="btn btn-primary">Annuler la demande</a>
+                                    <a href="{{ path('owner.accepted', {idRent: realty.id}) }}" class="btn btn-primary">Confirmer la demande</a>
+                                {% endif %}
+                            </td>
                             <td>
                                 {% if realty.images|length != 0 %}
                                     {% for image in realty.images %}
@@ -60,7 +66,7 @@
                             <td>
                                 {% if realty.idTenant %}
                                     {{ realty.idTenant.lastname }} {{ realty.idTenant.firstname }}
-                                    <a href="{{ path('admin.property.edit', {id: realty.id}) }}" class="btn btn-primary">Envoyer message au locataire</a>
+                                    <a href="{{ path('owner.contact', {idOwner: realty.id}) }}" class="btn btn-primary">Contacter le locataire</a>
                                 {% else %}
                                     <p>Il n'y a pas de locataire</p>
                                 {% endif %}
@@ -73,10 +79,10 @@
                                     <button class="btn btn-primary">Supprimer l'annonce</button>
                                 </form>
                                 {% if is_granted('ROLE_BAILLEUR_TIERS') %}
-                                    {% if realty.statut == 1 %}
-                                        <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Publier l'annonce</a>
+                                    {% if realty.statut == 2 %}
+                                        <a href="{{ path('owner.post', {idOwner: realty.id}) }}" class="btn btn-primary">Publier l'annonce</a>
                                     {% endif %}
-                                    <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au propriétaire</a>
+                                    <!--<a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au propriétaire</a>-->
                                 {% endif %}
                             </td>
                         </tr>

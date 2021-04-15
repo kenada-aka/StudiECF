@@ -1,0 +1,59 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">{{ subtitle }}</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section>
+        <div class="container mt-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>suject</th>
+                        <th>message</th>
+                        <th>id sender</th>
+                        <th>id receiver</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for message in messages %}
+                    <tr>
+                        <td>{{ message.id }}</td>
+                        <td>{{ message.date|date("d/m/Y") }}</td>
+                        <td>{{ message.subject }}</td>
+                        <td>{{ message.message }}</td>
+                        <td>{{ message.idSender.id }}</td>
+                        <td>{{ message.idReceiver.id }}</td>
+                        <td>
+                            <a href="{{ path('admin.property.edit', {id: message.id}) }}">Editer</a>
+                            <form method="POST" action="{{ path('admin.property.delete', {id: message.id}) }}">
+                                <input type="hidden" name="_method" value="DELETE"/>
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id)}}"/>
+                                <button>Supprimer</button>
+                            </form>
+                            <a href="{{ path('admin.property.edit', {id: message.id}) }}">Envoyer message au locataire</a>
+                            <a href="{{ path('admin.property.edit', {id: message.id}) }}">Envoyer message au propriétaire</a>
+                        </td>
+                    </tr>
+                 {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ path('owner.add') }}">Ajouter un nouveau bien immobilier (TODO MENU)</a>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
+
+
