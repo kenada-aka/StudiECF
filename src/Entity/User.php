@@ -81,6 +81,16 @@ class User implements UserInterface, \Serializable
     private $lastname;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $register;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $subscribe;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -344,6 +354,30 @@ class User implements UserInterface, \Serializable
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function getRegister(): ?\DateTimeInterface
+    {
+        return $this->register;
+    }
+
+    public function setRegister(\DateTimeInterface $register): self
+    {
+        $this->register = $register;
+
+        return $this;
+    }
+
+    public function getSubscribe(): ?\DateTimeInterface
+    {
+        return $this->subscribe;
+    }
+
+    public function setSubscribe(\DateTimeInterface $subscribe): self
+    {
+        $this->subscribe = $subscribe;
+
+        return $this;
     }
 
 }
