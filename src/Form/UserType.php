@@ -35,7 +35,8 @@ class UserType extends AbstractType
                     "Locataire" => "1",
                     "Propriétaire" => "2",
                     "Bailleur Tiers" => "3",
-                    "Agence" => "4",
+                    "Agence (TEST DEV)" => "4",
+                    "Admin (TEST DEV)" => "5"
                 ]])
         ;
 

@@ -25,7 +25,7 @@ class Message
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messagesReceive")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $id_receiver;
 

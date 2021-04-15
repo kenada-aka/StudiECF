@@ -115,6 +115,11 @@ class User implements UserInterface, \Serializable
      */
     private $realtyTenant;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Realty::class, mappedBy="id_agency")
+     */
+    private $realtiesAgency;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -122,6 +127,7 @@ class User implements UserInterface, \Serializable
         // $this->salt = md5(uniqid('', true));
         $this->messagesSend = new ArrayCollection();
         $this->messagesReceive = new ArrayCollection();
+        $this->realtiesAgency = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -324,6 +330,9 @@ class User implements UserInterface, \Serializable
             case "4": // Agence
                 $this->roles = ["ROLE_LOCATAIRE","ROLE_PROPRIETAIRE","ROLE_BAILLEUR_TIERS","ROLE_AGENCE"];
                 break;
+            case "5": // Admin
+                $this->roles = ["ROLE_LOCATAIRE","ROLE_PROPRIETAIRE","ROLE_BAILLEUR_TIERS","ROLE_AGENCE","ROLE_ADMIN"];
+                break;
         }
         return $this;
     }
@@ -376,6 +385,36 @@ class User implements UserInterface, \Serializable
     public function setSubscribe(\DateTimeInterface $subscribe): self
     {
         $this->subscribe = $subscribe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Realty[]
+     */
+    public function getRealtiesAgency(): Collection
+    {
+        return $this->realtiesAgency;
+    }
+
+    public function addRealtiesAgency(Realty $realtiesAgency): self
+    {
+        if (!$this->realtiesAgency->contains($realtiesAgency)) {
+            $this->realtiesAgency[] = $realtiesAgency;
+            $realtiesAgency->setIdAgency($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRealtiesAgency(Realty $realtiesAgency): self
+    {
+        if ($this->realtiesAgency->removeElement($realtiesAgency)) {
+            // set the owning side to null (unless already changed)
+            if ($realtiesAgency->getIdAgency() === $this) {
+                $realtiesAgency->setIdAgency(null);
+            }
+        }
 
         return $this;
     }

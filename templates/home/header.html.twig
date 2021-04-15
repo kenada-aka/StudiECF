@@ -46,8 +46,9 @@
                 {% if app.user %}
                     {% if is_granted('ROLE_AGENCE') %}
                         <li><a class="nav-link scrollto active" href="{{ path('member.home') }}">Accueil</a></li>
-                        <li><a class="nav-link scrollto" href="{{ path('owner.home') }}">Gestion des biens</a></li>
-                        <li><a class="nav-link scrollto" href="{{ path('register') }}">Gestion des messages</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('owner.add') }}">Ajouter une location</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('owner.home') }}">Visualiser mes locations et des propriétaires</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('owner.extends') }}">Attente accord des propriétaires</a></li>
                     {% elseif is_granted('ROLE_BAILLEUR_TIERS') %}
                         <li><a class="nav-link scrollto active" href="{{ path('member.home') }}">Accueil</a></li>
                         {% if disablemenu is not defined %}

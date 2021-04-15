@@ -67,6 +67,11 @@ class Realty
      */
     private $messagesRealty;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="realtiesAgency")
+     */
+    private $id_agency;
+
     public function __construct()
     {
         $this->documents = new ArrayCollection();
@@ -237,6 +242,18 @@ class Realty
     public function setIdTenant(?User $id_tenant): self
     {
         $this->id_tenant = $id_tenant;
+
+        return $this;
+    }
+
+    public function getIdAgency(): ?User
+    {
+        return $this->id_agency;
+    }
+
+    public function setIdAgency(?User $id_agency): self
+    {
+        $this->id_agency = $id_agency;
 
         return $this;
     }

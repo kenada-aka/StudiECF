@@ -27,7 +27,6 @@
                             <th>Loyer</th>
                             <th>documents</th>
                             <th>Propriétaire</th>
-                            <th>Locataire</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -35,10 +34,9 @@
                     {% for realty in realties %}
                         <tr>
                             <td>
-                                <p>{{ ["","En attente de validation par l'agence", "En attente de publication", "En attente de locataire", "Confirmer la location", "LOUER"][realty.statut] }}</p>
-                                {% if realty.statut == 4 %}
-                                    <a href="{{ path('owner.canceled', {idRent: realty.id}) }}" class="btn btn-primary">Annuler la demande</a>
-                                    <a href="{{ path('owner.accepted', {idRent: realty.id}) }}" class="btn btn-primary">Confirmer la demande</a>
+                                <p>{{ ["","En attente de validation", "En attente de publication", "En attente de locataire", "Confirmer la location", "LOUER"][realty.statut] }}</p>
+                                {% if realty.statut == 1 %}
+                                    <a href="{{ path('owner.agency.ok', {idRent: realty.id}) }}" class="btn btn-primary">Confirmer l'accord de gestion</a>
                                 {% endif %}
                             </td>
                             <td>
@@ -47,7 +45,6 @@
                                         <img src="{{ asset('uploads/png/' ~ image.url) }}"/>
                                     {% endfor %}
                                 {% endif %}
-                                <a href="{{ path('owner.upload.image', {idRent: realty.id}) }}" class="btn btn-primary">Ajouter une photo</a>
                             </td>
                             <td>{{ realty.title }}</td>
                             <td>{{ realty.description }}</td>
@@ -64,17 +61,7 @@
                             </td>
                             <td>
                                 <p>{{ realty.idOwner.lastname }} {{ realty.idOwner.firstname }}</p>
-                                {% if realty.idOwner.id != app.user.id %}
-                                    <a href="{{ path('agency.contact.owner', {idOwner: realty.id}) }}" class="btn btn-primary">Contacter le propriétaire</a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if realty.idTenant %}
-                                    {{ realty.idTenant.lastname }} {{ realty.idTenant.firstname }}
-                                    <a href="{{ path('owner.contact', {idOwner: realty.id}) }}" class="btn btn-primary">Contacter le locataire</a>
-                                {% else %}
-                                    <p>Il n'y a pas de locataire</p>
-                                {% endif %}
+                                <a href="{{ path('agency.contact.owner', {idOwner: realty.id}) }}" class="btn btn-primary">Contacter le propriétaire</a>
                             </td>
                             <td>
                                 <a href="{{ path('owner.update', {idOwner: realty.id}) }}" class="btn btn-primary">Modifier l'annonce</a>
@@ -87,8 +74,6 @@
                                     {% if realty.statut == 2 %}
                                         <a href="{{ path('owner.post', {idOwner: realty.id}) }}" class="btn btn-primary">Publier l'annonce</a>
                                     {% endif %}
-                                {% elseif is_granted('ROLE_PROPRIETAIRE') %}
-                                    <a href="{{ path('owner.contact.agency', {idOwner: realty.id}) }}" class="btn btn-primary">Contacter l'agence</a>
                                 {% endif %}
                             </td>
                         </tr>

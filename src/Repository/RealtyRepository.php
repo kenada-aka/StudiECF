@@ -31,6 +31,7 @@ class RealtyRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.statut = :val')
             ->setParameter('val', 3)
+            ->orderBy('a.id', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -43,6 +44,7 @@ class RealtyRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.id_tenant = :val')
             ->setParameter('val', $tenantId)
+            ->orderBy('a.id', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -55,6 +57,33 @@ class RealtyRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.id_owner = :val')
             ->setParameter('val', $ownerId)
+            ->orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Récupère la liste des biens par rapport à l'agence
+     **/
+    public function findAllWhereAgencyId(int $agencyId)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.id_agency = :val')
+            ->setParameter('val', $agencyId)
+            ->orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Récupère la liste des biens par rapport au propriétaire (en tant qu'Agence)
+     **/
+    public function findAllWhereOwnerExtends()
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.statut = :val')
+            ->setParameter('val', 1)
+            ->orderBy('a.id', 'ASC')
             ->getQuery()
             ->getResult();
     }

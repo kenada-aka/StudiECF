@@ -101,10 +101,27 @@ class OwnerController extends AbstractController
     public function home(): Response
     {
         $user = $this->getUser();
+        if($this->isGranted('ROLE_AGENCE')) $realties = $this->realtyRepo->findAllWhereAgencyId($user->getId());
+        else $realties = $this->realtyRepo->findAllWhereOwnerId($user->getId());
         return $this->render('owner/owner.home.html.twig', [
             'title' => 'Visualiser vos annonces de location',
             'subtitle' => 'A partir de cette page vous allez pouvoir visualiser les annonces de vos locations.',
-            'realties' => $this->realtyRepo->findAllWhereOwnerId($user->getId())
+            'realties' => $realties
+        ]);
+    }
+
+    /**
+     * @Route("/owner/extends", name="owner.extends")
+     * @IsGranted("ROLE_AGENCE")
+     */
+
+    public function homeExtends(): Response
+    {
+        $user = $this->getUser();
+        return $this->render('owner/owner.home.extends.html.twig', [
+            'title' => 'Visualiser les annonces des propriétaires',
+            'subtitle' => 'A partir de cette page vous allez pouvoir visualiser les annonces des propriétaires.',
+            'realties' => $this->realtyRepo->findAllWhereOwnerExtends()
         ]);
     }
 
@@ -120,6 +137,9 @@ class OwnerController extends AbstractController
         $realty = new Realty();
 
         $realty->setIdOwner($user); // propriétaire
+
+        if($this->isGranted('ROLE_AGENCE')) $realty->setIdAgency($user);
+
         if($this->isGranted('ROLE_BAILLEUR_TIERS')) $statut = 2;
         else  $statut = 1;
 
@@ -260,6 +280,29 @@ class OwnerController extends AbstractController
         
         return $this->redirectToRoute('owner.home');
     }
+
+    /**
+     * @Route("/owner/agencyOk/{idRent}", name="owner.agency.ok")
+     * @IsGranted("ROLE_AGENCE")
+     */
+
+    public function agencyOk(int $idRent)
+    {
+        // L'agence accepte la gestion du bien du propriétaire
+        $user = $this->getUser();
+
+        $realty = $this->realtyRepo->find($idRent);
+
+        $realty->setStatut(3); // libre à louer
+        $realty->setIdAgency($user);
+
+        $this->em->persist($realty);
+        $this->em->flush();
+        
+        return $this->redirectToRoute('owner.home');
+    }
+
+    
 
     /**
      * @Route("/owner/uploadImage/{idRent}", name="owner.upload.image")
