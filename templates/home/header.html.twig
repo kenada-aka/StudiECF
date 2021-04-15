@@ -35,23 +35,21 @@
         <nav id="navbar" class="navbar">
             <ul>
                 {% if not app.user %}
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="/#about">About</a></li>
+                    <li><a class="nav-link scrollto active" href="/#hero">Accueil</a></li>
+                    <li><a class="nav-link scrollto" href="/#about">A propos</a></li>
                     <li><a class="nav-link scrollto" href="/#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="/#portfolio">Portfolio</a></li>
-                    <li><a class="nav-link scrollto" href="/#team">Team</a></li>
-                    <li><a class="nav-link scrollto" href="/#pricing">Pricing</a></li>
+                    <li><a class="nav-link scrollto" href="/#pricing">Prix</a></li>
                     <li><a class="nav-link scrollto" href="/#contact">Contact</a></li>
                     <li><a class="nav-link scrollto" href="{{ path('show.owners') }}">Annonces</a></li>
                     <li><a class="nav-link scrollto" href="{{ path('register') }}">Inscription</a></li>
                 {% endif %}
                 {% if app.user %}
                     {% if is_granted('ROLE_PROPRIETAIRE') %}
-                        <li><a class="nav-link scrollto active" href="{{ path('member') }}">Home</a></li>
-                        <li><a class="nav-link scrollto" href="{{ path('register') }}">Ajouter une location</a></li>
+                        <li><a class="nav-link scrollto active" href="{{ path('register') }}">Home</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('owner.add') }}">Ajouter une location</a></li>
                     {% endif %}
                     {% if is_granted('ROLE_BAILLEUR_TIERS') %}
-                        <li><a class="nav-link scrollto" href="{{ path('register') }}">Gestion des biens</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('owner.home') }}">Gestion des biens</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('register') }}">Gestion des messages</a></li>
                     {% endif %}
                 {% endif %}

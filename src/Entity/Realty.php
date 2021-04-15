@@ -35,9 +35,9 @@ class Realty
     private $rent;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      */
-    private $to_rent;
+    private $statut; // 1 = private, 2 = public, 3 = to rent
 
     /**
      * @ORM\OneToMany(targetEntity=Document::class, mappedBy="id_realty")
@@ -50,13 +50,15 @@ class Realty
     private $images;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="realtyOwner", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="realtyOwner")
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\joinColumn(onDelete="SET NULL")
      */
     private $id_owner;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="realtyTenant", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="realtyTenant")
+     * @ORM\joinColumn(onDelete="SET NULL")
      */
     private $id_tenant;
 
@@ -108,14 +110,14 @@ class Realty
         return $this;
     }
 
-    public function getToRent(): ?bool
+    public function getStatut(): ?bool
     {
-        return $this->to_rent;
+        return $this->statut;
     }
 
-    public function setToRent(bool $to_rent): self
+    public function setStatut(bool $statut): self
     {
-        $this->to_rent = $to_rent;
+        $this->statut = $statut;
 
         return $this;
     }

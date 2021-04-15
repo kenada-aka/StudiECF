@@ -29,6 +29,8 @@ use App\Form\DocumentType;
 
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 class OwnerController extends AbstractController
 {
     private $realtyRepo;
@@ -92,31 +94,31 @@ class OwnerController extends AbstractController
 
     /**
      * @Route("/owner/", name="owner.home")
+     * @IsGranted("ROLE_PROPRIETAIRE")
      */
 
     public function home(): Response
     {
+        $user = $this->getUser();
         return $this->render('owner/owner.home.html.twig', [
             'title' => 'Owner / Home',
-            'realties' => $this->realtyRepo->findAll()
+            'realties' => $this->realtyRepo->findAllWhereOwnerId($user->getId())
         ]);
     }
 
-    
-
     /**
      * @Route("/owner/add", name="owner.add")
+     * @IsGranted("ROLE_PROPRIETAIRE")
      */
 
     public function add(Request $request): Response
     {
+        $user = $this->getUser();
+
         $realty = new Realty();
 
-        $user = $this->userRepo->find(1);
-        //$user = new User();
-        //$this->em->persist($user);
-
-        $realty->setIdTenant($user);
+        $realty->setIdOwner($user); // propriétaire
+        $realty->setStatut(1); // private
 
         $form = $this->createForm(RealtyType::class, $realty);
         $form->handleRequest($request);
@@ -134,8 +136,53 @@ class OwnerController extends AbstractController
         ]);
     }
 
+    
+
+    /**
+     * @Route("/owner/update/{idOwner}", name="owner.update")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+    public function updateOwner(int $idOwner, Request $request): Response
+    {
+
+        $realty = $this->realtyRepo->find($idOwner);
+        $form = $this->createForm(RealtyType::class,  $realty);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $this->em->persist($realty);
+            $this->em->flush();
+        }
+
+        return $this->render('owner/owner.edit.html.twig', [
+            'title' => 'Owner / Update',
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/owner/remove/{idOwner}", name="owner.delete", methods="DELETE")
+     * @IsGranted("ROLE_PROPRIETAIRE")
+     */
+
+    public function remove(int $idOwner, Request $request)
+    {
+        $realty = $this->realtyRepo->find($idOwner);
+
+        if($this->isCsrfTokenValid('delete'. $realty->getId(), $request->get('_token')))
+        {
+            $this->em->remove($realty);
+            $this->em->flush();
+        }
+        
+        return $this->redirectToRoute('owner.home');
+    }
+
     /**
      * @Route("/owner/uploadImage", name="owner.upload.image")
+     * @IsGranted("ROLE_PROPRIETAIRE")
      */
 
     public function uploadImage(Request $request, SluggerInterface $slugger): Response
@@ -190,6 +237,7 @@ class OwnerController extends AbstractController
 
     /**
      * @Route("/owner/uploadDocument", name="owner.upload.document")
+     * @IsGranted("ROLE_PROPRIETAIRE")
      */
 
     public function uploadDocument(Request $request, SluggerInterface $slugger): Response

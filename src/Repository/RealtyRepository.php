@@ -24,6 +24,18 @@ class RealtyRepository extends ServiceEntityRepository
     }
 
     /**
+     * Récupère la liste des biens par rapport au propriétaire
+     **/
+    public function findAllWhereOwnerId(int $ownerId)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.id_owner = :val')
+            ->setParameter('val', $ownerId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Récupère une liste d'articles triés et paginés.
      *
      * @param int $page Le numéro de la page

@@ -19,7 +19,7 @@ class RealtyType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('rent')
-            ->add('to_rent')
+            //->add('to_rent')
             //->add('id_owner', EntityType::class, ['class' => User::class,'choice_label' => 'id'])
             
         ;

@@ -14,56 +14,58 @@
 <main id="main">
     <section>
         <div class="container mt-4">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>title</th>
-                        <th>description</th>
-                        <th>rent</th>
-                        <th>to_rent</th>
-                        <th>id_owner</th>
-                        <th>id_tenant</th>
-                        <th>documents</th>
-                        <th>images</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for realty in realties %}
-                    <tr>
-                        <td>{{ realty.id }}</td>
-                        <td>{{ realty.title }}</td>
-                        <td>{{ realty.description }}</td>
-                        <td>{{ realty.rent }}</td>
-                        <td>{{ realty.toRent }}</td>
-                        <td>
-                        {% if realty.idOwner %}
-                        {{ realty.idOwner.email }}
-                        {% endif %}
-                        </td>
-                        <td>
-                        {% if realty.idTenant %}
-                        {{ realty.idTenant.email }}
-                        {% endif %}
-                        </td>
-                        <td>{{ realty.documents|length }}</td>
-                        <td>{{ realty.images|length }}</td>
-                        <td>
-                            <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Editer</a>
-                            <form method="POST" action="{{ path('admin.property.delete', {id: realty.id}) }}">
-                                <input type="hidden" name="_method" value="DELETE"/>
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ realty.id)}}"/>
-                                <button>Supprimer</button>
-                            </form>
+            {% if realties|length == 0 %}
+                <p>Vous n'avez pas de propriétaié</p>
+            {% else %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Photos</th>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Loyer</th>
+                            <th>documents</th>
+                            <th>Locataire</th>
+                            
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for realty in realties %}
+                        <tr>
+                            <td>{{ realty.images|length }}</td>
+                            <td>{{ realty.title }}</td>
+                            <td>{{ realty.description }}</td>
+                            <td>{{ realty.rent }}€</td>
+                            <td>{{ realty.documents|length }}</td>
+                            <td>
+                            {% if realty.idTenant %}
+                            {{ realty.idTenant.email }}
                             <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au locataire</a>
-                            <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au propriétaire</a>
-                        </td>
-                    </tr>
-                 {% endfor %}
-                </tbody>
-            </table>
-            <a href="{{ path('owner.add') }}">Ajouter un nouveau bien immobilier (TODO MENU)</a>
+                            {% endif %}
+                            </td>
+                            
+                            
+                            <td>
+                                <a href="{{ path('owner.update', {idOwner: realty.id}) }}">Modifier l'annonce</a>
+                                <a href="{{ path('owner.upload.image', {id: realty.id}) }}">Ajouter une photo</a>
+                                <a href="{{ path('owner.upload.document', {id: realty.id}) }}">Ajouter un document</a>
+                                {% if realty.statut == 1 %}
+                                    <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Publier l'annonce</a>
+                                {% endif %}
+                                <form method="POST" action="{{ path('owner.delete', {idOwner: realty.id}) }}">
+                                    <input type="hidden" name="_method" value="DELETE"/>
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ realty.id)}}"/>
+                                    <button>Supprimer l'annonce</button>
+                                </form>
+                                
+                                <a href="{{ path('admin.property.edit', {id: realty.id}) }}">Envoyer message au propriétaire</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
         </div>
     </section>
 </main>
