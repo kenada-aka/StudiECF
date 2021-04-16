@@ -1,12 +1,18 @@
 
 // Menu navbar
 
+let active = 0;
+
 $("#navbar a").each(function( index ) {
-    if(window.location.href == this.href) this.classList.add("active");
+    if(window.location.href == this.href)
+    {
+        this.classList.add("active");
+        active++;
+    }
     else this.classList.remove("active");
 });
 
-if(window.location.pathname == "/")
+if(active == 0 && window.location.pathname == "/")
 {
     $("#navbar a")[0].classList.add("active");
 }
@@ -18,7 +24,7 @@ $("#navbar a").click(function( event ) {
     this.classList.toggle("active");
 });
 
-// Event carrousel Hero
+// Event carousel Hero
 
 $("#hero a").click(function( event ) {
     let parentNode = event.target.parentNode.parentNode;
