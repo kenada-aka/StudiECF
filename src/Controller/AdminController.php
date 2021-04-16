@@ -11,97 +11,51 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-use App\Repository\AdminRepository;
-use App\Entity\Admin;
-use App\Form\AdminType;
+use App\Repository\UserRepository;
+use App\Entity\User;
+
+use App\Repository\RealtyRepository;
+use App\Entity\Realty;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AdminController extends AbstractController
 {
-    private $repository; 
-    private $repoTest;
+
+    private $userRepo;
+    private $realtyRepo;
     private $em;
 
-    public function __construct(AdminRepository $adminRepository, EntityManagerInterface $em)
+    public function __construct(UserRepository $userRepository, RealtyRepository $realtyRepository, EntityManagerInterface $em)
     {
-        $this->repository = $adminRepository;
+        $this->userRepo = $userRepository;
+        $this->realtyRepo = $realtyRepository;
         $this->em = $em;
     }
 
     /**
-     * @Route("/admin/", name="admin.property.home")
+     * @Route("/admin/user", name="admin.user.home")
+     * @IsGranted("ROLE_ADMIN")
      */
 
-    public function home(): Response
+    public function adminUserHome(): Response
     {
-        return $this->render('admin/admin.home.html.twig', [
-            'title' => 'CRUD TEST',
-            'test' => $this->repository->findAll()
+        $users = $this->userRepo->findAll();
+        return $this->render('admin/admin.user.home.html.twig', [
+            'title' => 'Gestion des utilisateurs',
+            'subtitle' => 'CRUD ADMIN : User',
+            'users' => $users
         ]);
     }
     
     /**
-     * @Route("/admin/addUser", name="admin.property.new")
+     * @Route("/admin/user/remove/{idUser}", name="admin.user.remove", methods="DELETE")
+     * @IsGranted("ROLE_ADMIN")
      */
 
-    public function addUser(Request $request)
+    public function delete(int $idUser, Request $request)
     {
-
-        $user = new Admin();
-
-        $form = $this->createForm(AdminType::class, $user);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-
-            $this->em = $this->getDoctrine()->getManager();
-
-            $this->em->persist($user);
-            $this->em->flush();
-            return $this->redirectToRoute('admin.property.home');
-        }
-
-        return $this->render('admin/admin.add.html.twig', [
-
-            'title' => 'TEST CRUD (new)',
-            'form' => $form->createView()
-
-        ]);
-
-    }
-
-    /**
-     * @Route("/admin/posts/{id}", name="admin.property.edit", methods="GET|POST")
-     * @param Admin $user
-     */
-
-    public function post(Admin $user, int $id, Request $request)
-    {
-
-        $form = $this->createForm(AdminType::class,  $user);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            // $this->em->persist($user);
-            $this->em->flush();
-        }
-
-        return $this->render('admin/admin.edit.html.twig', [
-            'title' => 'TEST CRUD (edit)',
-            'form' => $form->createView()
-        ]);
-
-    }
-
-    /**
-     * @Route("/admin/posts/{id}", name="admin.property.delete", methods="DELETE")
-     * @param Admin $user
-     */
-
-    public function delete(Admin $user, Request $request)
-    {
+        $user = $this->userRepo->find($idUser);
 
         if($this->isCsrfTokenValid('delete'. $user->getId(), $request->get('_token')))
         {
@@ -109,8 +63,22 @@ class AdminController extends AbstractController
             $this->em->flush();
         }
         
-        return $this->redirectToRoute('admin.property.home');
+        return $this->redirectToRoute('admin.user.home');
+    }
 
+    /**
+     * @Route("/admin/realty", name="admin.realty.home")
+     * @IsGranted("ROLE_ADMIN")
+     */
+
+    public function adminRealtyHome(): Response
+    {
+        $realties = $this->realtyRepo->findAll();
+        return $this->render('owner/owner.home.html.twig', [
+            'title' => 'Gestion des annonces',
+            'subtitle' => 'CRUD ADMIN : Realty',
+            'realties' => $realties
+        ]);
     }
 
 }

@@ -44,7 +44,11 @@
                     <li><a class="nav-link scrollto" href="{{ path('register') }}">Inscription</a></li>
                 {% endif %}
                 {% if app.user %}
-                    {% if is_granted('ROLE_AGENCE') %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a class="nav-link scrollto active" href="{{ path('member.home') }}">Accueil</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('admin.user.home') }}">Gestion des utilisateurs</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('admin.realty.home') }}">Gestion des annonces</a></li>
+                    {% elseif is_granted('ROLE_AGENCE') %}
                         <li><a class="nav-link scrollto active" href="{{ path('member.home') }}">Accueil</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('owner.add') }}">Ajouter une location</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('owner.home') }}">Visualiser mes locations et des propriétaires</a></li>
