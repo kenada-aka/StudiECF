@@ -30,8 +30,8 @@
                         <li><i class="bx bx-chevron-right"></i> <a href="/#pricing">{% trans %}Prix{% endtrans %}</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="/#contact">Contact</a></li>
                         {% if not app.user %}
-                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('show.owners') }}">{% trans %}Annonces{% endtrans %}</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('register') }}">{% trans %}Inscription{% endtrans %}</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('rental.default') }}">{% trans %}Annonces{% endtrans %}</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('member.register') }}">{% trans %}Inscription{% endtrans %}</a></li>
                         {% endif %}
                     </ul>
                 </div>

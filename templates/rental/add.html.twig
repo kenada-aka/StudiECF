@@ -46,16 +46,12 @@
             </div>
         
             <div class="col-lg-6 mt-5 mt-lg-0 aos-init" data-aos="fade-left" data-aos-delay="100">
-                {{ form_start(form, {'action': path('register'), 'method': 'POST'}) }}
-                    {{ form_row(form.lastname) }}
-                    {{ form_row(form.firstname) }}
-                    {{ form_row(form.username) }}
-                    {{ form_row(form.email) }}
-                    {{ form_row(form.plainPassword.first) }}
-                    {{ form_row(form.plainPassword.second) }}
-                    {{ form_row(form.roles) }}
-                    <div class="text-center php-email-form"><button type="submit">Inscription</button></div>
+                {{ form_start(form) }}
+                    {{ form_rest(form) }}
+                    <div class="text-center php-email-form mt-4"><button type="submit">{% trans %}Ajouter{% endtrans %}</button></div>
                 {{ form_end(form) }}
+            </div>
+    
             </div>
         </div>
     </section>

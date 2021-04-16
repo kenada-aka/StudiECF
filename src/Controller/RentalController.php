@@ -31,7 +31,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-class OwnerController extends AbstractController
+class RentalController extends AbstractController
 {
     private $realtyRepo;
     private $messageRepo; 
@@ -48,11 +48,22 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * @Route("/owners", name="show.owners", methods="GET|POST")
+     * @Route("/rental/", name="rental.default", methods="GET|POST")
      */
-    public function owners(Request $request)
+    public function rentalDefault(Request $request)
     {
+        $user = $this->getUser();
+
+        if($this->isGranted('ROLE_LOCATAIRE'))
+        {
+            if($this->realtyRepo->findByTenant($user->getId()))
+            {
+                return $this->redirectToRoute("rental.tenant");
+            }
+        }
+
         $order = "ASC";
+
         if($request->getMethod("post"))
         {
             if($request->get("order") == "ASC" || $request->get("order") == "DESC")
@@ -60,7 +71,9 @@ class OwnerController extends AbstractController
                 $order = $request->get("order");
             }
         }
+
         $page = 1;
+
         $articles = $this->realtyRepo->findAllFreeRentWithPagination($page, $this->nbArticlesParPage, $order);
 
         $pagination = array(
@@ -69,7 +82,8 @@ class OwnerController extends AbstractController
             'nomRoute' => 'front_articles_index',
             'paramsRoute' => array()
         );
-        return $this->render('owner/owner.public.html.twig', [
+
+        return $this->render('rental/list.default.html.twig', [
             'title' => 'Offres de location',
             'subtitle' => 'Sur cette page vous pouvez voir toutes les offres de location libre de nos biens, ainsi que les biens des propriétaires et des bailleurs tiers.',
             'realties' => $articles,
@@ -78,19 +92,12 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * Liste l'ensemble des articles triés par date de publication pour une page donnée.
-     *
-     * @Route("/owners/public/{page}", requirements={"page" = "\d+"}, name="front_articles_index")
-     *
-     * @param int $page Le numéro de la page
-     *
-     * @return array
+     * @Route("/rental/default/{page}", requirements={"page" = "\d+"}, name="front_articles_index")
      */
-    public function pagination(int $page, Request $request)
+    public function paginationDefault(int $page, Request $request)
     {
-        
-
         $order = "ASC";
+
         if($request->getMethod("post"))
         {
             if($request->get("order") == "ASC" || $request->get("order") == "DESC")
@@ -99,7 +106,6 @@ class OwnerController extends AbstractController
             }
         }
         
-
         $articles = $this->realtyRepo->findAllFreeRentWithPagination($page, $this->nbArticlesParPage, $order);
 
         $pagination = array(
@@ -118,16 +124,35 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * @Route("/owner/", name="owner.home")
+     * @Route("/rental/tenant", name="rental.tenant")
+     * @IsGranted("ROLE_LOCATAIRE")
+     */
+    public function rentalTenant()
+    {
+        $user = $this->getUser();
+
+        if(!$this->realtyRepo->findByTenant($user->getId()))
+        {
+            return $this->redirectToRoute("rental.default");
+        }
+
+        return $this->render('rental/tenant.html.twig', [
+            'title' => 'Ma location',
+            'subtitle' => 'A partir de cette page vous allez pouvoir gérer votre location avec votre propriétaire.',
+            'realties' => $this->realtyRepo->findByTenant($user->getId())
+        ]);
+    }
+
+    /**
+     * @Route("/rental/owner", name="rental.owner")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */
-
-    public function home(): Response
+    public function rentalOwner(): Response
     {
         $user = $this->getUser();
         if($this->isGranted('ROLE_AGENCE')) $realties = $this->realtyRepo->findAllWhereAgencyId($user->getId());
         else $realties = $this->realtyRepo->findAllWhereOwnerId($user->getId());
-        return $this->render('owner/owner.home.html.twig', [
+        return $this->render('rental/owner.html.twig', [
             'title' => 'Visualiser vos annonces de location',
             'subtitle' => 'A partir de cette page vous allez pouvoir visualiser les annonces de vos locations.',
             'realties' => $realties
@@ -135,14 +160,13 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * @Route("/owner/extends", name="owner.extends")
+     * @Route("/rental/extends", name="rental.extends")
      * @IsGranted("ROLE_AGENCE")
      */
-
     public function homeExtends(): Response
     {
         $user = $this->getUser();
-        return $this->render('owner/owner.home.extends.html.twig', [
+        return $this->render('rental/owner.extends.html.twig', [
             'title' => 'Visualiser les annonces des propriétaires',
             'subtitle' => 'A partir de cette page vous allez pouvoir visualiser les annonces des propriétaires.',
             'realties' => $this->realtyRepo->findAllWhereOwnerExtends()
@@ -150,11 +174,10 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * @Route("/owner/add", name="owner.add")
+     * @Route("/rental/add", name="rental.add")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */
-
-    public function add(Request $request): Response
+    public function rentalAdd(Request $request): Response
     {
         $user = $this->getUser();
 
@@ -180,22 +203,19 @@ class OwnerController extends AbstractController
             
         }
 
-        return $this->render('owner/owner.add.html.twig', [
+        return $this->render('rental/add.html.twig', [
             'title' => 'Ajouter une nouvelle location',
             'subtitle' => 'Pour ajouter une nouvelle location il suffit de compléter le formulaire ci-dessous.',
             'form' => $form->createView()
         ]);
     }
 
-    
-
     /**
-     * @Route("/owner/update/{idOwner}", name="owner.update")
+     * @Route("/rental/update/{idOwner}", name="rental.update")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */
-    public function updateOwner(int $idOwner, Request $request): Response
+    public function rentalUpdate(int $idOwner, Request $request): Response
     {
-
         $realty = $this->realtyRepo->find($idOwner);
         $form = $this->createForm(RealtyType::class,  $realty);
 
@@ -208,7 +228,7 @@ class OwnerController extends AbstractController
             return $this->redirectToRoute('owner.home');
         }
 
-        return $this->render('owner/owner.edit.html.twig', [
+        return $this->render('rental/update.html.twig', [
             'title' => 'Modifier votre annonce',
             'subtitle' => 'A partir de cette page, vous pouvez modifier les informations de votre annonce.',
             'form' => $form->createView()
@@ -216,11 +236,10 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * @Route("/owner/remove/{idOwner}", name="owner.delete", methods="DELETE")
+     * @Route("/rental/remove/{idOwner}", name="rental.remove", methods="DELETE")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */
-
-    public function remove(int $idOwner, Request $request)
+    public function rentalRemove(int $idOwner, Request $request)
     {
         $realty = $this->realtyRepo->find($idOwner);
 
@@ -230,15 +249,14 @@ class OwnerController extends AbstractController
             $this->em->flush();
         }
         
-        return $this->redirectToRoute('owner.home');
+        return $this->redirectToRoute('member.home');
     }
 
     /**
-     * @Route("/owner/post/{idOwner}", name="owner.post")
+     * @Route("/rental/post/{idOwner}", name="rental.post")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */
-
-    public function post(int $idOwner)
+    public function rentalPost(int $idOwner)
     {
         $realty = $this->realtyRepo->find($idOwner);
 
@@ -247,15 +265,14 @@ class OwnerController extends AbstractController
         $this->em->persist($realty);
         $this->em->flush();
         
-        return $this->redirectToRoute('owner.home');
+        return $this->redirectToRoute('member.home');
     }
 
     /**
-     * @Route("/owner/reserved/{idOwner}", name="owner.reserved")
+     * @Route("/rental/reserved/{idOwner}", name="rental.reserved")
      * @IsGranted("ROLE_LOCATAIRE")
      */
-
-    public function reserved(int $idOwner)
+    public function rentalReserved(int $idOwner)
     {
         $user = $this->getUser();
 
@@ -271,11 +288,10 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * @Route("/owner/canceled/{idRent}", name="owner.canceled")
+     * @Route("/rental/canceled/{idRent}", name="rental.canceled")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */
-
-    public function canceled(int $idRent)
+    public function rentalCanceled(int $idRent)
     {
         $realty = $this->realtyRepo->find($idRent);
 
@@ -285,15 +301,14 @@ class OwnerController extends AbstractController
         $this->em->persist($realty);
         $this->em->flush();
         
-        return $this->redirectToRoute('owner.home');
+        return $this->redirectToRoute('member.home');
     }
 
     /**
-     * @Route("/owner/accepted/{idRent}", name="owner.accepted")
+     * @Route("/rental/accepted/{idRent}", name="rental.accepted")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */
-
-    public function accepted(int $idRent)
+    public function rentalAccepted(int $idRent)
     {
         $realty = $this->realtyRepo->find($idRent);
 
@@ -302,11 +317,11 @@ class OwnerController extends AbstractController
         $this->em->persist($realty);
         $this->em->flush();
         
-        return $this->redirectToRoute('owner.home');
+        return $this->redirectToRoute('member.home');
     }
 
     /**
-     * @Route("/owner/agencyOk/{idRent}", name="owner.agency.ok")
+     * @Route("/rental/agencyOk/{idRent}", name="rental.agency.ok")
      * @IsGranted("ROLE_AGENCE")
      */
 
@@ -323,120 +338,7 @@ class OwnerController extends AbstractController
         $this->em->persist($realty);
         $this->em->flush();
         
-        return $this->redirectToRoute('owner.home');
+        return $this->redirectToRoute('member.home');
     }
 
-    
-
-    /**
-     * @Route("/owner/uploadImage/{idRent}", name="owner.upload.image")
-     * @IsGranted("ROLE_PROPRIETAIRE")
-     */
-
-    public function uploadImage(int $idRent, Request $request, SluggerInterface $slugger): Response
-    {
-        $image = new Image();
-
-        $form = $this->createForm(ImageType::class, $image);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            
-            $pngFile = $form->get('png')->getData();
-
-            if($pngFile) 
-            {
-                $originalFilename = pathinfo($pngFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$pngFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $pngFile->move(
-                        $this->getParameter('png_directory'), // config/services.yaml
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                $image->setUrl($newFilename);
-
-
-                $reality = $this->realtyRepo->find($idRent);
-                $image->setIdRealty($reality);
-
-
-                $this->em->persist($image);
-                $this->em->flush();
-            }
-
-            return $this->redirectToRoute('owner.home');
-       
-        }
-
-        return $this->render('owner/owner.upload.image.html.twig', [
-            'title' => 'Ajouter une photo',
-            'subtitle' => 'A partir de cette page, vous pouvez ajouter une photo pour votre annonce, les formats acceptés sont JPG et PNG.',
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/owner/uploadDocument/{idRent}", name="owner.upload.document")
-     * @IsGranted("ROLE_PROPRIETAIRE")
-     */
-
-    public function uploadDocument(int $idRent, Request $request, SluggerInterface $slugger): Response
-    {
-        $document = new Document();
-
-        $form = $this->createForm(DocumentType::class, $document);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            
-            $pdfFile = $form->get('pdf')->getData();
-
-            if($pdfFile) 
-            {
-                $originalFilename = pathinfo($pdfFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$pdfFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $pdfFile->move(
-                        $this->getParameter('pdf_directory'), // config/services.yaml
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                $document->setUrl($newFilename);
-
-
-                $reality = $this->realtyRepo->find($idRent);
-                $document->setIdRealty($reality);
-
-
-                $this->em->persist($document);
-                $this->em->flush();
-            }
-
-            return $this->redirectToRoute('owner.home');
-       
-        }
-
-        return $this->render('owner/owner.upload.document.html.twig', [
-            'title' => 'Ajouter un document',
-            'subtitle' => 'A partir de cette page, vous pouvez ajouter un document pour votre annonce (exemple : bail, quittances, assurance, ...), le format accepté est PDF.',
-            'form' => $form->createView(),
-        ]);
-    }
 }

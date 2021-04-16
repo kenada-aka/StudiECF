@@ -37,8 +37,8 @@
                             <td>
                                 <p>{{ ["","En attente de validation par l'agence", "En attente de publication", "En attente de locataire", "Confirmer la location", "LOUER"][realty.statut] }}</p>
                                 {% if realty.statut == 4 %}
-                                    <a href="{{ path('owner.canceled', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Annuler la demande{% endtrans %}</a>
-                                    <a href="{{ path('owner.accepted', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Confirmer la demande{% endtrans %}</a>
+                                    <a href="{{ path('rental.canceled', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Annuler la demande{% endtrans %}</a>
+                                    <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Confirmer la demande{% endtrans %}</a>
                                 {% endif %}
                             </td>
                             <td>
@@ -61,7 +61,7 @@
                                         </button>
                                     </div>
                                 {% endif %}
-                                <a href="{{ path('owner.upload.image', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Ajouter une photo{% endtrans %}</a>
+                                <a href="{{ path('rental.upload.image', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Ajouter une photo{% endtrans %}</a>
                             </td>
                             <td>{{ realty.title }}</td>
                             <td>{{ realty.description }}</td>
@@ -74,7 +74,7 @@
                                     {% endfor %}
                                     </ul>
                                 {% endif %}
-                                <a href="{{ path('owner.upload.document', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Ajouter un document{% endtrans %}</a>
+                                <a href="{{ path('rental.upload.document', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Ajouter un document{% endtrans %}</a>
                             </td>
                             <td>
                                 <p>{{ realty.idOwner.lastname }} {{ realty.idOwner.firstname }}</p>
@@ -91,18 +91,18 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ path('owner.update', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Modifier l'annonce{% endtrans %}</a>
-                                <form method="POST" action="{{ path('owner.delete', {idOwner: realty.id}) }}">
+                                <a href="{{ path('rental.update', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Modifier l'annonce{% endtrans %}</a>
+                                <form method="POST" action="{{ path('rental.remove', {idOwner: realty.id}) }}">
                                     <input type="hidden" name="_method" value="DELETE"/>
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ realty.id)}}"/>
                                     <button class="btn btn-primary">{% trans %}Supprimer l'annonce{% endtrans %}</button>
                                 </form>
                                 {% if is_granted('ROLE_BAILLEUR_TIERS') %}
                                     {% if realty.statut == 2 %}
-                                        <a href="{{ path('owner.post', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Publier l'annonce{% endtrans %}</a>
+                                        <a href="{{ path('rental.post', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Publier l'annonce{% endtrans %}</a>
                                     {% endif %}
                                 {% elseif is_granted('ROLE_PROPRIETAIRE') %}
-                                    <a href="{{ path('owner.contact.agency', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Contacter l'agence{% endtrans %}</a>
+                                    <a href="{{ path('rental.contact.agency', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Contacter l'agence{% endtrans %}</a>
                                 {% endif %}
                             </td>
                         </tr>

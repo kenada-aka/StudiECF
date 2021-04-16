@@ -37,11 +37,10 @@ class AdminController extends AbstractController
      * @Route("/admin/user", name="admin.user.home")
      * @IsGranted("ROLE_ADMIN")
      */
-
     public function adminUserHome(): Response
     {
         $users = $this->userRepo->findAll();
-        return $this->render('admin/admin.user.home.html.twig', [
+        return $this->render('admin/user.html.twig', [
             'title' => 'Gestion des utilisateurs',
             'subtitle' => 'CRUD ADMIN : User',
             'users' => $users
@@ -52,7 +51,6 @@ class AdminController extends AbstractController
      * @Route("/admin/user/remove/{idUser}", name="admin.user.remove", methods="DELETE")
      * @IsGranted("ROLE_ADMIN")
      */
-
     public function delete(int $idUser, Request $request)
     {
         $user = $this->userRepo->find($idUser);
@@ -70,11 +68,10 @@ class AdminController extends AbstractController
      * @Route("/admin/realty", name="admin.realty.home")
      * @IsGranted("ROLE_ADMIN")
      */
-
     public function adminRealtyHome(): Response
     {
         $realties = $this->realtyRepo->findAll();
-        return $this->render('owner/owner.home.html.twig', [
+        return $this->render('rental/owner.html.twig', [
             'title' => 'Gestion des annonces',
             'subtitle' => 'CRUD ADMIN : Realty',
             'realties' => $realties

@@ -1,0 +1,65 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">{{ subtitle }}</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section class="main">
+        <div class="container mt-4">
+            {% if realties|length == 0 %}
+                <div class="alert alert-warning" role="alert">{% trans %}Il n'y a pas d'annonce{% endtrans %}</div>
+            {% else %}
+                {% include "elements/filters.html.twig" %}
+                <table class="table table-striped">
+                    <tbody>
+                    {% for realty in realties %}
+                        <tr>
+                            <td>
+                                <div id="carousel{{ realty.id }}" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        {% for image in realty.images %}
+                                            <div class="carousel-item">
+                                                <img src="{{ asset('uploads/png/' ~ image.url) }}" class="img-fluid img-thumbnail">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ realty.id }}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ realty.id }}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="text-start text-wrap"><strong>{{ realty.title }}</strong></p>
+                                <p class="text-start text-wrap">{{ realty.description }}</p>
+                            </td>
+                            <td class="align-middle">
+                                <p class="alert-primary">{{ realty.rent }}€</p>
+                                {% if is_granted('ROLE_LOCATAIRE') %}
+                                    <a href="{{ path('rental.reserved', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Demander location{% endtrans %}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% include "elements/pagination.html.twig" %}
+            {% endif %}
+        </div>
+    </section>
+</main>
+
+{% endblock %}
+

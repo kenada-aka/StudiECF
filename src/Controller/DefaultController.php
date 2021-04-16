@@ -16,18 +16,51 @@ class DefaultController extends AbstractController
      */
     public function home()
     {
+        return $this->render('home/home.html.twig');
+    }
 
-        $user = $this->getUser();
-
-        if($user)
-        {
-            //dump($user);
-        }
-
-        return $this->render('home/home.html.twig', [
-            'title' => 'CRUD TEST'
+    /**
+     * @Route("/cgv", name="cgv")
+     */
+    public function cgv()
+    {
+        return $this->render('home/cgv.html.twig', [
+            'title' => 'CGV',
+            'subtitle' => 'Conditions Générales de Ventes'
         ]);
+    }
 
+    /**
+     * @Route("/cgu", name="cgu")
+     */
+    public function cgu()
+    {
+        return $this->render('home/cgu.html.twig', [
+            'title' => 'CGU',
+            'subtitle' => 'Conditions Générales d\'Utilisation'
+        ]);
+    }
+
+    /**
+     * @Route("/mentionslegales", name="mentionslegales")
+     */
+    public function mentionslegales()
+    {
+        return $this->render('home/mentionslegales.html.twig', [
+            'title' => 'Mentions Légales',
+            'subtitle' => 'Retrouvez ci-dessous nos mentions légales'
+        ]);
+    }
+
+    /**
+     * @Route("/faq", name="faq")
+     */
+    public function faq()
+    {
+        return $this->render('home/faq.html.twig', [
+            'title' => 'FAQ',
+            'subtitle' => 'Frequently Asked Questions'
+        ]);
     }
 
     /**
@@ -41,53 +74,5 @@ class DefaultController extends AbstractController
         // On revient sur la page précédente
         return $this->redirect($request->headers->get('referer'));
     }
-
-    /**
-     * @Route("/cgv", name="cgv")
-     */
-    public function cgv()
-    {
-        return $this->render('home/cgv.html.twig', [
-            'title' => 'CGV',
-            'subtitle' => 'Conditions Générales de Ventes'
-        ]);
-
-    }
-
-    /**
-     * @Route("/cgu", name="cgu")
-     */
-    public function cgu()
-    {
-        return $this->render('home/cgu.html.twig', [
-            'title' => 'CGU',
-            'subtitle' => 'Conditions Générales d\'Utilisation'
-        ]);
-
-    }
-
-    /**
-     * @Route("/mentionslegales", name="mentionslegales")
-     */
-    public function mentionslegales()
-    {
-        return $this->render('home/mentionslegales.html.twig', [
-            'title' => 'Mentions Légales',
-            'subtitle' => 'Retrouvez ci-dessous nos mentions légales'
-        ]);
-
-    }
-
-    /**
-     * @Route("/faq", name="faq")
-     */
-    public function faq()
-    {
-        return $this->render('home/faq.html.twig', [
-            'title' => 'FAQ',
-            'subtitle' => 'Frequently Asked Questions'
-        ]);
-
-    }
-
+    
 }

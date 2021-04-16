@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -18,57 +20,12 @@ use App\Form\UserType;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/login", name="app_login", methods="GET|POST")
-     */
-    public function login(AuthenticationUtils $authenticationUtils): Response
-    {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-        /*
-        $user = new User();
-        $plainPassword = '123';
-        $encoded = $encoder->encodePassword($user, $plainPassword);
-        dump($encoded);
-    */
-/*
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-*/
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-        return $this->render('home/home.html.twig', [
-            'title' => 'CRUD TEST',
-            'last_username' => $lastUsername, 'error' => $error
-        ]);
-    }
-
-
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/member/register", name="member.register", methods="GET|POST")
      */
-    public function logout()
-    {
-        //throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-        return $this->render('home/register.html.twig', [
-            'title' => 'CRUD TEST'
-        ]);
-    }
-
-
-
-    /**
-     * @Route("/register", name="register", methods="GET|POST")
-     */
-
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
@@ -77,7 +34,6 @@ class SecurityController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid())
         {
-
             // Encode the password
 
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
@@ -91,12 +47,9 @@ class SecurityController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('home');
-            
         }
 
-
-
-        return $this->render('home/register.html.twig', [
+        return $this->render('member/register.html.twig', [
             'title' => 'Inscription',
             'subtitle' => 'Merci pour votre confiance, vous pouvez profiter de nos servies en vous inscrivant via le formulaire d\'inscription',
             'form' => $form->createView()
@@ -104,7 +57,75 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/subscribe", name="member.subscribe")
+     * @Route("/login", name="app_login", methods="GET|POST")
+     */
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->redirectToRoute('member.home');
+    }
+
+    /**
+     * @Route("/logout", name="app_logout")
+     * @IsGranted("ROLE_LOCATAIRE")
+     */
+    public function logout()
+    {
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/member/home", name="member.home")
+     * @IsGranted("ROLE_LOCATAIRE")
+     */
+    public function home()
+    {
+        // A près authentification tous les utilisateurs arrivent ici !
+        $user = $this->getUser();
+
+        if($this->isGranted('ROLE_BAILLEUR_TIERS') && !$this->isGranted('ROLE_AGENCE'))
+        {
+            // Vérifier si l'abonnement est valide (1mois)
+            $diff = date_diff(new \DateTime(), $user->getSubscribe());
+            
+            if($diff->m < 1)
+            {
+                return $this->render('member/subscribe.html.twig', [
+                    'title' => 'Bonjour',
+                    'subtitle' => 'Pour pouvoir utiliser nos services, veuillez régler votre abonnement, merci.',
+                    'disablemenu' => 1
+                ]);
+            }
+        }
+
+        if($this->isGranted('ROLE_ADMIN')) $redirect = "admin.user.home";
+        else if($this->isGranted('ROLE_AGENCE')) $redirect = "rental.owner";
+        else if($this->isGranted('ROLE_BAILLEUR_TIERS')) $redirect = "rental.owner";
+        else if($this->isGranted('ROLE_PROPRIETAIRE')) $redirect = "rental.owner";
+        else if($this->isGranted('ROLE_LOCATAIRE')) $redirect = "rental.tenant";
+
+        return $this->redirectToRoute($redirect);
+        /*
+        return $this->render('member/home.html.twig', [
+            'title' => 'Bonjour',
+            'subtitle' => 'Bienvenu dans votre espace sécurisé, vous pouvez consulter les annonces des biens disponibles et contacter les propriétaires pour conculure la location.'
+        ]);
+        */
+        /*
+        return $this->render('owner/owner.public.html.twig', [
+            'title' => 'Bonjour',
+            'subtitle' => 'Bienvenu dans votre espace sécurisé, vous pouvez consulter les annonces des biens disponibles et contacter les propriétaires pour conculure la location.',
+            'realties' => $this->realtyRepo->findAllFreeRentWithPagination(1, 50, "ASC")
+        ]);
+        */
+    }
+
+    /**
+     * @Route("/member/subscribe", name="member.subscribe")
      * @IsGranted("ROLE_LOCATAIRE")
      */
     public function subscribe(Request $request)
@@ -135,4 +156,6 @@ class SecurityController extends AbstractController
 
         return $this->redirectToRoute('member.home');
     }
+
+    
 }

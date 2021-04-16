@@ -24,9 +24,9 @@
                             <td>
                                 <p>{{ ["","", "", "", "En attente de confirmation par le propriétaire", "Location confirmer !"][realty.statut] }}</p>
                                 {% if realty.statut == 5 %}
-                                    <a href="{{ path('owner.canceled', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Déclarer un problème{% endtrans %}</a>
-                                    <a href="{{ path('owner.accepted', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Demander des travaux{% endtrans %}</a>
-                                    <a href="{{ path('owner.accepted', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Demander échelonner le loyer{% endtrans %}</a>
+                                    <a href="{{ path('rental.canceled', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Déclarer un problème{% endtrans %}</a>
+                                    <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Demander des travaux{% endtrans %}</a>
+                                    <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Demander échelonner le loyer{% endtrans %}</a>
                                 {% endif %}
                             </td>
                             <td>

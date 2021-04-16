@@ -1,0 +1,36 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">{{ subtitle }}</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section id="contact" class="contact">
+        <div class="container aos-init" data-aos="fade-up">
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('member.home') }}">{% trans %}Accueil{% endtrans %}</a></div>
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('admin.user.home') }}">{% trans %}Gestion des utilisateurs{% endtrans %}</a></div>
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('admin.realty.home') }}">{% trans %}Gestion des annonces{% endtrans %}</a></div>
+            {% elseif is_granted('ROLE_AGENCE') %}
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('member.home') }}">{% trans %}Accueil{% endtrans %}</a></div>
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('owner.add') }}">{% trans %}Ajouter une location{% endtrans %}</a></div>
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('owner.home') }}">{% trans %}Visualiser mes locations et des propriétaires{% endtrans %}</a></div>
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('owner.extends') }}">{% trans %}Attente accord des propriétaires{% endtrans %}</a></div>
+            {% elseif is_granted('ROLE_PROPRIETAIRE') %}
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('owner.add') }}" role="button">{% trans %}Ajouter une nouvelle location{% endtrans %}</a></div>
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('owner.home') }}" role="button">{% trans %}Visualiser mes locations{% endtrans %}</a></div>
+            {% elseif is_granted('ROLE_LOCATARE') %}
+                <div class="mt-4"><a class="btn btn-primary" href="{{ path('owner.home') }}" role="button">{% trans %}Visualiser mes locations{% endtrans %}</a></div>
+            {% endif %}
+        </div>
+    </section>
+</main>
+
+{% endblock %}

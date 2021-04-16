@@ -36,14 +36,28 @@
                             <td>
                                 <p>{{ ["","En attente de validation", "En attente de publication", "En attente de locataire", "Confirmer la location", "LOUER"][realty.statut] }}</p>
                                 {% if realty.statut == 1 %}
-                                    <a href="{{ path('owner.agency.ok', {idRent: realty.id}) }}" class="btn btn-primary">Confirmer l'accord de gestion</a>
+                                    <a href="{{ path('rental.agency.ok', {idRent: realty.id}) }}" class="btn btn-primary">Confirmer l'accord de gestion</a>
                                 {% endif %}
                             </td>
                             <td>
                                 {% if realty.images|length != 0 %}
-                                    {% for image in realty.images %}
-                                        <img src="{{ asset('uploads/png/' ~ image.url) }}"/>
-                                    {% endfor %}
+                                    <div id="carousel{{ realty.id }}" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                            {% for image in realty.images %}
+                                                <div class="carousel-item">
+                                                    <img src="{{ asset('uploads/png/' ~ image.url) }}" class="d-block w-100 img-fluid img-thumbnail">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ realty.id }}" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ realty.id }}" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
                                 {% endif %}
                             </td>
                             <td>{{ realty.title }}</td>
@@ -57,22 +71,22 @@
                                     {% endfor %}
                                     </ul>
                                 {% endif %}
-                                <a href="{{ path('owner.upload.document', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Ajouter un document{% endtrans %}</a>
+                                <a href="{{ path('rental.upload.document', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Ajouter un document{% endtrans %}</a>
                             </td>
                             <td>
                                 <p>{{ realty.idOwner.lastname }} {{ realty.idOwner.firstname }}</p>
                                 <a href="{{ path('agency.contact.owner', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Contacter le propriétaire{% endtrans %}</a>
                             </td>
                             <td>
-                                <a href="{{ path('owner.update', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Modifier l'annonce{% endtrans %}</a>
-                                <form method="POST" action="{{ path('owner.delete', {idOwner: realty.id}) }}">
+                                <a href="{{ path('rental.update', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Modifier l'annonce{% endtrans %}</a>
+                                <form method="POST" action="{{ path('rental.remove', {idOwner: realty.id}) }}">
                                     <input type="hidden" name="_method" value="DELETE"/>
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ realty.id)}}"/>
                                     <button class="btn btn-primary">{% trans %}Supprimer l'annonce{% endtrans %}</button>
                                 </form>
                                 {% if is_granted('ROLE_BAILLEUR_TIERS') %}
                                     {% if realty.statut == 2 %}
-                                        <a href="{{ path('owner.post', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Publier l'annonce{% endtrans %}</a>
+                                        <a href="{{ path('rental.post', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Publier l'annonce{% endtrans %}</a>
                                     {% endif %}
                                 {% endif %}
                             </td>
