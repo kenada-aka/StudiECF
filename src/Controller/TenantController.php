@@ -52,7 +52,7 @@ class TenantController extends AbstractController
         return $this->render('owner/owner.public.html.twig', [
             'title' => 'Bonjour',
             'subtitle' => 'Bienvenu dans votre espace sécurisé, vous pouvez consulter les annonces des biens disponibles et contacter les propriétaires pour conculure la location.',
-            'realties' => $this->realtyRepo->findAllFreeRent()
+            'realties' => $this->realtyRepo->findAllFreeRentWithPagination(1, 50, "ASC")
         ]);
 
     }

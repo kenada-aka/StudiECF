@@ -46,3 +46,13 @@ $('div.carousel.slide').each(function( index ) {
     this.children[0].children[0].classList.add("active");
     var carousel = new bootstrap.Carousel(this);
 });
+
+// Fix form subscribe
+
+$("#subscribe").submit(function( event ) {
+    if($("#subscribe select").val() != "CB")
+    {
+        alert("Le moyen de paiement que vous souhaitez utiliser est en cours de developpement, merci pour votre patience et procéder à un paiement par CB, ou bien d'envoyer les informations par mail.");
+        event.preventDefault();
+    }
+});

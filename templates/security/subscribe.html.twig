@@ -16,13 +16,13 @@
         <div class="container aos-init" data-aos="fade-up">
             <div class="row mt-1 d-flex justify-content-end aos-init" data-aos="fade-right" data-aos-delay="100">
                 <div class="col-lg-6 mt-5 mt-lg-0 aos-init" data-aos="fade-left" data-aos-delay="100">
-                    <form method="post" action="{{ path('member.subscribe') }}">
+                    <form id="subscribe" method="post" action="{{ path('member.subscribe') }}">
                         <select name="mode">
                             <option value="CB">CB</option>
-                            <option value="Virement">Virement</option>
-                            <option value="Chèque">Chèque</option>
+                            <option value="Virement">{% trans %}Virement{% endtrans %}</option>
+                            <option value="Chèque">{% trans %}Chèque{% endtrans %}</option>
                         </select>
-                        <div class="text-center php-email-form"><button type="submit">Envoyer</button></div>
+                        <div class="text-center php-email-form"><button type="submit">{% trans %}Envoyer{% endtrans %}</button></div>
                    </form>
                 </div>
             </div>

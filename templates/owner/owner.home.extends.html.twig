@@ -15,18 +15,18 @@
     <section class="section">
         <div class="container mt-4">
             {% if realties|length == 0 %}
-                <div class="alert alert-warning text-center" role="alert">Vous n'avez pas encore ajouté d'annonce</div>
+                <div class="alert alert-warning text-center" role="alert">{% trans %}Vous n'avez pas encore ajouté d'annonce{% endtrans %}</div>
             {% else %}
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Statut</th>
-                            <th>Photos</th>
-                            <th>Titre</th>
-                            <th>Description</th>
-                            <th>Loyer</th>
-                            <th>documents</th>
-                            <th>Propriétaire</th>
+                            <th>{% trans %}Photos{% endtrans %}</th>
+                            <th>{% trans %}Titre{% endtrans %}</th>
+                            <th>{% trans %}Description{% endtrans %}</th>
+                            <th>{% trans %}Loyer{% endtrans %}</th>
+                            <th>{% trans %}documents{% endtrans %}</th>
+                            <th>{% trans %}Propriétaire{% endtrans %}</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -57,22 +57,22 @@
                                     {% endfor %}
                                     </ul>
                                 {% endif %}
-                                <a href="{{ path('owner.upload.document', {idRent: realty.id}) }}" class="btn btn-primary">Ajouter un document</a>
+                                <a href="{{ path('owner.upload.document', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Ajouter un document{% endtrans %}</a>
                             </td>
                             <td>
                                 <p>{{ realty.idOwner.lastname }} {{ realty.idOwner.firstname }}</p>
-                                <a href="{{ path('agency.contact.owner', {idOwner: realty.id}) }}" class="btn btn-primary">Contacter le propriétaire</a>
+                                <a href="{{ path('agency.contact.owner', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Contacter le propriétaire{% endtrans %}</a>
                             </td>
                             <td>
-                                <a href="{{ path('owner.update', {idOwner: realty.id}) }}" class="btn btn-primary">Modifier l'annonce</a>
+                                <a href="{{ path('owner.update', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Modifier l'annonce{% endtrans %}</a>
                                 <form method="POST" action="{{ path('owner.delete', {idOwner: realty.id}) }}">
                                     <input type="hidden" name="_method" value="DELETE"/>
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ realty.id)}}"/>
-                                    <button class="btn btn-primary">Supprimer l'annonce</button>
+                                    <button class="btn btn-primary">{% trans %}Supprimer l'annonce{% endtrans %}</button>
                                 </form>
                                 {% if is_granted('ROLE_BAILLEUR_TIERS') %}
                                     {% if realty.statut == 2 %}
-                                        <a href="{{ path('owner.post', {idOwner: realty.id}) }}" class="btn btn-primary">Publier l'annonce</a>
+                                        <a href="{{ path('owner.post', {idOwner: realty.id}) }}" class="btn btn-primary">{% trans %}Publier l'annonce{% endtrans %}</a>
                                     {% endif %}
                                 {% endif %}
                             </td>

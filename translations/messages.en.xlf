@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="rlSk6Zr" resname="Vous n'avez pas de location en cours !">
+        <source>Vous n'avez pas de location en cours !</source>
+        <target>You have no current rental!</target>
+      </trans-unit>
+      <trans-unit id="6reYY5r" resname="Déclarer un problème">
+        <source>Déclarer un problème</source>
+        <target>Report a problem</target>
+      </trans-unit>
+      <trans-unit id="Af3xH2f" resname="Demander des travaux">
+        <source>Demander des travaux</source>
+        <target>Request work</target>
+      </trans-unit>
+      <trans-unit id="WTpg7z_" resname="Demander échelonner le loyer">
+        <source>Demander échelonner le loyer</source>
+        <target>Apply to stagger the rent</target>
+      </trans-unit>
+      <trans-unit id="cJzu9tn" resname="Mois">
+        <source>Mois</source>
+        <target>Month</target>
+      </trans-unit>
+      <trans-unit id="A8p_INN" resname="Contacter le propriétaire">
+        <source>Contacter le propriétaire</source>
+        <target>Contact the owner</target>
+      </trans-unit>
+      <trans-unit id="oWRcqU5" resname="Nos liens">
+        <source>Nos liens</source>
+        <target>Links Us</target>
+      </trans-unit>
+      <trans-unit id="UzFhc1Y" resname="Accueil">
+        <source>Accueil</source>
+        <target>Home</target>
+      </trans-unit>
+      <trans-unit id="ZyFT62v" resname="A propos">
+        <source>A propos</source>
+        <target>About us</target>
+      </trans-unit>
+      <trans-unit id="YE3ORF4" resname="Services">
+        <source>Services</source>
+        <target>Services</target>
+      </trans-unit>
+      <trans-unit id="VMMk9sE" resname="Prix">
+        <source>Prix</source>
+        <target>Price</target>
+      </trans-unit>
+      <trans-unit id="eOYiezy" resname="Annonces">
+        <source>Annonces</source>
+        <target>Ads</target>
+      </trans-unit>
+      <trans-unit id="z7GsDIB" resname="Inscription">
+        <source>Inscription</source>
+        <target>Subscribe</target>
+      </trans-unit>
+      <trans-unit id="yhQxPLD" resname="Nos informations">
+        <source>Nos informations</source>
+        <target>Our Informations</target>
+      </trans-unit>
+      <trans-unit id="TM0fBGg" resname="Conditions Générales de Vente">
+        <source>Conditions Générales de Vente</source>
+        <target>CGV</target>
+      </trans-unit>
+      <trans-unit id="6FEu59A" resname="Conditions Générales d'Utilisation">
+        <source>Conditions Générales d'Utilisation</source>
+        <target>CGU</target>
+      </trans-unit>
+      <trans-unit id="zOnAobl" resname="Mentions légales">
+        <source>Mentions légales</source>
+        <target>Policy</target>
+      </trans-unit>
+      <trans-unit id="rF4TXJe" resname="Contactez nous">
+        <source>Contactez nous</source>
+        <target>Contact Us</target>
+      </trans-unit>
+      <trans-unit id="u7E_daZ" resname="Réseaux sociaux">
+        <source>Réseaux sociaux</source>
+        <target>Social networks</target>
+      </trans-unit>
+      <trans-unit id="UHeMCWT" resname="Vous pouvez nous rejoindre à travers nos divers réseaux sociaux afin d'obtenir les derniers informations.">
+        <source>Vous pouvez nous rejoindre à travers nos divers réseaux sociaux afin d'obtenir les derniers informations.</source>
+        <target>You can reach us through our various social networks to get the latest information.</target>
+      </trans-unit>
+      <trans-unit id="lQz21jl" resname="Gestion des utilisateurs">
+        <source>Gestion des utilisateurs</source>
+        <target>User Management</target>
+      </trans-unit>
+      <trans-unit id="DbPg_SX" resname="Gestion des annonces">
+        <source>Gestion des annonces</source>
+        <target>Ads management</target>
+      </trans-unit>
+      <trans-unit id="_Cq8_pg" resname="Ajouter une location">
+        <source>Ajouter une location</source>
+        <target>Add a rental</target>
+      </trans-unit>
+      <trans-unit id="diichGF" resname="Visualiser mes locations et des propriétaires">
+        <source>Visualiser mes locations et des propriétaires</source>
+        <target>View my rentals and owners</target>
+      </trans-unit>
+      <trans-unit id="35h1hNR" resname="Attente accord des propriétaires">
+        <source>Attente accord des propriétaires</source>
+        <target>Awaiting owners' agreement</target>
+      </trans-unit>
+      <trans-unit id="lm7sHbs" resname="Visualiser mes locations">
+        <source>Visualiser mes locations</source>
+        <target>View my rentals</target>
+      </trans-unit>
+      <trans-unit id="a0xCmvQ" resname="Ma location">
+        <source>Ma location</source>
+        <target>My rental</target>
+      </trans-unit>
+      <trans-unit id="zvEASlM" resname="Bienvenu sur DAZ Immobilier">
+        <source>Bienvenu sur DAZ Immobilier</source>
+        <target>Welcome on DAZ Immobilier</target>
+      </trans-unit>
+      <trans-unit id="yohgYZD" resname="DAZ Immobilier est une plateforme immobilière qui permet aux locataires de rechercher un logement et aux proprétaires, ainsi qu'aux bailleurs tiers de proposer des logements à la location.">
+        <source>DAZ Immobilier est une plateforme immobilière qui permet aux locataires de rechercher un logement et aux proprétaires, ainsi qu'aux bailleurs tiers de proposer des logements à la location.</source>
+        <target>DAZ Immobilier is a real estate platform that allows tenants to search for accommodation and owners, as well as third-party landlords, to offer accommodation for rent.</target>
+      </trans-unit>
+      <trans-unit id="RPN1Xei" resname="A propos de nous">
+        <source>A propos de nous</source>
+        <target>About Us</target>
+      </trans-unit>
+      <trans-unit id="O.QiL6E" resname="DAZ Immobilier permet aussi à des agences immobilières de gérer leurs biens et de se voir confier des biens par les propriétaires de notre réseau.">
+        <source>DAZ Immobilier permet aussi à des agences immobilières de gérer leurs biens et de se voir confier des biens par les propriétaires de notre réseau.</source>
+        <target>DAZ Immobilier also allows real estate agencies to manage their property and to be entrusted with property by the owners of our network.</target>
+      </trans-unit>
+      <trans-unit id="NtaqwRx" resname="Locataire">
+        <source>Locataire</source>
+        <target>Tenant</target>
+      </trans-unit>
+      <trans-unit id="GtH.czO" resname="Vous allez avoir accès à un espace sécurisé pour pouvoir rechercher une location et ainsi pouvoir échanger avec votre propriétaire les divers documents, déclarer des problèmes et faire des demandes de travaux. Il vous sera aussi possible commun accord avec le propriétaire d'écheloner les mensualités de votre loyer...">
+        <source>Vous allez avoir accès à un espace sécurisé pour pouvoir rechercher une location et ainsi pouvoir échanger avec votre propriétaire les divers documents, déclarer des problèmes et faire des demandes de travaux. Il vous sera aussi possible commun accord avec le propriétaire d'écheloner les mensualités de votre loyer...</source>
+        <target>You will have access to a secure space to be able to search for a rental and thus be able to exchange various documents with your landlord, declare problems and make work requests. It will also be possible for you by mutual agreement with the owner to stagger the monthly payments of your rent ...</target>
+      </trans-unit>
+      <trans-unit id="tAaIHgc" resname="Propriétaire">
+        <source>Propriétaire</source>
+        <target>Owner</target>
+      </trans-unit>
+      <trans-unit id="KvIzc4a" resname="Depuis votre espace sécurisé, vous allez pouvoir mettre votre bien en location, à ce moment là, une agence immobilière gérera votre bien ! Il vous sera aussi possible de commun accord avec le locataire d'écheloner le loyer.">
+        <source>Depuis votre espace sécurisé, vous allez pouvoir mettre votre bien en location, à ce moment là, une agence immobilière gérera votre bien ! Il vous sera aussi possible de commun accord avec le locataire d'écheloner le loyer.</source>
+        <target>From your secure space, you will be able to rent your property, at that time, a real estate agency will manage your property! It will also be possible for you by mutual agreement with the tenant to step up the rent.</target>
+      </trans-unit>
+      <trans-unit id="6X_CjCq" resname="Bailleur Tiers">
+        <source>Bailleur Tiers</source>
+        <target>Third Party Lessor</target>
+      </trans-unit>
+      <trans-unit id="inVSMoT" resname="Depuis votre espace sécurisé, vous allez pouvoir mettre votre ou vos biens en location, vous allez pouvoir gérer les problèmes et les demandes de travaux de votre ou vos locataires, ainsi de commun accord avec le locataire d'écheloner le loyer.">
+        <source>Depuis votre espace sécurisé, vous allez pouvoir mettre votre ou vos biens en location, vous allez pouvoir gérer les problèmes et les demandes de travaux de votre ou vos locataires, ainsi de commun accord avec le locataire d'écheloner le loyer.</source>
+        <target>From your secure space, you will be able to rent out your property (s), you will be able to manage the problems and work requests of your tenant (s), as well as by mutual agreement with the tenant to step up the rent.</target>
+      </trans-unit>
+      <trans-unit id="EbJGgLE" resname="Agence">
+        <source>Agence</source>
+        <target>Agency</target>
+      </trans-unit>
+      <trans-unit id="Ekwoe.X" resname="En tant qu'agence immobilière, vous aurez accès à toutes les fonctionnalités précédament décrite, mais il vous sera également possible de gérer les biens des propriétaires qu'il vous sera confiés.">
+        <source>En tant qu'agence immobilière, vous aurez accès à toutes les fonctionnalités précédament décrite, mais il vous sera également possible de gérer les biens des propriétaires qu'il vous sera confiés.</source>
+        <target>As a real estate agency, you will have access to all the functions described above, but you will also be able to manage the property of the owners that will be entrusted to you.</target>
+      </trans-unit>
+      <trans-unit id="bw04Zh4" resname="Quelle que soit la situation, la famille qui s’agrandit, une mutation ou une envie de changement, la recherche d’un nouveau logement est un moment de vie important mais qui peut être parfois stressant. Pour nous, un site d’annonces immobilières ne devrait pas être noyé dans la publicité mais, au contraire, offrir une expérience inédite et enrichissante. Chez DAZ Immobilier, nous en sommes pleinement conscients et nous nous sommes fixés pour mission de vous faciliter la recherche, afin que vous puissiez vous concentrer sur ce qui est important pour vous : trouver l’habitation de vos rêves.">
+        <source>Quelle que soit la situation, la famille qui s’agrandit, une mutation ou une envie de changement, la recherche d’un nouveau logement est un moment de vie important mais qui peut être parfois stressant. Pour nous, un site d’annonces immobilières ne devrait pas être noyé dans la publicité mais, au contraire, offrir une expérience inédite et enrichissante. Chez DAZ Immobilier, nous en sommes pleinement conscients et nous nous sommes fixés pour mission de vous faciliter la recherche, afin que vous puissiez vous concentrer sur ce qui est important pour vous : trouver l’habitation de vos rêves.</source>
+        <target>Whatever the situation, the growing family, a transfer or a desire for change, the search for a new accommodation is an important moment in life but which can sometimes be stressful. For us, a real estate advertising site should not be drowned in advertising but, on the contrary, offer a new and rewarding experience. At DAZ Immobilier, we are fully aware of this and we have made it our mission to make the search easier for you, so that you can focus on what is important to you: finding the home of your dreams.</target>
+      </trans-unit>
+      <trans-unit id="xwO6RY4" resname="Pour louer un appartement ou une maison, nous nous sommes dit que la recherche immobilière était souvent compliquée. Après tout, dénicher un logement, ce n’est pas juste trouver quatre murs : c’est aussi trouver la réponse à ses besoins et à son style de vie. C’est pour cette raison que nous avons décidé de créer DAZ Immobilier, le premier moteur de recherche d'annonces immobilières qui prend en compte le logement en lui-même mais aussi ses alentours, avec la vie de quartier et les points d’intérêt à proximité.">
+        <source>Pour louer un appartement ou une maison, nous nous sommes dit que la recherche immobilière était souvent compliquée. Après tout, dénicher un logement, ce n’est pas juste trouver quatre murs : c’est aussi trouver la réponse à ses besoins et à son style de vie. C’est pour cette raison que nous avons décidé de créer DAZ Immobilier, le premier moteur de recherche d'annonces immobilières qui prend en compte le logement en lui-même mais aussi ses alentours, avec la vie de quartier et les points d’intérêt à proximité.</source>
+        <target>To rent an apartment or a house, we told ourselves that the real estate search was often complicated. After all, finding accommodation isn't just about finding four walls: it's also about finding the answer to your needs and lifestyle. It is for this reason that we have decided to create DAZ Immobilier, the first search engine for real estate advertisements that takes into account the accommodation itself but also its surroundings, with neighborhood life and points of interest. near.</target>
+      </trans-unit>
+      <trans-unit id="bd.K.48" resname="Voir plus...">
+        <source>Voir plus...</source>
+        <target>Show more...</target>
+      </trans-unit>
+      <trans-unit id="H_I0PHd" resname="DAZ Immobilier a mis en place plusieurs outils pour vous faciliter la vie lorsque vous recherchez un appartement ou un maison, ou bien si vous louez un bien. Par l'intermédiare de plusieurs fonctionnalités, vous allez pouvoir gérer en ligne votre habitation...">
+        <source>DAZ Immobilier a mis en place plusieurs outils pour vous faciliter la vie lorsque vous recherchez un appartement ou un maison, ou bien si vous louez un bien. Par l'intermédiare de plusieurs fonctionnalités, vous allez pouvoir gérer en ligne votre habitation...</source>
+        <target>DAZ Immobilier has implemented several tools to make your life easier when you are looking for an apartment or a house, or if you are renting a property. Through several features, you will be able to manage your home online ...</target>
+      </trans-unit>
+      <trans-unit id="nsuvFgs" resname="Espace sécurisé">
+        <source>Espace sécurisé</source>
+        <target>Secure area</target>
+      </trans-unit>
+      <trans-unit id="xbvjUPQ" resname="Vous allez avoir accès à un espace sécurisé protégé par un mot de passe.">
+        <source>Vous allez avoir accès à un espace sécurisé protégé par un mot de passe.</source>
+        <target>You will have access to a secure area protected by a password.</target>
+      </trans-unit>
+      <trans-unit id="SQNWKXo" resname="Vous allez pouvoir ajouter, publier, éditer, supprimer une annonce.">
+        <source>Vous allez pouvoir ajouter, publier, éditer, supprimer une annonce.</source>
+        <target>You will be able to add, publish, edit, delete an ad.</target>
+      </trans-unit>
+      <trans-unit id="hlfZW8L" resname="Gestion des photos">
+        <source>Gestion des photos</source>
+        <target>Manage photos</target>
+      </trans-unit>
+      <trans-unit id="IpZsqnW" resname="Vous allez pouvoir ajouter et supprimer une photo de votre annonce.">
+        <source>Vous allez pouvoir ajouter et supprimer une photo de votre annonce.</source>
+        <target>You will be able to add and remove a photo from your ad.</target>
+      </trans-unit>
+      <trans-unit id="chiU5Fa" resname="Gestion des documents">
+        <source>Gestion des documents</source>
+        <target>Document management</target>
+      </trans-unit>
+      <trans-unit id="l6jRDga" resname="Vous allez pouvoir ajouter et supprimer un document de votre annonce.">
+        <source>Vous allez pouvoir ajouter et supprimer un document de votre annonce.</source>
+        <target>You will be able to add and remove a document from your ad.</target>
+      </trans-unit>
+      <trans-unit id="e6darLs" resname="Gestion des messages">
+        <source>Gestion des messages</source>
+        <target>Message handling</target>
+      </trans-unit>
+      <trans-unit id="925GJ_0" resname="Vous allez pouvoir envoyer des messages à votre propriétaire si vous êtes locataire et à votre locataire si vous être propriétaire.">
+        <source>Vous allez pouvoir envoyer des messages à votre propriétaire si vous êtes locataire et à votre locataire si vous être propriétaire.</source>
+        <target>You will be able to send messages to your landlord if you are a tenant and to your tenant if you are a landlord.</target>
+      </trans-unit>
+      <trans-unit id="FqTuyN7" resname="Gestion divers">
+        <source>Gestion divers</source>
+        <target>Miscellaneous management</target>
+      </trans-unit>
+      <trans-unit id="GGLyE79" resname="Vous allez pouvoir declarer ou gérer les problèmes de votre logement, demander des travaux et d'écheloner les mensualités de votre loyer.">
+        <source>Vous allez pouvoir declarer ou gérer les problèmes de votre logement, demander des travaux et d'écheloner les mensualités de votre loyer.</source>
+        <target>You will be able to declare or manage the problems of your housing, request work and stagger the monthly payments of your rent.</target>
+      </trans-unit>
+      <trans-unit id="UauZ4yf" resname="Si notre service vous intéresse, vous pouvez directement vous inscire, merci pour votre confiance.">
+        <source>Si notre service vous intéresse, vous pouvez directement vous inscire, merci pour votre confiance.</source>
+        <target>If you are interested in our service, you can directly register, thank you for your trust.</target>
+      </trans-unit>
+      <trans-unit id="30g1xC8" resname="Notre service est accessible gratuitement pour les locataires et les propriétaires, par contre si vous êtes bailleur tiers, il va falloir vous souscrire à un abonnement, nous avons différentes formules à vous proposer.">
+        <source>Notre service est accessible gratuitement pour les locataires et les propriétaires, par contre si vous êtes bailleur tiers, il va falloir vous souscrire à un abonnement, nous avons différentes formules à vous proposer.</source>
+        <target>Our service is available free of charge for tenants and owners, on the other hand if you are a third-party lessor, you will have to take out a subscription, we have different formulas to offer you.</target>
+      </trans-unit>
+      <trans-unit id="H8cMNNJ" resname="Gratuit">
+        <source>Gratuit</source>
+        <target>Free</target>
+      </trans-unit>
+      <trans-unit id="XvUjrEf" resname="mois">
+        <source>mois</source>
+        <target>month</target>
+      </trans-unit>
+      <trans-unit id="jpXA8EP" resname="Locataire et Propriétaire">
+        <source>Locataire et Propriétaire</source>
+        <target>Tenant and Owner</target>
+      </trans-unit>
+      <trans-unit id="FJjXiy3" resname="Découverte">
+        <source>Découverte</source>
+        <target>Discovery</target>
+      </trans-unit>
+      <trans-unit id="all6Y.I" resname="Abonnement pour 1 mois">
+        <source>Abonnement pour 1 mois</source>
+        <target>Subscription for 1 month</target>
+      </trans-unit>
+      <trans-unit id="oOWeDWP" resname="Souscrire">
+        <source>Souscrire</source>
+        <target>Subscribe</target>
+      </trans-unit>
+      <trans-unit id="GregzHI" resname="Abonnement pour 3 mois">
+        <source>Abonnement pour 3 mois</source>
+        <target>Subscription for 3 months</target>
+      </trans-unit>
+      <trans-unit id="FoKXy_J" resname="Ultime">
+        <source>Ultime</source>
+        <target>Ultimate</target>
+      </trans-unit>
+      <trans-unit id="8V_WYtB" resname="Abonnement pour 6 mois">
+        <source>Abonnement pour 6 mois</source>
+        <target>Subscription for 6 months</target>
+      </trans-unit>
+      <trans-unit id="eeXPIN4" resname="Adresse">
+        <source>Adresse</source>
+        <target>Location</target>
+      </trans-unit>
+      <trans-unit id="zExCS1c" resname="Téléphone">
+        <source>Téléphone</source>
+        <target>Phone</target>
+      </trans-unit>
+      <trans-unit id="oG1H_Wt" resname="Historique des messages">
+        <source>Historique des messages</source>
+        <target>Message history</target>
+      </trans-unit>
+      <trans-unit id="aHNIepW" resname="Il n'y a pas de message !">
+        <source>Il n'y a pas de message !</source>
+        <target>There is no message!</target>
+      </trans-unit>
+      <trans-unit id="eQdSCfK" resname="Envoyer">
+        <source>Envoyer</source>
+        <target>Send</target>
+      </trans-unit>
+      <trans-unit id="APnFM0V" resname="Ajouter">
+        <source>Ajouter</source>
+        <target>_Add</target>
+      </trans-unit>
+      <trans-unit id="9HXoz2v" resname="Mettre à jour">
+        <source>Mettre à jour</source>
+        <target>Update</target>
+      </trans-unit>
+      <trans-unit id="JhFgHmD" resname="Vous n'avez pas encore ajouté d'annonce">
+        <source>Vous n'avez pas encore ajouté d'annonce</source>
+        <target>You haven't added an ad yet</target>
+      </trans-unit>
+      <trans-unit id="XjFHq1H" resname="Photos">
+        <source>Photos</source>
+        <target>Pictures</target>
+      </trans-unit>
+      <trans-unit id="eOeSABC" resname="Titre">
+        <source>Titre</source>
+        <target>Title</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="8KkgCJo" resname="Loyer">
+        <source>Loyer</source>
+        <target>Rent</target>
+      </trans-unit>
+      <trans-unit id="mxa0TQ4" resname="documents">
+        <source>documents</source>
+        <target>documents</target>
+      </trans-unit>
+      <trans-unit id="ei8x3yU" resname="Ajouter un document">
+        <source>Ajouter un document</source>
+        <target>Add document</target>
+      </trans-unit>
+      <trans-unit id="I8eGSwQ" resname="Modifier l'annonce">
+        <source>Modifier l'annonce</source>
+        <target>Update ad</target>
+      </trans-unit>
+      <trans-unit id="RhFmx2M" resname="Supprimer l'annonce">
+        <source>Supprimer l'annonce</source>
+        <target>Remove ad</target>
+      </trans-unit>
+      <trans-unit id="vyUyvnX" resname="Publier l'annonce">
+        <source>Publier l'annonce</source>
+        <target>Post ad</target>
+      </trans-unit>
+      <trans-unit id="tOkp2Lz" resname="Documents">
+        <source>Documents</source>
+        <target>Documents</target>
+      </trans-unit>
+      <trans-unit id="BZxYImL" resname="Annuler la demande">
+        <source>Annuler la demande</source>
+        <target>Cancel the request</target>
+      </trans-unit>
+      <trans-unit id="qDCrkj6" resname="Confirmer la demande">
+        <source>Confirmer la demande</source>
+        <target>Confirm the request</target>
+      </trans-unit>
+      <trans-unit id="KcKFtpI" resname="Ajouter une photo">
+        <source>Ajouter une photo</source>
+        <target>Add picture</target>
+      </trans-unit>
+      <trans-unit id="Ai_wICc" resname="Contacter le locataire">
+        <source>Contacter le locataire</source>
+        <target>Contact the tenant</target>
+      </trans-unit>
+      <trans-unit id="8G6Z.DQ" resname="Il n'y a pas de locataire">
+        <source>Il n'y a pas de locataire</source>
+        <target>There is no tenant</target>
+      </trans-unit>
+      <trans-unit id="JJiQFMf" resname="Contacter l'agence">
+        <source>Contacter l'agence</source>
+        <target>Contact the agency</target>
+      </trans-unit>
+      <trans-unit id="rm6tBJ." resname="Ajouter une nouvelle location">
+        <source>Ajouter une nouvelle location</source>
+        <target>Add a new rental</target>
+      </trans-unit>
+      <trans-unit id="BuUtbgp" resname="Il n'y a pas d'annonce">
+        <source>Il n'y a pas d'annonce</source>
+        <target>There is no announcement</target>
+      </trans-unit>
+      <trans-unit id="4ty.FG5" resname="Demander location">
+        <source>Demander location</source>
+        <target>Request rental</target>
+      </trans-unit>
+      <trans-unit id="5Y8P_g5" resname="Virement">
+        <source>Virement</source>
+        <target>Transfer</target>
+      </trans-unit>
+      <trans-unit id="cjoLeN0" resname="Chèque">
+        <source>Chèque</source>
+        <target>Check</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

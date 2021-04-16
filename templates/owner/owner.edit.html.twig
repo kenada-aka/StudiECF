@@ -25,7 +25,7 @@
            <div class="info">
               <div class="address">
                 <i class="bi bi-geo-alt"></i>
-                <h4>Adresse :</h4>
+                <h4>{% trans %}Adresse{% endtrans %} :</h4>
                 <p>113 rue des locations immobilières, 75 001, Paris</p>
               </div>
 
@@ -37,7 +37,7 @@
 
               <div class="phone">
                 <i class="bi bi-phone"></i>
-                <h4>Téléphone :</h4>
+                <h4>{% trans %}Téléphone{% endtrans %} :</h4>
                 <p>+33 6 89 13 23 33</p>
               </div>
 
@@ -48,7 +48,7 @@
             <div class="col-lg-6 mt-5 mt-lg-0 aos-init" data-aos="fade-left" data-aos-delay="100">
                 {{ form_start(form) }}
                     {{ form_rest(form) }}
-                    <div class="text-center php-email-form"><button type="submit">Mettre à jour</button></div>
+                    <div class="text-center php-email-form"><button type="submit">{% trans %}Mettre à jour{% endtrans %}</button></div>
                 {{ form_end(form) }}
             </div>
     

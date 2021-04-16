@@ -22,32 +22,32 @@
             <div class="row">
             
                 <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Nos liens</h4>
+                    <h4>{% trans %}Nos liens{% endtrans %}</h4>
                     <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="/#hero">Accueil</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="/#about">A propos</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="/#services">Services</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="/#pricing">Prix</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="/#hero">{% trans %}Accueil{% endtrans %}</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="/#about">{% trans %}A propos{% endtrans %}</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="/#services">{% trans %}Services{% endtrans %}</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="/#pricing">{% trans %}Prix{% endtrans %}</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="/#contact">Contact</a></li>
                         {% if not app.user %}
-                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('show.owners') }}">Annonces</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('register') }}">Inscription</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('show.owners') }}">{% trans %}Annonces{% endtrans %}</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ path('register') }}">{% trans %}Inscription{% endtrans %}</a></li>
                         {% endif %}
                     </ul>
                 </div>
                 
                 <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Nos informations</h4>
+                    <h4>{% trans %}Nos informations{% endtrans %}</h4>
                     <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="{{ path('cgv') }}">Conditions Générales de Vente</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="{{ path('cgu') }}">Conditions Générales d'Utilisation</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="{{ path('mentionslegales') }}">Mentions légales</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="{{ path('cgv') }}">{% trans %}Conditions Générales de Vente{% endtrans %}</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="{{ path('cgu') }}">{% trans %}Conditions Générales d'Utilisation{% endtrans %}</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="{{ path('mentionslegales') }}">{% trans %}Mentions légales{% endtrans %}</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="{{ path('faq') }}">FAQ</a></li>
                     </ul>
                 </div>
                 
                 <div class="col-lg-3 col-md-6 footer-contact">
-                    <h4>Contactez nous</h4>
+                    <h4>{% trans %}Contactez nous{% endtrans %}</h4>
                     <p>
                     113 rue des locations immobilières<br/>
                     75 001, Paris<br/>
@@ -58,8 +58,8 @@
                 </div>
                 
                 <div class="col-lg-3 col-md-6 footer-info">
-                    <h3>Réseaux sociaux</h3>
-                    <p>Vous pouvez nous rejoindre à travers nos divers réseaux sociaux afin d'obtenir les derniers informations.</p>
+                    <h3>{% trans %}Réseaux sociaux{% endtrans %}</h3>
+                    <p>{% trans %}Vous pouvez nous rejoindre à travers nos divers réseaux sociaux afin d'obtenir les derniers informations.{% endtrans %}</p>
                     <div class="social-links mt-3">
                         <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
                         <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
@@ -84,6 +84,7 @@
             <p>Icônes conçues par <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/fr/" title="Flaticon">www.flaticon.com</a></p>
             <p>Image by <a href="https://pixabay.com/users/ikedaleo-5258838/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2278497">ikedaleo</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2278497">Pixabay</a></p>
             <p>Textes : <a href="https://www.bienici.com">https://www.bienici.com</a></p>
+            <p>Générateur de cookie : <a href="https://webii.eu/tool/cookie/">https://webii.eu/tool/cookie/</a></p>
         </div>
     </div>
 
