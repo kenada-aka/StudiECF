@@ -669,7 +669,6 @@ body {
   --------------------------------------------------------------*/
   .about {
     padding: 140px 0;
-    background: url("../img/about-bg.png") top center no-repeat;
     position: relative;
   }
   
@@ -795,7 +794,7 @@ body {
   # Cta
   --------------------------------------------------------------*/
   .cta {
-    background: linear-gradient(rgba(5, 74, 133, 0.8), rgba(5, 74, 133, 0.9)), url("../img/cta-bg.jpg") fixed center center;
+    background: linear-gradient(rgba(5, 74, 133, 0.8), rgba(5, 74, 133, 0.9));
     background-size: cover;
     padding: 120px 0;
   }
@@ -961,7 +960,6 @@ body {
   # Contact
   --------------------------------------------------------------*/
   .contact {
-    background: url("../img/contact-bg.png") left center no-repeat;
     position: relative;
   }
   
