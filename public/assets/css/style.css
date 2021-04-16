@@ -1093,6 +1093,25 @@ body {
     background: #0880e8;
     color: #fff;
   }
+  .button {
+    display:inline;
+    margin-left:20px;
+  }
+  
+  .button button[type="submit"] {
+    border: 0;
+    padding: 10px 32px;
+    color: #0880e8;
+    transition: 0.4s;
+    border-radius: 50px;
+    border: 2px solid #0880e8;
+    background: #fff;
+  }
+  
+  .button button[type="submit"]:hover {
+    background: #0880e8;
+    color: #fff;
+  }
   
   @-webkit-keyframes animate-loading {
     0% {

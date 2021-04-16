@@ -39,3 +39,10 @@ $("#home-contact").submit(function( event ) {
     alert("Formulaire temporairement désactivé en attendant le nom de domaine...");
     event.preventDefault();
 });
+
+// Carousel des photos des annonces
+
+$('div.carousel.slide').each(function( index ) {
+    this.children[0].children[0].classList.add("active");
+    var carousel = new bootstrap.Carousel(this);
+});

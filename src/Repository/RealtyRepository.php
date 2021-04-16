@@ -23,18 +23,7 @@ class RealtyRepository extends ServiceEntityRepository
         parent::__construct($registry, Realty::class);
     }
 
-    /**
-     * Récupère la liste des biens qui ne sont pas louer
-     **/
-    public function findAllFreeRent()
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.statut = :val')
-            ->setParameter('val', 3)
-            ->orderBy('a.id', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
+    
 
     /**
      * Récupère la location par le locataire
@@ -89,7 +78,7 @@ class RealtyRepository extends ServiceEntityRepository
     }
 
     /**
-     * Récupère une liste d'articles triés et paginés.
+     * Récupère la liste des biens qui ne sont pas louer triés et paginés.
      *
      * @param int $page Le numéro de la page
      * @param int $nbMaxParPage Nombre maximum d'article par page     
@@ -99,7 +88,7 @@ class RealtyRepository extends ServiceEntityRepository
      *
      * @return Paginator
      */
-    public function findAllWithPagination($page, $nbMaxParPage, $order)
+    public function findAllFreeRentWithPagination($page, $nbMaxParPage, $order)
     {
         if(!is_numeric($page))
         {
@@ -115,9 +104,11 @@ class RealtyRepository extends ServiceEntityRepository
         {
             throw new InvalidArgumentException("La valeur de l'argument $nbMaxParPage est incorrecte (valeur : " . $nbMaxParPage . ").");
         }
-    
         $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.statut = :val')
+            ->setParameter('val', 3)
             ->orderBy('a.rent', $order);
+        
         
         $query = $qb->getQuery();
 

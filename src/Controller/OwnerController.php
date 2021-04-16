@@ -37,6 +37,8 @@ class OwnerController extends AbstractController
     private $messageRepo; 
     private $em;
 
+    private $nbArticlesParPage = 5;
+
     public function __construct(EntityManagerInterface $em, RealtyRepository $realtyRepository, MessageRepository $messageRepository, userRepository $userRepository)
     {
         $this->userRepo = $userRepository;
@@ -46,14 +48,32 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * @Route("/owners", name="show.owners")
+     * @Route("/owners", name="show.owners", methods="GET|POST")
      */
-    public function owners()
+    public function owners(Request $request)
     {
+        $order = "ASC";
+        if($request->getMethod("post"))
+        {
+            if($request->get("order") == "ASC" || $request->get("order") == "DESC")
+            {
+                $order = $request->get("order");
+            }
+        }
+        $page = 1;
+        $articles = $this->realtyRepo->findAllFreeRentWithPagination($page, $this->nbArticlesParPage, $order);
+
+        $pagination = array(
+            'page' => $page,
+            'nbPages' => ceil(count($articles) / $this->nbArticlesParPage),
+            'nomRoute' => 'front_articles_index',
+            'paramsRoute' => array()
+        );
         return $this->render('owner/owner.public.html.twig', [
             'title' => 'Offres de location',
             'subtitle' => 'Sur cette page vous pouvez voir toutes les offres de location libre de nos biens, ainsi que les biens des propriétaires et des bailleurs tiers.',
-            'realties' => $this->realtyRepo->findAllFreeRent()
+            'realties' => $articles,
+            'pagination' => $pagination
         ]);
     }
 
@@ -68,26 +88,30 @@ class OwnerController extends AbstractController
      */
     public function pagination(int $page, Request $request)
     {
-        $nbArticlesParPage = 1;
+        
 
         $order = "ASC";
-
-        if($request->isMethod('post'))
+        if($request->getMethod("post"))
         {
-            $order = $request->get('order'); // TODO : Filtrer les posibilités
+            if($request->get("order") == "ASC" || $request->get("order") == "DESC")
+            {
+                $order = $request->get("order");
+            }
         }
+        
 
-        $articles = $this->realtyRepo->findAllWithPagination($page, $nbArticlesParPage, $order);
+        $articles = $this->realtyRepo->findAllFreeRentWithPagination($page, $this->nbArticlesParPage, $order);
 
         $pagination = array(
             'page' => $page,
-            'nbPages' => ceil(count($articles) / $nbArticlesParPage),
+            'nbPages' => ceil(count($articles) / $this->nbArticlesParPage),
             'nomRoute' => 'front_articles_index',
             'paramsRoute' => array()
         );
 
         return $this->render('owner/owner.public.html.twig', [
-            'title' => 'Owner / Home',
+            'title' => 'Offres de location',
+            'subtitle' => 'Sur cette page vous pouvez voir toutes les offres de location libre de nos biens, ainsi que les biens des propriétaires et des bailleurs tiers.',
             'realties' => $articles,
             'pagination' => $pagination
         ]);

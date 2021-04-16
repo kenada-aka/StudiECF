@@ -23,9 +23,23 @@
                     {% for realty in realties %}
                         <tr>
                             <td>
-                                {% for image in realty.images %}
-                                    <img src="{{ asset('uploads/png/' ~ image.url) }}" /></td>
-                                {% endfor %}
+                                <div id="carousel{{ realty.id }}" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        {% for image in realty.images %}
+                                            <div class="carousel-item">
+                                                <img src="{{ asset('uploads/png/' ~ image.url) }}" class="d-block w-100 img-fluid img-thumbnail">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ realty.id }}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ realty.id }}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
                             <td>
                                 <p>{{ realty.title }}</p>
                                 <p>{{ realty.description }}</p>
