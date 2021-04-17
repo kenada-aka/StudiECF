@@ -122,43 +122,7 @@ class RentalController extends AbstractController
             'pagination' => $pagination
         ]);
     }
-
-    /**
-     * @Route("/rental/tenant", name="rental.tenant")
-     * @IsGranted("ROLE_LOCATAIRE")
-     */
-    public function rentalTenant()
-    {
-        $user = $this->getUser();
-
-        if(!$this->realtyRepo->findByTenant($user->getId()))
-        {
-            return $this->redirectToRoute("rental.default");
-        }
-
-        return $this->render('rental/tenant.html.twig', [
-            'title' => 'Ma location',
-            'subtitle' => 'A partir de cette page vous allez pouvoir gérer votre location avec votre propriétaire.',
-            'realties' => $this->realtyRepo->findByTenant($user->getId())
-        ]);
-    }
-
-    /**
-     * @Route("/rental/owner", name="rental.owner")
-     * @IsGranted("ROLE_PROPRIETAIRE")
-     */
-    public function rentalOwner(): Response
-    {
-        $user = $this->getUser();
-        if($this->isGranted('ROLE_AGENCE')) $realties = $this->realtyRepo->findAllWhereAgencyId($user->getId());
-        else $realties = $this->realtyRepo->findAllWhereOwnerId($user->getId());
-        return $this->render('rental/owner.html.twig', [
-            'title' => 'Visualiser vos annonces de location',
-            'subtitle' => 'A partir de cette page vous allez pouvoir visualiser les annonces de vos locations.',
-            'realties' => $realties
-        ]);
-    }
-
+    
     /**
      * @Route("/rental/extends", name="rental.extends")
      * @IsGranted("ROLE_AGENCE")

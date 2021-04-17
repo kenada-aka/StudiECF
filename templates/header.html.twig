@@ -48,21 +48,21 @@
                         <li><a class="nav-link scrollto" href="{{ path('admin.user.home') }}">{% trans %}Gestion des utilisateurs{% endtrans %}</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('admin.realty.home') }}">{% trans %}Gestion des annonces{% endtrans %}</a></li>
                     {% elseif is_granted('ROLE_AGENCE') %}
-                        <li><a class="nav-link scrollto" href="{{ path('rental.owner') }}">{% trans %}Gérer mes locations et des propriétaires{% endtrans %}</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('member.home') }}">{% trans %}Gérer mes locations et des propriétaires{% endtrans %}</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('rental.extends') }}">{% trans %}Attente accord des propriétaires{% endtrans %}</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('rental.add') }}">{% trans %}Ajouter une location{% endtrans %}</a></li>
                     {% elseif is_granted('ROLE_BAILLEUR_TIERS') %}
                         {% if disablemenu is not defined %}
-                            <li><a class="nav-link scrollto" href="{{ path('rental.owner') }}">{% trans %}Gérer mes locations{% endtrans %}</a></li>
+                            <li><a class="nav-link scrollto" href="{{ path('member.home') }}">{% trans %}Gérer mes locations{% endtrans %}</a></li>
                             <li><a class="nav-link scrollto" href="{{ path('rental.add') }}">{% trans %}Ajouter une location{% endtrans %}</a></li>
                         {% else %} 
                             <li><a class="nav-link scrollto" href="{{ path('member.home') }}">{% trans %}Accueil{% endtrans %}</a></li>   
                         {% endif %}
                     {% elseif is_granted('ROLE_PROPRIETAIRE') %}
-                        <li><a class="nav-link scrollto" href="{{ path('rental.owner') }}">{% trans %}Visualiser mes locations{% endtrans %}</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('member.home') }}">{% trans %}Visualiser mes locations{% endtrans %}</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('rental.add') }}">{% trans %}Ajouter une location{% endtrans %}</a></li>
                     {% elseif is_granted('ROLE_LOCATAIRE') %}
-                        <li><a class="nav-link scrollto" href="{{ path('rental.tenant') }}">{% trans %}Ma location{% endtrans %}</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('member.tenant') }}">{% trans %}Ma location{% endtrans %}</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('rental.default') }}">{% trans %}Rechercher une location{% endtrans %}</a></li>
                     {% endif %}
                 {% endif %}
