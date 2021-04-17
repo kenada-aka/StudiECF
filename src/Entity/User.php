@@ -49,6 +49,11 @@ class User implements UserInterface, \Serializable
      */
     private $isActive;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $askRemove;
+
 
 
     public function getUsername()
@@ -415,6 +420,18 @@ class User implements UserInterface, \Serializable
                 $realtiesAgency->setIdAgency(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAskRemove(): ?string
+    {
+        return $this->askRemove;
+    }
+
+    public function setAskRemove(bool $askRemove): self
+    {
+        $this->askRemove = $askRemove;
 
         return $this;
     }

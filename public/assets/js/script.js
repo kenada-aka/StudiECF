@@ -84,15 +84,14 @@ $('a.remove').each(function(index) {
             method: "POST",
             url: "/rental/askRemoveDocument/",
             data: { id: this.dataset.id }
-        }).done(function( msg ) {
-            alert( "Data Saved: " + msg );
+        }).done(function(msg) {
+            alert("Votre message à été transmis à l'administrateur: " + msg);
         });
         this.parentNode.classList.add("d-none");
     });
 });
 
 // Tabs messageries espace membre
-
 
 $('.myTab button').each(function(index) {
     var tabTrigger = new bootstrap.Tab(this)
@@ -107,6 +106,20 @@ $('.myTab button').each(function(index) {
                 this.classList.add("show");
                 this.classList.add("active");
             }
+        });
+    });
+});
+
+// Gestion de demande suppression du compte
+
+$('a.removeAccount').each(function(index) {
+    this.addEventListener('click', function(event) {
+        event.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: "/member/askRemoveAccount/"
+        }).done(function(msg) {
+            alert("Votre demande de suppression de votre compte à été transmis à l'administrateur");
         });
     });
 });

@@ -63,6 +63,7 @@
                     {% elseif is_granted('ROLE_LOCATAIRE') %}
                         <li><a class="nav-link scrollto" href="{{ path('member.tenant') }}">{% trans %}Ma location{% endtrans %}</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('rental.default') }}">{% trans %}Rechercher une location{% endtrans %}</a></li>
+                        <li><a class="nav-link scrollto removeAccount" href="#">{% trans %}Supprimer mon compte{% endtrans %}</a></li>
                     {% endif %}
                 {% endif %}
             </ul>

@@ -102,6 +102,25 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @Route("/member/askRemoveAccount/", name="member.askRemove")
+     * @IsGranted("ROLE_LOCATAIRE")
+     */
+    public function askRemoveAccount(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $user = $this->getUser();
+
+            $user->setAskRemove(true);
+            
+            $this->em->persist($user);
+            $this->em->flush();
+
+            return new Response();
+        }
+    }
+
+    /**
      * @Route("/member/home", name="member.home")
      * @IsGranted("ROLE_LOCATAIRE")
      */
