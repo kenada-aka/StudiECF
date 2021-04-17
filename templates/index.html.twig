@@ -38,6 +38,22 @@
 		{% include "header.html.twig" %}
 		{% block body %}{% endblock %}
 		{% include "footer.html.twig" %}
+		<!-- Modal -->
+		<div class="container" >
+			<div class="modal fade" id="Modal" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Message</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- Script JS -->
 		<script src="/assets/js/script.js"></script>
 		<script type="text/javascript" src="https://webii.eu/tool/cookie/cookie.js?"></script>

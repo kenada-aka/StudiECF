@@ -47,6 +47,7 @@
                     {% if is_granted('ROLE_ADMIN') %}
                         <li><a class="nav-link scrollto" href="{{ path('member.owner') }}">{% trans %}Gestion de toutes les locations{% endtrans %}</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('admin.user.home') }}">{% trans %}Gestion des utilisateurs{% endtrans %}</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('admin.showRemoveDocument') }}">{% trans %}Document à supprimer{% endtrans %}</a></li>
                     {% elseif is_granted('ROLE_AGENCE') %}
                         <li><a class="nav-link scrollto" href="{{ path('member.owner') }}">{% trans %}Gérer mes locations et les locations des propriétaires{% endtrans %}</a></li>
                         <li><a class="nav-link scrollto" href="{{ path('rental.add') }}">{% trans %}Ajouter une location{% endtrans %}</a></li>

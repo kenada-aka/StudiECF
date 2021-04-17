@@ -42,7 +42,7 @@ class AdminController extends AbstractController
         $users = $this->userRepo->findAll();
         return $this->render('admin/user.html.twig', [
             'title' => 'Gestion des utilisateurs',
-            'subtitle' => 'CRUD ADMIN : User',
+            'subtitle' => 'Les utilisateurs ayant fait la demande pour supprimer leur compte, le boutton est affiché en rouge.',
             'users' => $users
         ]);
     }
@@ -63,5 +63,9 @@ class AdminController extends AbstractController
         
         return $this->redirectToRoute('admin.user.home');
     }
+
+    
+
+    
 
 }

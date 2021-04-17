@@ -85,7 +85,8 @@ $('a.remove').each(function(index) {
             url: "/rental/askRemoveDocument/",
             data: { id: this.dataset.id }
         }).done(function(msg) {
-            alert("Votre message à été transmis à l'administrateur: " + msg);
+            $('.modal-body').html("Votre demande de suppression d'un document à été transmise à l'administrateur, merci de patienter...");
+            $('#Modal').modal('show'); 
         });
         this.parentNode.classList.add("d-none");
     });
@@ -119,7 +120,8 @@ $('a.removeAccount').each(function(index) {
             method: "POST",
             url: "/member/askRemoveAccount/"
         }).done(function(msg) {
-            alert("Votre demande de suppression de votre compte à été transmis à l'administrateur");
+            $('.modal-body').html("Votre demande de suppression de votre compte à été transmise à l'administrateur, merci de patienter...");
+            $('#Modal').modal('show'); 
         });
     });
 });

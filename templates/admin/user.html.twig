@@ -42,7 +42,11 @@
                             <form method="POST" action="{{ path('admin.user.remove', {idUser: user.id}) }}">
                                 <input type="hidden" name="_method" value="DELETE"/>
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id)}}"/>
-                                <button class="btn btn-primary">Supprimer</button>
+                                {% if user.askRemove %}
+                                    <button class="btn btn-danger">Supprimer</button>
+                                {% else %}
+                                    <button class="btn btn-primary">Supprimer</button>
+                                {% endif %}
                             </form>
                         </td>
                     </tr>

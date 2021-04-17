@@ -142,7 +142,8 @@ class ExtendsController extends AbstractController
     }
 
     /**
-     *  @Route("/rental/askRemoveDocument/", name="rental.askRemove.document")
+     * @Route("/rental/askRemoveDocument/", name="rental.askRemove.document")
+     * @IsGranted("ROLE_PROPRIETAIRE")
      */
     public function askRemoveDocument(Request $request)
     {
@@ -159,6 +160,19 @@ class ExtendsController extends AbstractController
 
             return new Response();
         }
+    }
+
+    /**
+     * @Route("/admin/showRemoveDocument", name="admin.showRemoveDocument")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function showRemoveDocument(): Response
+    {
+        return $this->render('admin/remove.document.html.twig', [
+            'title' => 'Gestion des documents',
+            'subtitle' => 'Vous trouverez ici tous les documents en attente de supression.',
+            'documents' => $this->documentRepo->find()
+        ]);
     }
 
 }
