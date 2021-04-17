@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Routing\Annotation\Route;                         // Permet d'utiliser les routes sans "config/routes.yaml"
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,16 +15,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use App\Repository\RealtyRepository;
 
+use Symfony\Component\String\Slugger\SluggerInterface;
+
+use App\Entity\Image;
+use App\Form\ImageType;
+
+use App\Entity\Document;
+use App\Form\DocumentType;
+use App\Repository\DocumentRepository;
+
 
 class ExtendsController extends AbstractController
 {
 
     private $realtyRepo;
+    private $documentRepo;
     private $em;
 
-    public function __construct(EntityManagerInterface $em, RealtyRepository $realtyRepository)
+    public function __construct(EntityManagerInterface $em, RealtyRepository $realtyRepository, DocumentRepository $documentRepository)
     {
         $this->realtyRepo = $realtyRepository;
+        $this->documentRepo = $documentRepository;
         $this->em = $em;
     }
 
@@ -36,6 +50,7 @@ class ExtendsController extends AbstractController
 
         $form = $this->createForm(ImageType::class, $image);
         $form->handleRequest($request);
+
 
         if($form->isSubmitted() && $form->isValid())
         {
@@ -69,16 +84,9 @@ class ExtendsController extends AbstractController
                 $this->em->persist($image);
                 $this->em->flush();
             }
-
-            return $this->redirectToRoute('member.home');
-       
         }
 
-        return $this->render('extends/upload.image.html.twig', [
-            'title' => 'Ajouter une photo',
-            'subtitle' => 'A partir de cette page, vous pouvez ajouter une photo pour votre annonce, les formats acceptés sont JPG et PNG.',
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('member.home');
     }
 
     /**
@@ -126,17 +134,31 @@ class ExtendsController extends AbstractController
                 $this->em->flush();
             }
 
-            return $this->redirectToRoute('member.home');
+            
        
         }
 
-        return $this->render('extends/upload.document.html.twig', [
-            'title' => 'Ajouter un document',
-            'subtitle' => 'A partir de cette page, vous pouvez ajouter un document pour votre annonce (exemple : bail, quittances, assurance, ...), le format accepté est PDF.',
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('member.home');
     }
 
-    
+    /**
+     *  @Route("/rental/askRemoveDocument/", name="rental.askRemove.document")
+     */
+    public function askRemoveDocument(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $idDocument = $request->request->get('id');
+
+            $document = $this->documentRepo->find($idDocument);
+
+            $document->setAskRemove(true);
+            
+            $this->em->persist($document);
+            $this->em->flush();
+
+            return new Response();
+        }
+    }
 
 }

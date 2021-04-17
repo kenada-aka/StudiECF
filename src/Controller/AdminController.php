@@ -64,18 +64,4 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin.user.home');
     }
 
-    /**
-     * @Route("/admin/realty", name="admin.realty.home")
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function adminRealtyHome(): Response
-    {
-        $realties = $this->realtyRepo->findAll();
-        return $this->render('rental/owner.html.twig', [
-            'title' => 'Gestion des annonces',
-            'subtitle' => 'CRUD ADMIN : Realty',
-            'realties' => $realties
-        ]);
-    }
-
 }

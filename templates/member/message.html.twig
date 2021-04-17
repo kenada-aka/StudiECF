@@ -12,14 +12,14 @@
 </section>
 
 <main id="main">
-    <section class="section contact">
+    <section id="contact" class="contact mt-5">
         <div class="container aos-init" data-aos="fade-up">
-            <div class="row mt-1 d-flex justify-content-end aos-init" data-aos="fade-right" data-aos-delay="100">
+            <div class="row mt-1 d-flex justify-content-center aos-init" data-aos="fade-right" data-aos-delay="100">
                 <div class="col-lg-6 mt-5 mt-lg-0 aos-init" data-aos="fade-left" data-aos-delay="100">
                     {{ form_start(form) }}
-                        {{ form_row(form.pdf) }}
-                        <div class="text-center php-email-form mt-4"><button type="submit">{% trans %}Ajouter{% endtrans %}</button></div>
-                    {{ form_end(form) }}
+                            {{ form_rest(form) }}
+                            <div class="text-center php-email-form mt-4"><button type="submit">{% trans %}Envoyer{% endtrans %}</button></div>
+                        {{ form_end(form) }}
                 </div>
             </div>
         </div>

@@ -24,6 +24,7 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity=Realty::class, inversedBy="images")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $id_realty;
 

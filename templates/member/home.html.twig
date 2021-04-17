@@ -61,20 +61,48 @@
                                 {% if realty.documents|length != 0 %}
                                     <ul class="list-group list-group-flush">
                                     {% for document in realty.documents %}
-                                        <li class="list-group-item">
-                                            <i class='bx bxs-file-pdf'></i>
-                                            <a href="{{ asset('uploads/pdf/' ~ document.url) }}">{{ document.url }}</a>
-                                            {% if is_granted('ROLE_PROPRIETAIRE') %}
-                                                <a href="#">{DEL}</a>
-                                            {% endif %}
-                                        </li>
+                                        {% if not document.askRemove %}
+                                            <li class="list-group-item">
+                                                <i class='bx bxs-file-pdf'></i>
+                                                <a href="{{ asset('uploads/pdf/' ~ document.url) }}">{{ document.url }}</a>
+                                                {% if is_granted('ROLE_PROPRIETAIRE') %}
+                                                    <a href="#" class="remove" data-id="{{ document.id }}"><img src="/assets/img/remove.png" width="16" height="16" title="Demander à supprimer le document"/></a>
+                                                {% endif %}
+                                            </li>
+                                        {% endif %}
                                     {% endfor %}
                                     </ul>
                                 {% endif %}
                                 {% if is_granted('ROLE_PROPRIETAIRE') %}
                                     <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
-                                        <a href="{{ path('rental.upload.image', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Ajouter une photo{% endtrans %}</a>
-                                        <a href="{{ path('rental.upload.document', {idRent: realty.id}) }}" class="btn btn-primary">{% trans %}Ajouter un document{% endtrans %}</a>
+                                        <button class="addImg btn btn-primary">{% trans %}Ajouter une photo{% endtrans %}</button>
+                                        <button class="addPdf btn btn-primary">{% trans %}Ajouter un document{% endtrans %}</button>
+                                    </div>
+                                    <div class="d-none d-flex justify-content-center mt-4">
+                                        {{ form_start(formImg, {'action': path('rental.upload.image', {idRent: realty.id}), 'method': 'POST'}) }}
+                                            <div class="form-group">
+                                                <label for="image_png">Image</label>
+                                                <div class="custom-file">
+                                                    <input type="file" id="image_png" name="image[png]" class="custom-file-input">
+                                                    <label for="image_png" lang="fr" class="custom-file-label"></label>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt-4"><button type="submit" class="btn btn-primary">{% trans %}Ajouter{% endtrans %}</button></div>
+                                            <input type="hidden" id="image__token" name="image[_token]" value="{{ formImg._token.vars.value }}">
+                                        {{ form_end(formImg, {'render_rest': false}) }}
+                                    </div>
+                                    <div class="d-none d-flex justify-content-center mt-4">
+                                        {{ form_start(formPdf, {'action': path('rental.upload.document', {idRent: realty.id}), 'method': 'POST'}) }}
+                                            <div class="form-group">
+                                                <label for="document_pdf">Document</label>
+                                                <div class="custom-file">
+                                                    <input type="file" id="document_pdf" name="document[pdf]" class="custom-file-input">
+                                                    <label for="document_pdf" lang="fr" class="custom-file-label"></label>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt-4"><button type="submit" class="btn btn-primary">{% trans %}Ajouter{% endtrans %}</button></div>
+                                            <input type="hidden" id="document__token" name="document[_token]" value="{{ formPdf._token.vars.value }}">
+                                        {{ form_end(formPdf, {'render_rest': false}) }}
                                     </div>
                                 {% endif %}
                             </div>
@@ -87,7 +115,8 @@
                         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                             <div class="icon-box" style="width:100%;">
                                 <h4 class="title">Statut</h4>
-                                <p class="description">{{ ["","En attente de validation par l'agence.", "En attente de publication.", "En attente de locataire.", "Confirmer la location.", "LOUER"][realty.statut] }}</p>
+                                <p>Propriétaire : <strong>{{ realty.idOwner.lastname }} {{ realty.idOwner.firstname }}</strong></p>
+                                <p class="description">{{ ["","En attente de validation par l'agence.", "En attente de publication.", "En attente de locataire.", "En attente de confirmer la location.", "LOUER"][realty.statut] }}</p>
                                 {% if is_granted('ROLE_BAILLEUR_TIERS') %}
                                     {% if realty.statut == 2 %}
                                         <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
@@ -103,15 +132,43 @@
                                             <a href="{{ path('rental.canceled', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Annuler la location{% endtrans %}</a>
                                         </div>
                                     {% endif %}
-                                {% elseif is_granted('ROLE_PROPRIETAIRE') %}
-                                    <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
-                                        <a href="{{ path('owner.contact.agency', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Contacter l'agence{% endtrans %}</a>
-                                    </div>
                                 {% endif %}
                                 {% if is_granted('ROLE_AGENCE') %}
                                     {% if realty.idOwner != realty.idAgency %}
+                                        {% if messagesAgence|length != 0 and messagesAgence[realty.id]|length != 0 %}
+                                            <ul class="list-group list-group-flush">
+                                                {% for message in messagesAgence[realty.id] %}
+                                                    <li class="list-group-item">
+                                                        <div class="text-start"><strong>{{ message.idSender.lastname }} {{ message.idSender.firstname }}</strong></div>
+                                                        <div class="text-start text-muted"><small>({{ message.date|date("d/m/Y - H:i") }})</small></div>
+                                                        <div class="text-start">{{ message.message }}</div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <div class="alert alert-warning mt-4">{% trans %}Il n'y a pas de message !{% endtrans %}</div>
+                                        {% endif %}
                                         <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
                                             <a href="{{ path('agency.contact.owner', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Contacter le propriétaire{% endtrans %}</a>
+                                        </div>
+                                    {% endif %}
+                                {% elseif is_granted('ROLE_PROPRIETAIRE') or not is_granted('ROLE_BAILLEUR_TIERS') %}
+                                    {% if realty.idOwner != realty.idAgency %}
+                                        {% if messagesAgence|length != 0 and messagesAgence[realty.id]|length != 0 %}
+                                            <ul class="list-group list-group-flush">
+                                                {% for message in messagesAgence[realty.id] %}
+                                                    <li class="list-group-item">
+                                                        <div class="text-start"><strong>{{ message.idSender.lastname }} {{ message.idSender.firstname }}</strong></div>
+                                                        <div class="text-start text-muted"><small>({{ message.date|date("d/m/Y - H:i") }})</small></div>
+                                                        <div class="text-start">{{ message.message }}</div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <div class="alert alert-warning mt-4">{% trans %}Il n'y a pas de message !{% endtrans %}</div>
+                                        {% endif %}
+                                        <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
+                                            <a href="{{ path('owner.contact.agency', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Contacter l'agence{% endtrans %}</a>
                                         </div>
                                     {% endif %}
                                 {% endif %}
@@ -119,16 +176,22 @@
                         </div>
                     {% endif %}
 
-                    <!-- Messageries (LOCATAIRE) -->
+                    <!-- Messageries -->
 
-                    {% if is_granted('ROLE_LOCATAIRE') and not is_granted('ROLE_PROPRIETAIRE') %}
+                    {% if is_granted('ROLE_LOCATAIRE') %}
                         {% if realty.idOwner %}
                             <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
                                 <div class="icon-box" style="width:100%;">
                                     <h4 class="title">Messageries</h4>
                                     <ul class="nav nav-tabs myTab" id="myTab" data-bs-target="#myTabContent1" role="tablist">
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="home" type="button" role="tab" aria-controls="home" aria-selected="true">Propriétaire</button>
+                                            {% if is_granted('ROLE_BAILLEUR_TIERS') %}
+                                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="home" type="button" role="tab" aria-controls="home" aria-selected="true">Locataire</button>
+                                            {% elseif is_granted('ROLE_PROPRIETAIRE') %}
+                                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="home" type="button" role="tab" aria-controls="home" aria-selected="true">Propriétaire</button>
+                                            {% else %}
+                                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="home" type="button" role="tab" aria-controls="home" aria-selected="true">Locataire</button>
+                                            {% endif %}
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="loyer-tab" data-bs-toggle="tab" data-bs-target="loyer" type="button" role="tab" aria-controls="loyer" aria-selected="false">Loyer</button>
@@ -136,44 +199,39 @@
                                     </ul>
                                     <div class="tab-content" id="myTabContent1">
                                         <div class="tab-pane fade show active text-center" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                            <strong>{{ realty.idOwner.lastname }} {{ realty.idOwner.firstname }}</strong>
-                                            <div><a href="{{ path('owner.contact', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Contacter le propriétaire{% endtrans %}</a></div>
-                                        </div>
-                                        <div class="tab-pane fade text-center" id="loyer" role="tabpanel" aria-labelledby="contact-tab">
-                                            {% if realty.statut == 5 %}
-                                                <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Demander d'échelonner le loyer{% endtrans %}</a>
+                                            {% if messages|length != 0 and messages[realty.id]|length != 0 %}
+                                                <ul class="list-group list-group-flush">
+                                                    {% for message in messages[realty.id] %}
+                                                        <li class="list-group-item">
+                                                            <div class="text-start"><strong>{{ message.idSender.lastname }} {{ message.idSender.firstname }}</strong></div>
+                                                            <div class="text-start text-muted"><small>({{ message.date|date("d/m/Y - H:i") }})</small></div>
+                                                            <div class="text-start">{{ message.message }}</div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
                                             {% else %}
-                                                <p class="alert alert-warning">En attente de confirmation par le propriétaire.</p>
+                                                <div class="alert alert-warning mt-4">{% trans %}Il n'y a pas de message !{% endtrans %}</div>
+                                            {% endif %}
+                                            {% if is_granted('ROLE_PROPRIETAIRE') %}
+                                                <div><a href="{{ path('owner.contact.tenant', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Contacter le locataire{% endtrans %}</a></div>
+                                            {% else %}
+                                                <div><a href="{{ path('tenant.contact.owner', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Contacter le propriétaire{% endtrans %}</a></div>
                                             {% endif %}
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endif %}
-
-                    <!-- Messageries (PROPRIETAIRE) -->
-
-                    {% if is_granted('ROLE_PROPRIETAIRE') %}
-                        {% if realty.idTenant %}
-                            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-                                <div class="icon-box" style="width:100%;">
-                                    <h4 class="title">Messageries</h4>
-                                    <ul class="nav nav-tabs myTab" id="myTab" data-bs-target="#myTabContent1" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="home" type="button" role="tab" aria-controls="home" aria-selected="true">Locataire</button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="loyer-tab" data-bs-toggle="tab" data-bs-target="loyer" type="button" role="tab" aria-controls="loyer" aria-selected="false">Loyer</button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="myTabContent1">
-                                        <div class="tab-pane fade show active text-center" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                            <strong>{{ realty.idTenant.lastname }} {{ realty.idTenant.firstname }}</strong>
-                                            <a href="{{ path('owner.contact', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Contacter le locataire{% endtrans %}</a>
-                                        </div>
                                         <div class="tab-pane fade text-center" id="loyer" role="tabpanel" aria-labelledby="contact-tab">
-                                            <p>TODO</p>
+                                            {% if is_granted('ROLE_PROPRIETAIRE') %}
+                                                {% if realty.statut == 5 %}
+                                                    <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Accepter échelonner le loyer{% endtrans %}</a>
+                                                    <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Relancer payer le loyer{% endtrans %}</a>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if realty.statut == 5 %}
+                                                    <div class="alert alert-warning mt-4">{% trans %}Il n'y a pas de message !{% endtrans %}</div>
+                                                    <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Demander échelonner le loyer{% endtrans %}</a>
+                                                {% else %}
+                                                    <p class="alert alert-warning mt-4">En attente de confirmation par le propriétaire.</p>
+                                                {% endif %}
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -199,15 +257,39 @@
                                     </ul>
                                     <div class="tab-content" id="myTabContent2">
                                         <div class="tab-pane fade show active text-center" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                            <p>todo il n'y a pas de message</p>
+                                            {% if problems|length != 0 and problems[realty.id]|length != 0 %}
+                                                <ul class="list-group list-group-flush">
+                                                    {% for message in problems[realty.id] %}
+                                                        <li class="list-group-item">
+                                                            <div class="text-start"><strong>{{ message.idSender.lastname }} {{ message.idSender.firstname }}</strong></div>
+                                                            <div class="text-start text-muted"><small>({{ message.date|date("d/m/Y - H:i") }})</small></div>
+                                                            <div class="text-start">{{ message.message }}</div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                <div class="alert alert-warning mt-4">{% trans %}Il n'y a pas de message !{% endtrans %}</div>
+                                            {% endif %}
                                             {% if not is_granted('ROLE_PROPRIETAIRE') %}
-                                                <a href="{{ path('rental.canceled', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Déclarer un problème{% endtrans %}</a>
+                                                <a href="{{ path('tenant.problem.owner', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Déclarer un problème{% endtrans %}</a>
                                             {% endif %}
                                         </div>
                                         <div class="tab-pane fade text-center" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                            <p>todo il n'y a pas de message</p>
+                                            {% if works|length != 0 and works[realty.id]|length != 0 %}
+                                                <ul class="list-group list-group-flush">
+                                                    {% for message in works[realty.id] %}
+                                                        <li class="list-group-item">
+                                                            <div class="text-start"><strong>{{ message.idSender.lastname }} {{ message.idSender.firstname }}</strong></div>
+                                                            <div class="text-start text-muted"><small>({{ message.date|date("d/m/Y - H:i") }})</small></div>
+                                                            <div class="text-start">{{ message.message }}</div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                <div class="alert alert-warning mt-4">{% trans %}Il n'y a pas de message !{% endtrans %}</div>
+                                            {% endif %}
                                             {% if not is_granted('ROLE_PROPRIETAIRE') %}
-                                                <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Demander des travaux{% endtrans %}</a>
+                                                <a href="{{ path('tenant.work.owner', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Demander des travaux{% endtrans %}</a>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -219,23 +301,6 @@
 
                 </div>
             {% endfor %}
-
-
-
-
-
-            {% if is_granted('ROLE_ADMIN') %}
-                <div class="mt-4"><a class="btn btn-primary" href="{{ path('member.home') }}">{% trans %}Accueil{% endtrans %}</a></div>
-            {% elseif is_granted('ROLE_AGENCE') %}
-                
-            {% endif %}
-            
-                
-
-                
-
-            
-
         </div>
     </section> 
 </main>

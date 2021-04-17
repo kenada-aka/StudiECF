@@ -21,14 +21,6 @@ use App\Form\RealtyType;
 use App\Repository\UserRepository;
 use App\Entity\User;
 
-use App\Entity\Image;
-use App\Form\ImageType;
-
-use App\Entity\Document;
-use App\Form\DocumentType;
-
-use Symfony\Component\String\Slugger\SluggerInterface;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class RentalController extends AbstractController
@@ -58,7 +50,7 @@ class RentalController extends AbstractController
         {
             if($this->realtyRepo->findByTenant($user->getId()))
             {
-                return $this->redirectToRoute("rental.tenant");
+                return $this->redirectToRoute("member.tenant");
             }
         }
 
@@ -122,7 +114,7 @@ class RentalController extends AbstractController
             'pagination' => $pagination
         ]);
     }
-    
+
     /**
      * @Route("/rental/extends", name="rental.extends")
      * @IsGranted("ROLE_AGENCE")
@@ -189,7 +181,7 @@ class RentalController extends AbstractController
         {
             $this->em->persist($realty);
             $this->em->flush();
-            return $this->redirectToRoute('owner.home');
+            return $this->redirectToRoute('member.owner');
         }
 
         return $this->render('rental/update.html.twig', [
@@ -209,8 +201,14 @@ class RentalController extends AbstractController
 
         if($this->isCsrfTokenValid('delete'. $realty->getId(), $request->get('_token')))
         {
-            $this->em->remove($realty);
-            $this->em->flush();
+            // Si locataire pas possible de supprimer
+            if(!$realty->getIdTenant())
+            {
+                $realty->removeAllImages($this->getParameter('png_directory'));
+                $realty->removeAllDocuments($this->getParameter('pdf_directory'));
+                $this->em->remove($realty);
+                $this->em->flush();
+            }
         }
         
         return $this->redirectToRoute('member.home');

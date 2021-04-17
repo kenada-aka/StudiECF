@@ -23,6 +23,11 @@ class Document
     private $url;
 
     /**
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     */
+    private $askRemove;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Realty::class, inversedBy="documents")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -41,6 +46,18 @@ class Document
     public function setUrl(string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getAskRemove(): ?string
+    {
+        return $this->askRemove;
+    }
+
+    public function setAskRemove(bool $askRemove): self
+    {
+        $this->askRemove = $askRemove;
 
         return $this;
     }

@@ -22,11 +22,13 @@ class MessageRepository extends ServiceEntityRepository
     /**
      * Récupère les messages entre le locataire et le propriétaire (par rapport à un bien)
      **/
-    public function findAllByOwner(int $idOwner)
+    public function findAllByOwner(int $idOwner, int $type)
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.id_owner = :val')
+            ->andWhere('a.type = :type')
             ->setParameter('val', $idOwner)
+            ->setParameter('type', $type)
             ->orderBy('a.date', 'DESC')
             ->getQuery()
             ->getResult();

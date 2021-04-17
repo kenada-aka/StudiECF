@@ -40,30 +40,30 @@ class Realty
     private $statut; // 1 = private propriétaire, 2 = private bailleur tiers ou agence, 3 = publique libre de location, 4 = réserver par locataire, 5 = louer
 
     /**
-     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="id_realty")
+     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="id_realty", orphanRemoval=true)
      */
     private $documents;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="id_realty")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="id_realty", orphanRemoval=true)
      */
     private $images;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="realtyOwner")
      * @ORM\JoinColumn(nullable=false)
-     * @ORM\joinColumn(onDelete="SET NULL")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $id_owner;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="realtyTenant")
-     * @ORM\joinColumn(onDelete="SET NULL")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $id_tenant;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="id_receiver", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="id_owner", orphanRemoval=true)
      */
     private $messagesRealty;
 
@@ -185,8 +185,24 @@ class Realty
         if ($this->documents->removeElement($document)) {
             // set the owning side to null (unless already changed)
             if ($document->getIdRealty() === $this) {
-                $document->setIdRealty(null);
+                //$document->setIdRealty(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function removeAllDocuments($path): self
+    {
+        $documents = $this->getDocuments();
+        
+        foreach($documents as $document)
+        {
+            $file = $path ."/". $document->getUrl();
+            if(file_exists($file)) {
+                unlink($file);
+            }   
+            $this->removeDocument($document);
         }
 
         return $this;
@@ -215,8 +231,24 @@ class Realty
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
             if ($image->getIdRealty() === $this) {
-                $image->setIdRealty(null);
+                //$image->setIdRealty(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function removeAllImages($path): self
+    {
+        $images = $this->getImages();
+        
+        foreach($images as $image)
+        {
+            $file = $path ."/". $image->getUrl();
+            if(file_exists($file)) {
+                unlink($file);
+            }   
+            $this->removeImage($image);
         }
 
         return $this;

@@ -19,18 +19,28 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use App\Repository\RealtyRepository;
 
+use App\Repository\MessageRepository;
+
 use App\Entity\User;
 use App\Form\UserType;
+
+use App\Entity\Image;
+use App\Form\ImageType;
+
+use App\Entity\Document;
+use App\Form\DocumentType;
 
 class SecurityController extends AbstractController
 {
 
     private $realtyRepo;
+    private $messageRepository;
     private $em;
 
-    public function __construct(EntityManagerInterface $em, RealtyRepository $realtyRepository)
+    public function __construct(EntityManagerInterface $em, RealtyRepository $realtyRepository, MessageRepository $messageRepository)
     {
         $this->realtyRepo = $realtyRepository;
+        $this->messageRepo = $messageRepository;
         $this->em = $em;
     }
 
@@ -115,8 +125,7 @@ class SecurityController extends AbstractController
             }
         }
 
-        if($this->isGranted('ROLE_ADMIN')) $redirect = "admin.user.home";
-        else if($this->isGranted('ROLE_PROPRIETAIRE')) $redirect = "member.owner";
+        if($this->isGranted('ROLE_PROPRIETAIRE')) $redirect = "member.owner";
         else if($this->isGranted('ROLE_LOCATAIRE')) $redirect = "member.tenant";
 
         return $this->redirectToRoute($redirect);
@@ -175,15 +184,32 @@ class SecurityController extends AbstractController
 
         // Si le locataire n'est pas entrain de louer un bien
 
-        if(!$this->realtyRepo->findByTenant($user->getId()))
+        $realties = $this->realtyRepo->findByTenant($user->getId());
+
+        if(!$realties)
         {
             return $this->redirectToRoute("rental.default");
         }
 
+        // Récupérer les messages entre le locataire et le propriétaire ou l'agence
+
+        $messages[$realties[0]->getId()] = $this->messageRepo->findAllByOwner($realties[0]->getId(), 2); // 2 = contact
+
+        // Récupérer les messages concernant les problèmes de la location
+
+        $problems[$realties[0]->getId()] = $this->messageRepo->findAllByOwner($realties[0]->getId(), 3); // 3 = problèmes
+
+        // Récupérer les messages concernant les demandes de travaux
+
+        $works[$realties[0]->getId()] = $this->messageRepo->findAllByOwner($realties[0]->getId(), 4); // 4 = travaux
+
         return $this->render('member/home.html.twig', [
             'title' => 'Ma location',
             'subtitle' => 'A partir de cette page vous allez pouvoir gérer votre location avec votre propriétaire ou votre agence.',
-            'realties' => $this->realtyRepo->findByTenant($user->getId())
+            'realties' => $realties,
+            'messages' => $messages,
+            'problems' => $problems,
+            'works' => $works
         ]);
     }
 
@@ -196,15 +222,59 @@ class SecurityController extends AbstractController
         $user = $this->getUser();
         
         // Si pas d'annonce : redirection formulaire add
-        
 
-        if($this->isGranted('ROLE_AGENCE')) $realties = $this->realtyRepo->findAllWhereAgencyId($user->getId());
+        if($this->isGranted('ROLE_ADMIN')) $realties = $this->realtyRepo->findAll();
+        else if($this->isGranted('ROLE_AGENCE')) $realties = $this->realtyRepo->findAllWhereAgencyId($user->getId());
         else $realties = $this->realtyRepo->findAllWhereOwnerId($user->getId());
+
+        if(!$realties)
+        {
+            return $this->redirectToRoute("rental.add");
+        }
+
+
+        // Formulaire Photo
+
+        $image = new Image();
+
+        $formImg = $this->createForm(ImageType::class, $image);
+
+        // Formulaire Document
+
+        $document = new Document();
+
+        $formPdf = $this->createForm(DocumentType::class, $document);
+
+
+        foreach($realties as $realty)
+        {
+            // Récupérer les messages entre le locataire et le propriétaire ou l'agence
+
+            $messages[$realty->getId()] = $this->messageRepo->findAllByOwner($realty->getId(), 2); // 2 = contact
+
+            // Récupérer les messages concernant les problèmes de la location
+
+            $problems[$realty->getId()] = $this->messageRepo->findAllByOwner($realty->getId(), 3); // 3 = problèmes
+
+            // Récupérer les messages concernant les demandes de travaux
+
+            $works[$realty->getId()] = $this->messageRepo->findAllByOwner($realty->getId(), 4); // 4 = travaux
+
+            // Récupérer les messages entre le propriétaire et l'agence
+
+            $messagesAgence[$realty->getId()] = $this->messageRepo->findAllByOwner($realty->getId(), 5); // 5 = agence
+        }
 
         return $this->render('member/home.html.twig', [
             'title' => 'Bonjour',
             'subtitle' => 'A partir de votre espace sécurisé vous allez pouvoir gérer votre ou vos biens.',
-            'realties' => $realties
+            'realties' => $realties,
+            'formImg' => $formImg->createView(),
+            'formPdf' => $formPdf->createView(),
+            'messages' => $messages,
+            'problems' => $problems,
+            'works' => $works,
+            'messagesAgence' => $messagesAgence
         ]);
     }
 

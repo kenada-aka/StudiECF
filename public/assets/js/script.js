@@ -57,6 +57,40 @@ $("#subscribe").submit(function(event) {
     }
 });
 
+// Gestion des bouttons "ajouter" image/document
+
+$('button.addImg').each(function(index) {
+    this.addEventListener('click', function(event) {
+        event.preventDefault();
+        this.parentNode.nextElementSibling.classList.remove("d-none");
+        this.parentNode.nextElementSibling.nextElementSibling.classList.add("d-none");
+    });
+});
+
+$('button.addPdf').each(function(index) {
+    this.addEventListener('click', function(event) {
+        event.preventDefault();
+        this.parentNode.nextElementSibling.classList.add("d-none");
+        this.parentNode.nextElementSibling.nextElementSibling.classList.remove("d-none");
+    });
+});
+
+// Gestion de demande suppression d'un document
+
+$('a.remove').each(function(index) {
+    this.addEventListener('click', function(event) {
+        event.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: "/rental/askRemoveDocument/",
+            data: { id: this.dataset.id }
+        }).done(function( msg ) {
+            alert( "Data Saved: " + msg );
+        });
+        this.parentNode.classList.add("d-none");
+    });
+});
+
 // Tabs messageries espace membre
 
 
