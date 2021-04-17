@@ -1,0 +1,47 @@
+{% extends "index.html.twig" %}
+
+{% block body %}
+<section id="hero" class="register d-flex align-items-end">
+    <div class="carousel-item active">
+        <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{ title }}</h2>
+            <p class="animate__animated animate__fadeInUp">{{ subtitle }}</p>
+        </div>
+    </div>
+</section>
+
+<main id="main">
+    <section class="section">
+        <div class="container mt-4">
+            {% if documents|length == 0 %}
+                <div class="alert alert-warning mt-4 text-center">Il n'y a pas de document à supprimer</div>
+            {% else  %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>URL</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for document in documents %}
+                        <tr>
+                            <td>{{ document.url }}</td>
+                            <td>{{ document.idRealty.title }}</td>
+                            <td>
+                                <form method="POST" action="{{ path('admin.removeDocument', {idDocument: document.id}) }}">
+                                    <input type="hidden" name="_method" value="DELETE"/>
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ document.id)}}"/>
+                                    <button class="btn btn-danger">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -155,7 +155,7 @@ class RentalController extends AbstractController
         {
             $this->em->persist($realty);
             $this->em->flush();
-            return $this->redirectToRoute('owner.home');
+            return $this->redirectToRoute('member.owner');
             
         }
 

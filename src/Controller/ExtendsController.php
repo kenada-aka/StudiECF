@@ -171,8 +171,29 @@ class ExtendsController extends AbstractController
         return $this->render('admin/remove.document.html.twig', [
             'title' => 'Gestion des documents',
             'subtitle' => 'Vous trouverez ici tous les documents en attente de supression.',
-            'documents' => $this->documentRepo->find()
+            'documents' => $this->documentRepo->findBy(array("askRemove" => true))
         ]);
+    }
+
+    /**
+     * @Route("/admin/removeDocument", name="admin.removeDocument", methods="DELETE")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function removeDocument(Request $request)
+    {
+        $document = $this->documentRepo->find($request->get('idDocument'));
+
+        if($this->isCsrfTokenValid('delete'. $document->getId(), $request->get('_token')))
+        {
+            $file = $this->getParameter('pdf_directory') ."/". $document->getUrl();
+            if(file_exists($file)) {
+                unlink($file);
+            }   
+            $this->em->remove($document);
+            $this->em->flush();
+        }
+        
+        return $this->redirectToRoute('admin.showRemoveDocument');
     }
 
 }
