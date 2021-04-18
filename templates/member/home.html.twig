@@ -117,22 +117,6 @@
                                 <h4 class="title">Statut</h4>
                                 <p>Propriétaire : <strong>{{ realty.idOwner.lastname }} {{ realty.idOwner.firstname }}</strong></p>
                                 <p class="description">{{ ["","En attente de validation par l'agence.", "En attente de publication.", "En attente de locataire.", "En attente de confirmer la location.", "LOUER"][realty.statut] }}</p>
-                                {% if is_granted('ROLE_BAILLEUR_TIERS') %}
-                                    {% if realty.statut == 2 %}
-                                        <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
-                                            <a href="{{ path('rental.post', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Publier l'annonce{% endtrans %}</a>
-                                        </div>
-                                    {% elseif realty.statut == 4 %}
-                                        <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
-                                            <a href="{{ path('rental.canceled', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Annuler la demande{% endtrans %}</a>
-                                            <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Confirmer la demande{% endtrans %}</a>
-                                        </div>
-                                    {% elseif realty.statut == 5 %}
-                                        <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
-                                            <a href="{{ path('rental.canceled', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Annuler la location{% endtrans %}</a>
-                                        </div>
-                                    {% endif %}
-                                {% endif %}
                                 {% if is_granted('ROLE_AGENCE') %}
                                     {% if realty.idOwner != realty.idAgency %}
                                         {% if messagesAgence|length != 0 and messagesAgence[realty.id]|length != 0 %}
@@ -169,6 +153,22 @@
                                         {% endif %}
                                         <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
                                             <a href="{{ path('owner.contact.agency', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Contacter l'agence{% endtrans %}</a>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                                {% if is_granted('ROLE_BAILLEUR_TIERS') %}
+                                    {% if realty.statut == 1 or realty.statut == 2 %}
+                                        <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
+                                            <a href="{{ path('rental.post', {idOwner: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Publier l'annonce{% endtrans %}</a>
+                                        </div>
+                                    {% elseif realty.statut == 4 %}
+                                        <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
+                                            <a href="{{ path('rental.canceled', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Annuler la demande{% endtrans %}</a>
+                                            <a href="{{ path('rental.accepted', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Confirmer la demande{% endtrans %}</a>
+                                        </div>
+                                    {% elseif realty.statut == 5 %}
+                                        <div class="btn-group btn-group-sm d-flex justify-content-center" role="group">
+                                            <a href="{{ path('rental.canceled', {idRent: realty.id}) }}" class="btn btn-primary mt-4">{% trans %}Annuler la location{% endtrans %}</a>
                                         </div>
                                     {% endif %}
                                 {% endif %}

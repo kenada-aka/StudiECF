@@ -244,7 +244,22 @@ class SecurityController extends AbstractController
         // Si pas d'annonce : redirection formulaire add
 
         if($this->isGranted('ROLE_ADMIN')) $realties = $this->realtyRepo->findAll();
-        else if($this->isGranted('ROLE_AGENCE')) $realties = $this->realtyRepo->findAllWhereAgencyId($user->getId());
+        else if($this->isGranted('ROLE_AGENCE')) 
+        {
+            // S'il y a des annonces des propriétaires
+            $realties = $this->realtyRepo->findAllWhereOwnerExtends();
+            if($realties)
+            {
+                // Mettre à jour l'identifiant de l'agence
+                foreach($realties as $realty)
+                {
+                    $realty->setIdAgency($user);
+                    $this->em->persist($realty);
+                    $this->em->flush();
+                }
+            }
+            $realties = $this->realtyRepo->findAllWhereAgencyId($user->getId());
+        }
         else $realties = $this->realtyRepo->findAllWhereOwnerId($user->getId());
 
         if(!$realties)
