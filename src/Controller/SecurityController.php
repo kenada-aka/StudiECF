@@ -61,6 +61,7 @@ class SecurityController extends AbstractController
 
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
 
+            $user->setAskRemove(false);
             $user->setPassword($password);
             $user->setRegister(new \DateTime());
             $user->setSubscribe(new \DateTime());

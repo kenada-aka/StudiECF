@@ -424,7 +424,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getAskRemove(): ?string
+    public function getAskRemove(): ?bool
     {
         return $this->askRemove;
     }
