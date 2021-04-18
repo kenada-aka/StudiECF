@@ -70,7 +70,7 @@
         ]
     },
     "conflict": {
-        "symfony/symfony": "php bin/console doctrine:migrations:migrate"
+        "symfony/symfony": "*"
     },
     "extra": {
         "symfony": {
