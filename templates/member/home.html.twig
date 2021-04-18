@@ -185,12 +185,10 @@
                                     <h4 class="title">Messageries</h4>
                                     <ul class="nav nav-tabs myTab" id="myTab" data-bs-target="#myTabContent1" role="tablist">
                                         <li class="nav-item" role="presentation">
-                                            {% if is_granted('ROLE_BAILLEUR_TIERS') %}
+                                            {% if is_granted('ROLE_PROPRIETAIRE') %}
                                                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="home" type="button" role="tab" aria-controls="home" aria-selected="true">Locataire</button>
-                                            {% elseif is_granted('ROLE_PROPRIETAIRE') %}
-                                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="home" type="button" role="tab" aria-controls="home" aria-selected="true">Propriétaire</button>
                                             {% else %}
-                                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="home" type="button" role="tab" aria-controls="home" aria-selected="true">Locataire</button>
+                                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="home" type="button" role="tab" aria-controls="home" aria-selected="true">Propriétaire</button>
                                             {% endif %}
                                         </li>
                                         <li class="nav-item" role="presentation">
@@ -241,7 +239,7 @@
 
                     <!-- Gestion -->
 
-                    {% if is_granted('ROLE_LOCATAIRE') %}
+                    {% if is_granted('ROLE_LOCATAIRE') and not is_granted('ROLE_PROPRIETAIRE') or is_granted('ROLE_BAILLEUR_TIERS') %}
                         {% if realty.idTenant %}
                             {% if realty.statut == 5 %}
                             <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
