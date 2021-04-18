@@ -58,6 +58,8 @@ class RealtyRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.id_agency = :val')
+            ->orWhere('a.statut = :statut')
+            ->setParameter('statut', 1)
             ->setParameter('val', $agencyId)
             ->orderBy('a.id', 'ASC')
             ->getQuery()
