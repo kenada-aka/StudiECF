@@ -116,20 +116,6 @@ class RentalController extends AbstractController
     }
 
     /**
-     * @Route("/rental/extends", name="rental.extends")
-     * @IsGranted("ROLE_AGENCE")
-     */
-    public function homeExtends(): Response
-    {
-        $user = $this->getUser();
-        return $this->render('rental/owner.extends.html.twig', [
-            'title' => 'Visualiser les annonces des propriétaires',
-            'subtitle' => 'A partir de cette page vous allez pouvoir visualiser les annonces des propriétaires.',
-            'realties' => $this->realtyRepo->findAllWhereOwnerExtends()
-        ]);
-    }
-
-    /**
      * @Route("/rental/add", name="rental.add")
      * @IsGranted("ROLE_PROPRIETAIRE")
      */

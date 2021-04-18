@@ -36,7 +36,8 @@ $("#hero a").click(function(event) {
 // Event formulaire contact à la page d'accueil
 
 $("#home-contact").submit(function(event) {
-    alert("Formulaire temporairement désactivé en attendant le nom de domaine...");
+    $('.modal-body').html("Formulaire temporairement désactivé en attendant le nom de domaine...");
+    $('#Modal').modal('show'); 
     event.preventDefault();
 });
 
@@ -52,7 +53,8 @@ $('div.carousel.slide').each(function(index) {
 $("#subscribe").submit(function(event) {
     if($("#subscribe select").val() != "CB")
     {
-        alert("Le moyen de paiement que vous souhaitez utiliser est en cours de developpement, merci pour votre patience et procéder à un paiement par CB, ou bien d'envoyer les informations par mail.");
+        $('.modal-body').html("Le moyen de paiement que vous souhaitez utiliser est en cours de developpement, merci pour votre patience et procéder à un paiement par CB, ou bien d'envoyer les informations par mail.");
+        $('#Modal').modal('show'); 
         event.preventDefault();
     }
 });
