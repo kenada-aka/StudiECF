@@ -55,7 +55,7 @@ class Document
         return $this->askRemove;
     }
 
-    public function setAskRemove(bool $askRemove): bool
+    public function setAskRemove(bool $askRemove): self
     {
         $this->askRemove = $askRemove;
 
