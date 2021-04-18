@@ -71,7 +71,10 @@
             "@auto-scripts"
         ],
         "compile": [
-            "php bin/console doctrine:migrations:migrate"
+            "php bin/console doctrine:schema:create",
+            "php bin/console doctrine:schema:update",
+            "php bin/console make:migration",
+            "hp bin/console  d:m:m"
         ]
     },
     "conflict": {
