@@ -1,0 +1,5 @@
+user(#id:integer, lastname:varchar, firstname:varchar, username:varchar, email:varchar, password:varchar, roles:json, register:datetime, subscribe:datetime, isActive:boolean, askRemove:boolean)
+realty(#id:integer, idOwner=>user, idTenant=>user, idAgency=>user, title:varchar, description:varchar, rent:integer, statut:integer) avec idOwner NOT NULL
+document(#id:integer, idRealty=>realty, url:varchar, askRemove:boolean) avec idRealty NOT NULL
+image(#id:integer, idRealty=>realty, url:varchar) avec idRealty NOT NULL
+message(#id:integer, idOwner=>realty, idSender=>user, idReceiver=>user, message:varchar, date:datetime, type:integer) avec idOwner et idSender NOT NULL
