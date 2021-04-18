@@ -50,12 +50,12 @@ class Document
         return $this;
     }
 
-    public function getAskRemove(): ?string
+    public function getAskRemove(): ?bool
     {
         return $this->askRemove;
     }
 
-    public function setAskRemove(bool $askRemove): self
+    public function setAskRemove(bool $askRemove): bool
     {
         $this->askRemove = $askRemove;
 

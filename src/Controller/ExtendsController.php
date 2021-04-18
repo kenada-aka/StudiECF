@@ -124,6 +124,7 @@ class ExtendsController extends AbstractController
                 }
 
                 $document->setUrl($newFilename);
+                $document->setAskRemove(false);
 
 
                 $reality = $this->realtyRepo->find($idRent);
