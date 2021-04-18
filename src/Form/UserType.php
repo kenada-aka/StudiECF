@@ -34,9 +34,9 @@ class UserType extends AbstractType
                 'choices'  => [  
                     "Locataire" => "1",
                     "Propriétaire" => "2",
-                    "Bailleur Tiers" => "3",
-                    "Agence (TEST DEV)" => "4",
-                    "Admin (TEST DEV)" => "5"
+                    "Bailleur Tiers" => "3"
+                    //"Agence (TEST DEV)" => "4",
+                    //"Admin (TEST DEV)" => "5"
                 ]])
         ;
 
