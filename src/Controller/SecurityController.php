@@ -90,12 +90,12 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        if($error->getMessage() == "")
+        if($error)
         {
-            return $this->redirectToRoute('member.home');
+            return $this->render('home/home.html.twig', ['error' => $error]);
         }
 
-        return $this->render('home/home.html.twig', ['error' => $error]);
+        return $this->redirectToRoute('member.home');
     }
 
     /**
