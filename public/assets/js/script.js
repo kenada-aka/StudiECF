@@ -128,4 +128,11 @@ $('a.removeAccount').each(function(index) {
     });
 });
 
+// Gestion de l'erreur de connexion
+
+$("#ErrorConnexion").each(function(index) {
+    $('#Modal').modal('show');
+});
+
+
 
