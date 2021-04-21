@@ -107,7 +107,7 @@ class RentalController extends AbstractController
             'paramsRoute' => array()
         );
 
-        return $this->render('owner/owner.public.html.twig', [
+        return $this->render('rental/list.default.html.twig', [
             'title' => 'Offres de location',
             'subtitle' => 'Sur cette page vous pouvez voir toutes les offres de location libre de nos biens, ainsi que les biens des propriétaires et des bailleurs tiers.',
             'realties' => $articles,
