@@ -8,7 +8,7 @@ DAZ Immobilier est une application web pour les Agences Immobilières souhaitant
 Cloner le dépôt à partir de GitHub
 
 ```bash
-git clone kenada-aka/StudiECF
+git clone https://github.com/kenada-aka/StudiECF
 ```
 
 ## Déployer sur Heroku avec la base de données
